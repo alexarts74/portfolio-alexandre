@@ -25,7 +25,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
       <nav className="fixed left-0 right-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-100">
         <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 flex justify-between items-center py-4">
           <Link
-            href="/"
+            href="/#projets"
             className="group flex items-center gap-3 text-neutral-600 transition-colors hover:text-black"
           >
             <svg
@@ -55,33 +55,69 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
       </nav>
 
       <main className="min-h-screen bg-white pt-16">
-        {/* Hero Section - Full Width Image */}
-        <section className="relative h-[50vh] md:h-[60vh] lg:h-[70vh] w-full overflow-hidden">
-          {heroError ? (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200">
-              <div
-                className="text-[20vw] font-light text-neutral-200"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {project.title.charAt(0)}
-              </div>
+        {/* Hero Section - Different layout for mobile vs web */}
+        {project.type === "mobile" ? (
+          /* Mobile Hero - Phone mockups */
+          <section className="relative py-12 md:py-16 lg:py-20 w-full overflow-hidden bg-gradient-to-b from-neutral-100 to-white">
+            <div className="flex justify-center items-end gap-4 md:gap-6 lg:gap-8 px-6">
+              {project.images.slice(0, 3).map((img, index) => (
+                <div
+                  key={index}
+                  className={`relative flex-shrink-0 rounded-[2rem] overflow-hidden bg-neutral-900 shadow-2xl transition-all duration-500 ${
+                    index === 1
+                      ? "w-[180px] md:w-[220px] lg:w-[260px] aspect-[9/19.5] z-10"
+                      : "w-[140px] md:w-[180px] lg:w-[220px] aspect-[9/19.5] opacity-80 hidden md:block"
+                  }`}
+                  style={{
+                    boxShadow: index === 1
+                      ? "0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1)"
+                      : "0 15px 30px -8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1)"
+                  }}
+                >
+                  {/* Phone frame effect */}
+                  <div className="absolute inset-0 rounded-[2rem] border border-neutral-700/50 pointer-events-none z-10" />
+                  {/* Notch */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 md:w-20 h-5 md:h-6 bg-neutral-900 rounded-full z-20" />
+                  <Image
+                    src={img}
+                    alt={`${project.title} - Screen ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    priority={index === 1}
+                  />
+                </div>
+              ))}
             </div>
-          ) : (
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover"
-              priority
-              onError={() => setHeroError(true)}
-            />
-          )}
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-        </section>
+          </section>
+        ) : (
+          /* Web Hero - Full Width Image */
+          <section className="relative h-[50vh] md:h-[60vh] lg:h-[70vh] w-full overflow-hidden">
+            {heroError ? (
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200">
+                <div
+                  className="text-[20vw] font-light text-neutral-200"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {project.title.charAt(0)}
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover"
+                priority
+                onError={() => setHeroError(true)}
+              />
+            )}
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+          </section>
+        )}
 
         {/* Project Header */}
-        <section className="relative -mt-32 md:-mt-40 z-10">
+        <section className={`relative z-10 ${project.type === "mobile" ? "-mt-12 md:-mt-16" : "-mt-32 md:-mt-40"}`}>
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             <div className="max-w-4xl">
               {/* Meta info */}
@@ -283,7 +319,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         </section>
 
         {/* Gallery */}
-        <section className="py-16 md:py-24 bg-neutral-50">
+        <section className="py-16 md:py-24 bg-white">
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             <h2
               className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-10"
@@ -291,7 +327,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             >
               {locale === "en" ? "Gallery" : "Galerie"}
             </h2>
-            <ProjectGallery images={project.images} title={project.title} />
+            <ProjectGallery images={project.images} title={project.title} isMobile={project.type === "mobile"} />
           </div>
         </section>
 

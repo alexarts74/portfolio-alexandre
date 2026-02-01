@@ -94,6 +94,15 @@ html, body {
   }
 }
 
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /* Classes d'animation */
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
@@ -122,6 +131,14 @@ html, body {
 .animate-line-expand {
   animation: lineExpand 1s ease-out forwards;
   transform-origin: left;
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
 }
 
 /* État initial pour les éléments animés */
