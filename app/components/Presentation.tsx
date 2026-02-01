@@ -52,7 +52,7 @@ export default function Presentation() {
               imageVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
             }`}
           >
-            <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-200">
+            <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden bg-neutral-200">
               {imageError ? (
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-300">
                   <div className="text-center">
@@ -62,10 +62,10 @@ export default function Presentation() {
                 </div>
               ) : (
                 <Image
-                  src="/images/portrait.jpg"
+                  src="/images/portrait.png"
                   alt="Portrait d'Alexandre"
                   fill
-                  className="object-cover grayscale transition-[filter,transform] duration-1000 ease-in-out hover:grayscale-0 hover:scale-105"
+                  className="object-cover grayscale transition-[filter,transform] duration-1000 ease-in-out hover:grayscale-0"
                   onError={() => setImageError(true)}
                 />
               )}

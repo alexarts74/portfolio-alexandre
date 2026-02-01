@@ -128,50 +128,146 @@ export const translations = {
     },
     // Project data
     projectData: {
-      callixte: {
-        shortDescription: "Artistic portfolio for a contemporary dancer",
-        fullDescription:
-          "A minimalist and elegant portfolio website designed for Callixte, a contemporary dancer and choreographer. Features smooth scroll animations, video backgrounds, bilingual support, and a refined aesthetic that reflects the artistry of dance.",
-      },
-      tripmate: {
-        shortDescription: "Travel companion app for planning adventures",
-        fullDescription:
-          "TripMate is a comprehensive travel planning application that helps users organize their trips, discover destinations, and share experiences. Features include itinerary planning, budget tracking, and collaborative trip planning with friends.",
-      },
       evera: {
-        shortDescription: "Modern web platform with elegant design",
-        fullDescription:
-          "Evera is a comprehensive web development project featuring modern design principles, responsive layouts, and seamless user interactions. Built with attention to detail and performance optimization.",
+        shortDescription: "SaaS platform for vehicle fleet management",
+        context: "Evera is a SaaS solution for companies managing vehicle fleets. It centralizes all vehicle-related information: trips, costs, maintenance, infractions, and subscriptions, enabling proactive real-time management.",
+        missions: [
+          "Full development of the main dashboard, integrating all vehicle data, trips, costs, and alerts",
+          "Implementation of real-time alert notifications via CRON jobs and server scripts for immediate incident prevention",
+          "Integration of vehicle telemetry via MQTT for live data tracking",
+          "Automation of client payments and subscriptions via Stripe",
+          "Design of analytical reports to optimize fleet management",
+        ],
+        learnings: [
+          "Full-stack experience with front-back-server integration in real-time",
+          "Mastery of technical solutions for complex product needs",
+          "Ability to think product, prioritize features, and propose relevant alerts and reports for end users",
+          "Strengthened product-technical vision, combining backend, front-end, and server automation",
+        ],
       },
       bibbatteries: {
-        shortDescription: "Professional website for battery solutions",
-        fullDescription:
-          "A professional web platform for Bib Batteries, showcasing their products and services. Features include product catalogs, contact forms, and an intuitive navigation system designed to enhance user experience.",
+        shortDescription: "Electric battery stock management platform",
+        context: "Bib Batteries is a web platform to centralize electric battery stock management, allowing suppliers, partners, and internal teams to collaborate and access reliable information.",
+        missions: [
+          "Development of an interactive dashboard to visualize stocks, battery status, and warranties",
+          "Setup of automatic synchronization scripts with Notion to update data without manual intervention",
+          "Creation of dynamic reports for battery status tracking and rental management",
+          "Multi-user access rights management to adapt views based on roles",
+        ],
+        learnings: [
+          "User-centered product approach, designing dashboards adapted to different roles",
+          "Server logic development and automation to simplify manual processes",
+          "Ability to solve multi-user problems while ensuring data consistency and security",
+          "Strengthened full-stack and product vision, combining interactive front-end and robust backend",
+        ],
       },
       runmate: {
-        shortDescription: "Mobile app for running enthusiasts",
-        fullDescription:
-          "RunMate is a mobile application designed for runners to track their progress, set goals, and connect with other running enthusiasts. Built with React Native for cross-platform compatibility.",
+        shortDescription: "Social mobile app for runners",
+        context: "RunMate is a mobile application for connecting runners, organizing outings, and building a community around running.",
+        missions: [
+          "Complete mobile interface development in React Native and NativeWind",
+          "Backend creation in Ruby on Rails, including user management, profiles, groups, events, and internal messaging",
+          "Implementation of push notifications and real-time messaging",
+          "Design of a runner availability management system",
+          "Integration of statistics and goal tracking to motivate users",
+        ],
+        learnings: [
+          "Experience in user-centered product design, addressing motivation and socialization needs",
+          "Development of real-time technical solutions, like messaging and notifications",
+          "Mobile front-end and backend coordination for a smooth experience",
+          "Reflection on functional value and feature prioritization",
+        ],
       },
       workadventure: {
-        shortDescription: "Virtual workspace exploration platform",
-        fullDescription:
-          "WorkAdventure is a web-based virtual workspace that allows teams to interact in a 2D environment. Features include real-time communication, customizable spaces, and integration with popular collaboration tools.",
+        shortDescription: "Immersive collaborative interactive platform",
+        context: "WorkAdventure is an immersive platform for online events and collaborative experiences, where users navigate through interactive spaces.",
+        missions: [
+          "UI/UX redesign to improve navigation and user experience",
+          "Development of interactive popups and camera management to enrich interaction",
+          "Creation of a CLI tool to allow partners to easily publish their maps",
+          "Automation of interactive map deployment via GitHub Actions",
+        ],
+        learnings: [
+          "Highly technical experience, creating CLI tools and automated workflows for partners",
+          "Mastery of complex frontend architecture, managing advanced interactions and modular maps",
+          "Performance and scalability optimization for reusable interactive spaces",
+          "Development of CI/CD and deployment automation skills",
+        ],
       },
       thesurfcourse: {
-        shortDescription: "E-learning platform for surf lessons",
-        fullDescription:
-          "The Surf Course is an e-learning platform dedicated to surf education. It offers video courses, progress tracking, and interactive lessons for surfers of all levels.",
+        shortDescription: "Personalized surf equipment buying guide",
+        context: "The Surf Course is a web application that guides beginner surfers in choosing their equipment based on level, size, and practice conditions.",
+        missions: [
+          "Development of an interactive journey with personalized recommendations",
+          "Implementation of a product/user matching algorithm",
+          "Interface optimization for smooth navigation on smartphones and tablets",
+        ],
+        learnings: [
+          "Product thinking around personalization and recommendations",
+          "Ability to translate user constraints into simple and effective algorithms",
+          "Mobile UX improvement and smooth navigation",
+          "Feature prioritization to maximize user value",
+        ],
       },
       tudobemmaman: {
-        shortDescription: "Community platform for mothers",
-        fullDescription:
-          "Tudo Bem Maman is a supportive community platform designed for mothers. It provides resources, community forums, and helpful tools for navigating motherhood.",
+        shortDescription: "E-commerce for clothing brand",
+        context: "Online store for a clothing brand, allowing customers to browse products, manage cart and purchases, with a back-office dashboard to manage collections and sales.",
+        missions: [
+          "Product catalog and cart development with smooth navigation",
+          "Secure payment system integration via Stripe",
+          "Back-office dashboard creation to manage products, stocks, and sales",
+          "Responsive interface optimization for desktop and mobile",
+        ],
+        learnings: [
+          "Mastery of complete e-commerce application design, from front to back",
+          "Development of robust technical solutions for online management and payment",
+          "Product thinking on user experience and purchase journey",
+          "Ability to make product value-oriented technical decisions",
+        ],
+      },
+      tripmate: {
+        shortDescription: "Collaborative travel mobile app",
+        context: "TripMate is a mobile application for creating and sharing trips with others. Each trip becomes a collaborative journal where participants can document destinations, track shared expenses, and keep a complete record of the journey.",
+        missions: [
+          "Complete mobile application development with account creation and authentication",
+          "Collaborative trip creation with participant invitation system",
+          "Shared travel journal development, allowing destinations, photos, descriptions, and prices to be added",
+          "Tricount-style expense management module implementation with automatic reimbursement calculation",
+          "Trip export feature creation to save or share the journal after the trip",
+          "Real-time data management for smooth user synchronization",
+        ],
+        learnings: [
+          "Solid cross-platform mobile development experience, with particular attention to real smartphone usage",
+          "Understanding of mobile best practices, including Apple guidelines (UX, performance, navigation, iOS/iPadOS constraints)",
+          "Ability to design a fluid collaborative application, even with multiple simultaneous active users",
+          "Strengthened product thinking on ease of use, feature clarity, and value delivered to end users",
+        ],
+      },
+      callixte: {
+        shortDescription: "Portfolio website for professional dancer",
+        context: "Portfolio Callixte is a showcase website for a professional dancer. The goal is to offer an elegant, immersive, and visually striking site that highlights her artistic universe and identity.",
+        missions: [
+          "Custom showcase site design, focused on imagery and content enhancement",
+          "Smooth animation integration to reinforce immersion",
+          "Work on visual hierarchy, transitions, and navigation rhythm",
+          "Responsive site development, adapted for desktop and mobile",
+        ],
+        learnings: [
+          "Deepening of web design skills and visual detail sense",
+          "Ability to translate an artistic identity into a coherent digital experience",
+          "Work on aesthetics, animations, and visual storytelling, without unnecessary over-engineering",
+          "Understanding the importance of a clear, elegant, and impactful showcase site for a personal brand",
+        ],
       },
       otherprojects: {
         shortDescription: "Collection of various web projects",
-        fullDescription:
-          "A collection of various web development projects showcasing different technologies and approaches. Each project demonstrates specific skills and problem-solving capabilities.",
+        context: "A collection of various web development projects showcasing different technologies and approaches.",
+        missions: [
+          "Various web development projects",
+        ],
+        learnings: [
+          "Each project demonstrates specific skills and problem-solving capabilities",
+        ],
       },
     },
   },
@@ -304,50 +400,146 @@ export const translations = {
     },
     // Project data
     projectData: {
-      callixte: {
-        shortDescription: "Portfolio artistique pour une danseuse contemporaine",
-        fullDescription:
-          "Un site portfolio minimaliste et élégant conçu pour Callixte, danseuse et chorégraphe contemporaine. Comprend des animations au scroll fluides, des arrière-plans vidéo, un support bilingue et une esthétique raffinée qui reflète l'art de la danse.",
-      },
-      tripmate: {
-        shortDescription: "Application de voyage pour planifier vos aventures",
-        fullDescription:
-          "TripMate est une application de planification de voyage complète qui aide les utilisateurs à organiser leurs voyages, découvrir des destinations et partager leurs expériences. Comprend la planification d'itinéraires, le suivi du budget et la planification collaborative de voyages avec des amis.",
-      },
       evera: {
-        shortDescription: "Plateforme web moderne au design élégant",
-        fullDescription:
-          "Evera est un projet de développement web complet avec des principes de design moderne, des layouts responsive et des interactions utilisateur fluides. Construit avec attention aux détails et optimisation des performances.",
+        shortDescription: "Plateforme SaaS de gestion de flottes de véhicules",
+        context: "Evera est une solution SaaS pour les entreprises qui gèrent des flottes de véhicules. Elle centralise toutes les informations liées aux véhicules : trajets, coûts, entretiens, infractions et abonnements, pour permettre une gestion proactive et en temps réel.",
+        missions: [
+          "Développement complet du tableau de bord principal, intégrant toutes les données véhicules, trajets, coûts et alertes",
+          "Mise en place de remontées d'alertes en temps réel via CRON jobs et scripts serveur pour prévenir immédiatement des incidents",
+          "Intégration de la télémétrie des véhicules via MQTT pour le suivi live des données",
+          "Automatisation des paiements et abonnements clients via Stripe",
+          "Conception de reportings analytiques pour optimiser la gestion de la flotte",
+        ],
+        learnings: [
+          "Expérience full-stack avec intégration front-back-serveur en temps réel",
+          "Maîtrise de solutions techniques pour des besoins produits complexes",
+          "Capacité à penser produit, prioriser les fonctionnalités et proposer des alertes et reportings pertinents pour l'utilisateur final",
+          "Renforcement de ma vision produit-technique, combinant backend, front-end et automatisation serveur",
+        ],
       },
       bibbatteries: {
-        shortDescription: "Site professionnel pour solutions de batteries",
-        fullDescription:
-          "Une plateforme web professionnelle pour Bib Batteries, présentant leurs produits et services. Comprend des catalogues produits, formulaires de contact et un système de navigation intuitif conçu pour améliorer l'expérience utilisateur.",
+        shortDescription: "Plateforme de gestion de stocks de batteries électriques",
+        context: "Bib Batteries est une plateforme web pour centraliser la gestion des stocks de batteries électriques, permettant aux fournisseurs, partenaires et équipes internes de collaborer et d'accéder à des informations fiables.",
+        missions: [
+          "Développement d'un dashboard interactif pour visualiser stocks, état des batteries et garanties",
+          "Mise en place de scripts de synchronisation automatiques avec Notion pour actualiser les données sans intervention manuelle",
+          "Création de rapports dynamiques pour le suivi de l'état des batteries et la gestion des locations",
+          "Gestion des droits d'accès multi-utilisateurs pour adapter les vues selon les rôles",
+        ],
+        learnings: [
+          "Approche produit centrée utilisateur, en concevant des dashboards adaptés à différents rôles",
+          "Développement de logiques serveur et automatisation, pour simplifier des processus manuels",
+          "Capacité à résoudre des problèmes multi-utilisateurs, en garantissant cohérence et sécurité des données",
+          "Renforcement de ma vision full-stack et produit, en combinant front interactif et backend robuste",
+        ],
       },
       runmate: {
-        shortDescription: "Application mobile pour passionnés de course",
-        fullDescription:
-          "RunMate est une application mobile conçue pour les coureurs afin de suivre leur progression, définir des objectifs et se connecter avec d'autres passionnés. Construite avec React Native pour une compatibilité multiplateforme.",
+        shortDescription: "Application mobile sociale pour coureurs",
+        context: "RunMate est une application mobile permettant de connecter les coureurs, organiser des sorties et créer une communauté autour de la course à pied.",
+        missions: [
+          "Développement complet de l'interface mobile en React Native et NativeWind",
+          "Création du backend en Ruby on Rails, incluant gestion utilisateurs, profils, groupes, événements et messagerie interne",
+          "Mise en place de notifications push et messagerie en temps réel",
+          "Conception d'un système de gestion des disponibilités des coureurs",
+          "Intégration de statistiques et suivi d'objectifs pour motiver les utilisateurs",
+        ],
+        learnings: [
+          "Expérience dans la conception produit centrée utilisateur, pour répondre aux besoins de motivation et socialisation",
+          "Développement de solutions techniques temps réel, comme messagerie et notifications",
+          "Coordination front-end et backend mobile pour une expérience fluide",
+          "Réflexion sur la valeur fonctionnelle et la priorisation des fonctionnalités",
+        ],
       },
       workadventure: {
-        shortDescription: "Plateforme d'exploration d'espace de travail virtuel",
-        fullDescription:
-          "WorkAdventure est un espace de travail virtuel basé sur le web qui permet aux équipes d'interagir dans un environnement 2D. Comprend la communication en temps réel, des espaces personnalisables et l'intégration avec les outils de collaboration populaires.",
+        shortDescription: "Plateforme interactive collaborative immersive",
+        context: "WorkAdventure est une plateforme immersive pour événements et expériences collaboratives en ligne, où les utilisateurs naviguent dans des espaces interactifs.",
+        missions: [
+          "Refonte UI/UX pour améliorer la navigation et l'expérience utilisateur",
+          "Développement de popups interactifs et gestion caméra pour enrichir l'interaction",
+          "Création d'un outil CLI pour permettre aux partenaires de publier facilement leurs cartes",
+          "Automatisation du déploiement des cartes interactives via GitHub Actions",
+        ],
+        learnings: [
+          "Expérience très technique, avec création d'outils CLI et workflows automatisés pour partenaires",
+          "Maîtrise de l'architecture frontend complexe, pour gérer des interactions avancées et cartes modulaires",
+          "Optimisation de la performance et la scalabilité pour des espaces interactifs réutilisables",
+          "Développement de compétences en CI/CD et automatisation de déploiement",
+        ],
       },
       thesurfcourse: {
-        shortDescription: "Plateforme e-learning pour cours de surf",
-        fullDescription:
-          "The Surf Course est une plateforme e-learning dédiée à l'éducation au surf. Elle propose des cours vidéo, un suivi de progression et des leçons interactives pour surfeurs de tous niveaux.",
+        shortDescription: "Guide d'achat de matériel de surf personnalisé",
+        context: "The Surf Course est une application web qui guide les surfeurs débutants dans le choix de leur matériel selon niveau, taille et conditions de pratique.",
+        missions: [
+          "Développement d'un parcours interactif avec recommandations personnalisées",
+          "Implémentation d'un algorithme de matching produit/utilisateur",
+          "Optimisation de l'interface pour une navigation fluide sur smartphones et tablettes",
+        ],
+        learnings: [
+          "Réflexion produit autour de la personnalisation et recommandations",
+          "Capacité à traduire des contraintes utilisateurs en algorithmes simples et efficaces",
+          "Amélioration de l'UX mobile et navigation fluide",
+          "Priorisation des fonctionnalités pour maximiser la valeur utilisateur",
+        ],
       },
       tudobemmaman: {
-        shortDescription: "Plateforme communautaire pour mamans",
-        fullDescription:
-          "Tudo Bem Maman est une plateforme communautaire de soutien conçue pour les mamans. Elle fournit des ressources, des forums communautaires et des outils utiles pour accompagner la maternité.",
+        shortDescription: "E-commerce pour marque de vêtements",
+        context: "Boutique en ligne pour une marque de vêtements, permettant de parcourir produits, gérer panier et achats, avec un dashboard back-office pour gérer collections et ventes.",
+        missions: [
+          "Développement du catalogue produits et panier, avec navigation fluide",
+          "Intégration d'un système de paiement sécurisé via Stripe",
+          "Création du dashboard back-office pour gérer produits, stocks et ventes",
+          "Optimisation de l'interface responsive pour desktop et mobile",
+        ],
+        learnings: [
+          "Maîtrise de la conception d'une application e-commerce complète, du front au back",
+          "Développement de solutions techniques robustes pour la gestion et paiement en ligne",
+          "Réflexion produit sur l'expérience utilisateur et parcours d'achat",
+          "Capacité à prendre des décisions techniques orientées valeur produit",
+        ],
+      },
+      tripmate: {
+        shortDescription: "Application mobile de voyage collaborative",
+        context: "TripMate est une application mobile permettant de créer et partager des voyages à plusieurs. Chaque voyage devient un journal collaboratif, où les participants peuvent documenter les destinations, suivre les dépenses communes et conserver une trace complète du séjour.",
+        missions: [
+          "Développement d'une application mobile complète, avec création de compte et authentification",
+          "Mise en place de la création de voyages collaboratifs, avec système d'invitation des participants",
+          "Développement d'un journal de voyage partagé, permettant d'ajouter destinations, photos, descriptions et prix",
+          "Implémentation d'un module de gestion des dépenses de type Tricount, avec calcul automatique des remboursements",
+          "Création d'une fonctionnalité d'export du voyage, pour conserver ou partager le journal après le séjour",
+          "Gestion des données temps réel pour assurer une synchronisation fluide entre les utilisateurs",
+        ],
+        learnings: [
+          "Solide expérience en développement mobile cross-platform, avec une attention particulière aux usages réels sur smartphone",
+          "Compréhension des bonnes pratiques mobiles, notamment les guidelines Apple (UX, performances, navigation, contraintes iOS/iPadOS)",
+          "Capacité à concevoir une application collaborative fluide, même avec plusieurs utilisateurs actifs en simultané",
+          "Renforcement de ma réflexion produit sur la simplicité d'usage, la clarté des fonctionnalités et la valeur apportée à l'utilisateur final",
+        ],
+      },
+      callixte: {
+        shortDescription: "Site vitrine pour danseuse professionnelle",
+        context: "Portfolio Callixte est un site vitrine destiné à une danseuse professionnelle. L'objectif est de proposer un site élégant, immersif et visuellement fort, mettant en avant son univers artistique et son identité.",
+        missions: [
+          "Conception d'un site vitrine sur-mesure, centré sur l'image et la mise en valeur du contenu",
+          "Intégration d'animations fluides pour renforcer l'immersion",
+          "Travail sur la hiérarchie visuelle, les transitions et le rythme de navigation",
+          "Développement d'un site responsive, adapté desktop et mobile",
+        ],
+        learnings: [
+          "Approfondissement de mes compétences en design web et sens du détail visuel",
+          "Capacité à traduire une identité artistique en expérience digitale cohérente",
+          "Travail sur l'esthétique, les animations et la narration visuelle, sans sur-technicité inutile",
+          "Compréhension de l'importance d'un site vitrine clair, élégant et impactant pour une marque personnelle",
+        ],
       },
       otherprojects: {
         shortDescription: "Collection de divers projets web",
-        fullDescription:
-          "Une collection de divers projets de développement web présentant différentes technologies et approches. Chaque projet démontre des compétences spécifiques et des capacités de résolution de problèmes.",
+        context: "Une collection de divers projets de développement web présentant différentes technologies et approches.",
+        missions: [
+          "Développement de divers projets web",
+        ],
+        learnings: [
+          "Chaque projet démontre des compétences spécifiques et des capacités de résolution de problèmes",
+        ],
       },
     },
   },
