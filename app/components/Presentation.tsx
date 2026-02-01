@@ -65,7 +65,7 @@ export default function Presentation() {
                   src="/images/portrait.png"
                   alt="Portrait d'Alexandre"
                   fill
-                  className="object-cover grayscale transition-[filter,transform] duration-1000 ease-in-out hover:grayscale-0"
+                  className="object-cover transition-[filter,transform] duration-1000 ease-in-out hover:grayscale"
                   onError={() => setImageError(true)}
                 />
               )}

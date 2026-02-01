@@ -75,6 +75,9 @@ export const projects: Project[] = [
     images: [
       "/images/projects/runmate.jpg",
       "/images/projects/runmate-2.jpg",
+      "/images/projects/runmate-3.jpg",
+      "/images/projects/runmate-4.jpg",
+      "/images/projects/runmate-5.jpg",
     ],
     shortDescription: "Application mobile sociale pour coureurs",
     context: "RunMate est une application mobile permettant de connecter les coureurs, organiser des sorties et créer une communauté autour de la course à pied.",
@@ -144,7 +147,7 @@ export const projects: Project[] = [
     ],
     year: "2023",
     technologies: ["Ruby on Rails", "JavaScript", "PostgreSQL", "Figma"],
-    type: "web",
+    type: "mobile",
   },
   {
     title: "Tudo Bem Maman",
@@ -180,6 +183,8 @@ export const projects: Project[] = [
       "/images/projects/tripmate.jpg",
       "/images/projects/tripmate-2.jpg",
       "/images/projects/tripmate-3.jpg",
+      "/images/projects/tripmate-4.jpg",
+      "/images/projects/tripmate-5.jpg",
     ],
     shortDescription: "Application mobile de voyage collaborative",
     context: "TripMate est une application mobile permettant de créer et partager des voyages à plusieurs. Chaque voyage devient un journal collaboratif, où les participants peuvent documenter les destinations, suivre les dépenses communes et conserver une trace complète du séjour.",

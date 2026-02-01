@@ -111,7 +111,7 @@ export default function ProjectsGrid() {
   const otherProjects = projects.slice(1);
 
   return (
-    <section id="projets" className="w-full">
+    <section id="projets" className="w-full scroll-mt-20">
       {/* Dark Header Section */}
       <div className="relative bg-black py-20 md:py-28 lg:py-32 overflow-hidden">
         {/* Background Large Number */}
