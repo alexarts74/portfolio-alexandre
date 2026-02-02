@@ -13,13 +13,83 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden bg-black">
-      {/* Video Background */}
+      {/* Mobile Background - Animated geometric design */}
+      <div className="absolute inset-0 md:hidden overflow-hidden">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-black" />
+
+        {/* Animated lines */}
+        <div className="absolute inset-0">
+          {/* Diagonal line 1 */}
+          <div
+            className="absolute w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/20 to-transparent animate-pulse"
+            style={{
+              left: '20%',
+              top: '-50%',
+              transform: 'rotate(25deg)',
+              animationDuration: '3s'
+            }}
+          />
+          {/* Diagonal line 2 */}
+          <div
+            className="absolute w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/10 to-transparent animate-pulse"
+            style={{
+              left: '60%',
+              top: '-50%',
+              transform: 'rotate(25deg)',
+              animationDuration: '4s',
+              animationDelay: '1s'
+            }}
+          />
+          {/* Diagonal line 3 */}
+          <div
+            className="absolute w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/15 to-transparent animate-pulse"
+            style={{
+              left: '85%',
+              top: '-50%',
+              transform: 'rotate(25deg)',
+              animationDuration: '3.5s',
+              animationDelay: '0.5s'
+            }}
+          />
+        </div>
+
+        {/* Floating circles */}
+        <div
+          className="absolute w-64 h-64 rounded-full border border-white/5"
+          style={{
+            right: '-5rem',
+            top: '15%',
+            animation: 'float 8s ease-in-out infinite'
+          }}
+        />
+        <div
+          className="absolute w-96 h-96 rounded-full border border-white/5"
+          style={{
+            left: '-8rem',
+            bottom: '10%',
+            animation: 'float 10s ease-in-out infinite reverse'
+          }}
+        />
+        <div
+          className="absolute w-32 h-32 rounded-full bg-white/5"
+          style={{
+            right: '20%',
+            bottom: '25%',
+            animation: 'float 6s ease-in-out infinite',
+            animationDelay: '2s'
+          }}
+        />
+
+      </div>
+
+      {/* Video Background - Desktop only */}
       <video
         autoPlay
         muted
         loop
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover hidden md:block"
       >
         <source src="/videos/header-v20.mp4" type="video/mp4" />
       </video>
