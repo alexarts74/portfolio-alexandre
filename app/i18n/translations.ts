@@ -259,6 +259,23 @@ export const translations = {
           "Understanding the importance of a clear, elegant, and impactful showcase site for a personal brand",
         ],
       },
+      mascotteocean: {
+        shortDescription: "Showcase website for restaurant in Carcans Plage",
+        context: "La Mascotte de l'Océan is a showcase website for a friendly restaurant located in Carcans Plage. The site presents the complete menu (savory, sweet, ice cream, drinks), the atmosphere of the place, and allows customers to discover the establishment before their visit.",
+        missions: [
+          "Responsive showcase website development with Next.js for smooth navigation",
+          "Creation of an elegant and refined interface highlighting the menu and products",
+          "Integration of interactive menu with savory, sweet, ice cream, and drinks sections",
+          "Mobile-first optimization for optimal user experience on all devices",
+          "Implementation of subtle animations and transitions for smooth navigation",
+        ],
+        learnings: [
+          "Experience in creating showcase websites for the restaurant sector",
+          "Mastery of web performance optimization with Next.js",
+          "Development of intuitive and attractive interfaces to showcase a commercial offer",
+          "Ability to translate the identity of a place into a coherent digital experience",
+        ],
+      },
       otherprojects: {
         shortDescription: "Collection of various web projects",
         context: "A collection of various web development projects showcasing different technologies and approaches.",
@@ -529,6 +546,23 @@ export const translations = {
           "Capacité à traduire une identité artistique en expérience digitale cohérente",
           "Travail sur l'esthétique, les animations et la narration visuelle, sans sur-technicité inutile",
           "Compréhension de l'importance d'un site vitrine clair, élégant et impactant pour une marque personnelle",
+        ],
+      },
+      mascotteocean: {
+        shortDescription: "Site vitrine pour restaurant à Carcans Plage",
+        context: "La Mascotte de l'Océan est un site vitrine pour un restaurant convivial situé à Carcans Plage. Le site présente le menu complet (salé, sucré, glaces, boissons), l'ambiance du lieu et permet aux clients de découvrir l'établissement avant leur visite.",
+        missions: [
+          "Développement d'un site vitrine responsive avec Next.js pour une navigation fluide",
+          "Création d'une interface élégante et épurée mettant en valeur le menu et les produits",
+          "Intégration de la carte interactive avec sections salé, sucré, glaces et boissons",
+          "Optimisation mobile-first pour une expérience utilisateur optimale sur tous les appareils",
+          "Mise en place d'animations subtiles et transitions pour une navigation fluide",
+        ],
+        learnings: [
+          "Expérience dans la création de sites vitrines pour le secteur de la restauration",
+          "Maîtrise de l'optimisation des performances web avec Next.js",
+          "Développement d'interfaces intuitives et attractives pour mettre en valeur une offre commerciale",
+          "Capacité à traduire l'identité d'un lieu en expérience digitale cohérente",
         ],
       },
       otherprojects: {

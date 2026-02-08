@@ -12,9 +12,35 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const [imageError, setImageError] = useState(false);
   const projectTranslations = t.projectData[project.slug as keyof typeof t.projectData];
+
+  const getProjectTypeLabel = (projectType: string) => {
+    if (locale === "fr") {
+      switch (projectType) {
+        case "professional":
+          return "CDI Professionnel";
+        case "freelance":
+          return "Freelance";
+        case "personal":
+          return "Personnel";
+        default:
+          return projectType;
+      }
+    } else {
+      switch (projectType) {
+        case "professional":
+          return "Professional";
+        case "freelance":
+          return "Freelance";
+        case "personal":
+          return "Personal";
+        default:
+          return projectType;
+      }
+    }
+  };
 
   const handleExternalLink = (e: React.MouseEvent, url: string) => {
     e.preventDefault();
@@ -112,6 +138,13 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             style={{ fontFamily: "var(--font-body)" }}
           >
             {project.type === "mobile" ? "Mobile" : "Web"}
+          </span>
+          <span className="text-neutral-300">•</span>
+          <span
+            className="text-[10px] font-light tracking-[0.2em] text-neutral-400 uppercase"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            {getProjectTypeLabel(project.projectType)}
           </span>
         </div>
         <h3

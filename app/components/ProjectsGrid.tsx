@@ -13,6 +13,32 @@ function FeaturedProject({ project }: { project: typeof projects[0] }) {
   const [imageError, setImageError] = useState(false);
   const projectTranslations = t.projectData[project.slug as keyof typeof t.projectData];
 
+  const getProjectTypeLabel = (projectType: string) => {
+    if (locale === "fr") {
+      switch (projectType) {
+        case "professional":
+          return "CDI Professionnel";
+        case "freelance":
+          return "Freelance";
+        case "personal":
+          return "Personnel";
+        default:
+          return projectType;
+      }
+    } else {
+      switch (projectType) {
+        case "professional":
+          return "Professional";
+        case "freelance":
+          return "Freelance";
+        case "personal":
+          return "Personal";
+        default:
+          return projectType;
+      }
+    }
+  };
+
   return (
     <Link href={`/projects/${project.slug}`} className="group block">
       <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
@@ -54,7 +80,7 @@ function FeaturedProject({ project }: { project: typeof projects[0] }) {
             className="text-xs font-light tracking-[0.3em] text-neutral-400 uppercase mb-3"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            {project.year} — {project.type === "mobile" ? "Mobile" : "Web"}
+            {project.year} — {project.type === "mobile" ? "Mobile" : "Web"} — {getProjectTypeLabel(project.projectType)}
           </span>
           <h3
             className="text-2xl md:text-3xl lg:text-4xl font-light tracking-wide transition-all duration-300 group-hover:tracking-wider"
@@ -108,7 +134,14 @@ export default function ProjectsGrid() {
   const { ref: gridRef, isVisible: gridVisible } = useInView({ threshold: 0.05 });
 
   const featuredProject = projects[0];
-  const otherProjects = projects.slice(1);
+  // Séparer les projets par type et trier par année (du plus récent au plus ancien)
+  const allOtherProjects = projects.slice(1);
+  const mobileProjects = allOtherProjects
+    .filter(p => p.type === "mobile")
+    .sort((a, b) => parseInt(b.year) - parseInt(a.year));
+  const webProjects = allOtherProjects
+    .filter(p => p.type === "web")
+    .sort((a, b) => parseInt(b.year) - parseInt(a.year));
 
   return (
     <section id="projets" className="w-full scroll-mt-20">
@@ -192,20 +225,55 @@ export default function ProjectsGrid() {
           <div className="h-px flex-1 bg-neutral-200" />
         </div>
 
-        {/* Other Projects Grid */}
-        <div ref={gridRef} className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-          {otherProjects.map((project, index) => (
-            <div
-              key={project.slug}
-              className={`transition-all duration-700 ${
-                gridVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-              }`}
-              style={{ transitionDelay: `${0.1 * index}s` }}
+        {/* Mobile Projects Section */}
+        {mobileProjects.length > 0 && (
+          <div className="mb-16 md:mb-20">
+            <h3
+              className="mb-6 text-xl md:text-2xl font-light tracking-wide text-neutral-700"
+              style={{ fontFamily: "var(--font-display)" }}
             >
-              <ProjectCard project={project} index={index + 1} />
+              Projets <span className="italic text-neutral-400">mobiles</span>
+            </h3>
+            <div ref={gridRef} className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+              {mobileProjects.map((project, index) => (
+                <div
+                  key={project.slug}
+                  className={`transition-all duration-700 ${
+                    gridVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                  }`}
+                  style={{ transitionDelay: `${0.1 * index}s` }}
+                >
+                  <ProjectCard project={project} index={index + 1} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        )}
+
+        {/* Web Projects Section */}
+        {webProjects.length > 0 && (
+          <div>
+            <h3
+              className="mb-6 text-xl md:text-2xl font-light tracking-wide text-neutral-700"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Projets <span className="italic text-neutral-400">web</span>
+            </h3>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+              {webProjects.map((project, index) => (
+                <div
+                  key={project.slug}
+                  className={`transition-all duration-700 ${
+                    gridVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                  }`}
+                  style={{ transitionDelay: `${0.1 * (index + mobileProjects.length)}s` }}
+                >
+                  <ProjectCard project={project} index={index + mobileProjects.length + 1} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         </div>
       </div>
     </section>
