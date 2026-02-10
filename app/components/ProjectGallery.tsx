@@ -146,7 +146,7 @@ export default function ProjectGallery({ images, title, isMobile = false }: Proj
             src={images[displayedImage]}
             alt={`${title} - Image ${displayedImage + 1}`}
             fill
-            className={`object-cover transition-all duration-500 ease-out ${
+            className={`object-cover object-top transition-all duration-500 ease-out ${
               isTransitioning ? "opacity-0 scale-[1.02]" : "opacity-100 scale-100"
             }`}
             priority

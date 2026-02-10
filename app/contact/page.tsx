@@ -123,11 +123,11 @@ export default function ContactPage() {
                     Email
                   </h3>
                   <a
-                    href="mailto:contact@alexandre-artus.com"
+                    href="mailto:artusalexandre74@gmail.com"
                     className="text-xl md:text-2xl font-light tracking-tight transition-colors hover:text-neutral-500"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    contact@alexandre-artus.com
+                    artusalexandre74@gmail.com
                   </a>
                 </div>
 
@@ -141,7 +141,7 @@ export default function ContactPage() {
                   </h3>
                   <div className="flex gap-4">
                     <a
-                      href="https://github.com/alexandreMusic"
+                      href="https://github.com/alexarts74"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex items-center gap-2 text-base font-light transition-colors hover:text-neutral-500"
@@ -153,7 +153,7 @@ export default function ContactPage() {
                       GitHub
                     </a>
                     <a
-                      href="https://linkedin.com/in/alexandre-music"
+                      href="https://www.linkedin.com/in/alexandre-artus-27a71b1a4/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex items-center gap-2 text-base font-light transition-colors hover:text-neutral-500"

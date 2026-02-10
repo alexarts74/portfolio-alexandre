@@ -132,11 +132,11 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:contact@alexandre-artus.com"
+                href="mailto:artusalexandre74@gmail.com"
                 className="text-base font-light text-white/80 transition-all duration-300 hover:text-white hover:translate-x-1"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                contact@alexandre-artus.com
+                artusalexandre74@gmail.com
               </a>
               <a
                 href="https://github.com/alexandreMusic"

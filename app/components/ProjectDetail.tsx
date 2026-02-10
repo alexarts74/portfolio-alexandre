@@ -54,7 +54,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         </div>
       </nav>
 
-      <main className="min-h-screen bg-white pt-16">
+      <main className="min-h-screen bg-white">
         {/* Hero Section - Different layout for mobile vs web */}
         {project.type === "mobile" ? (
           /* Mobile Hero - Phone mockups */
@@ -90,9 +90,22 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             </div>
           </section>
         ) : (
-          /* Web Hero - Full Width Image */
-          <section className="relative h-[50vh] md:h-[60vh] lg:h-[70vh] w-full overflow-hidden">
-            {heroError ? (
+          /* Web Hero - même mise en page que Evera (vidéo ou image + overlay) */
+          <section className="relative w-full overflow-hidden h-[70vh] md:h-[80vh] lg:h-[90vh]">
+            {project.video ? (
+              <>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                >
+                  <source src={project.video} type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden />
+              </>
+            ) : heroError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200">
                 <div
                   className="text-[20vw] font-light text-neutral-200"
@@ -102,35 +115,42 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                 </div>
               </div>
             ) : (
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover"
-                priority
-                onError={() => setHeroError(true)}
-              />
+              <>
+                <Image
+                  src={project.images?.[0] ?? project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  priority
+                  onError={() => setHeroError(true)}
+                />
+                <div className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden />
+              </>
             )}
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
           </section>
         )}
 
-        {/* Project Header */}
-        <section className={`relative z-10 ${project.type === "mobile" ? "-mt-12 md:-mt-16" : "-mt-32 md:-mt-40"}`}>
+        {/* Project Header - comme Evera : texte blanc sur hero (vidéo ou image) */}
+        <section
+          className={`relative z-10 ${
+            project.type === "mobile"
+              ? "-mt-12 md:-mt-16"
+              : "-mt-72 md:-mt-80 lg:-mt-88"
+          }`}
+        >
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
-            <div className="max-w-4xl">
+            <div className={`max-w-4xl ${project.type === "web" ? "mb-16 md:mb-20 lg:mb-24" : ""}`}>
               {/* Meta info */}
               <div className="flex items-center gap-4 mb-6">
                 <span
-                  className="text-xs font-light tracking-[0.3em] text-neutral-500 uppercase"
+                  className={`text-xs font-light tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   {project.year}
                 </span>
-                <div className="h-px w-8 bg-neutral-300" />
+                <div className={`h-px w-8 ${project.type === "web" ? "bg-white/40" : "bg-neutral-300"}`} />
                 <span
-                  className="text-xs font-light tracking-[0.3em] text-neutral-500 uppercase"
+                  className={`text-xs font-light tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   {project.type === "mobile" ? "Mobile" : "Web"}
@@ -139,7 +159,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
 
               {/* Title */}
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light tracking-tight mb-8"
+                className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light tracking-tight mb-8 ${project.type === "web" ? "text-white" : ""}`}
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 {project.title}
@@ -147,7 +167,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
 
               {/* Short Description */}
               <p
-                className="text-xl md:text-2xl lg:text-3xl font-light text-neutral-600 leading-relaxed max-w-2xl"
+                className={`text-xl md:text-2xl lg:text-3xl font-light leading-relaxed max-w-2xl ${project.type === "web" ? "text-white/95" : "text-neutral-600"}`}
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 {projectTranslations?.shortDescription || project.shortDescription}
@@ -157,7 +177,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         </section>
 
         {/* Main Content - Editorial Layout */}
-        <section className="py-16 md:py-24 lg:py-32">
+        <section className={project.type === "web" ? "pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32" : "py-16 md:py-24 lg:py-32"}>
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             {/* Context + Technologies Row */}
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20 md:mb-28">
@@ -327,7 +347,19 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             >
               {locale === "en" ? "Gallery" : "Galerie"}
             </h2>
-            <ProjectGallery images={project.images} title={project.title} isMobile={project.type === "mobile"} />
+            <ProjectGallery
+              images={
+                [
+                  ...(
+                    project.type === "web"
+                      ? (project.images.length > 1 ? project.images.slice(1) : project.images)
+                      : project.images
+                  )
+                ].reverse()
+              }
+              title={project.title}
+              isMobile={project.type === "mobile"}
+            />
           </div>
         </section>
 

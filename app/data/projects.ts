@@ -3,6 +3,7 @@ export interface Project {
   slug: string;
   image: string;
   images: string[];
+  video?: string;
   shortDescription: string;
   context: string;
   missions: string[];
@@ -20,8 +21,13 @@ export const projects: Project[] = [
     title: "Evera",
     slug: "evera",
     image: "/images/projects/evera.png",
+    video: "/images/projects/evera/complet.mp4",
     images: [
-      "/images/projects/evera.png",
+      "/images/projects/evera/dashboard.png",
+      "/images/projects/evera/gestion-flotte.png",
+      "/images/projects/evera/trajet.png",
+      "/images/projects/evera/aen.png",
+      "/images/projects/evera/reservation.png",
     ],
     shortDescription: "Plateforme SaaS de gestion de flottes de véhicules",
     context: "Evera est une solution SaaS pour les entreprises qui gèrent des flottes de véhicules. Elle centralise toutes les informations liées aux véhicules : trajets, coûts, entretiens, infractions et abonnements, pour permettre une gestion proactive et en temps réel.",
@@ -49,7 +55,9 @@ export const projects: Project[] = [
     slug: "bibbatteries",
     image: "/images/projects/bib-batteries.png",
     images: [
-      "/images/projects/bib-batteries.png",
+      "/images/projects/bib/bib-1.png",
+      "/images/projects/bib/bib-2.png",
+      "/images/projects/bib/bib-3.png",
     ],
     shortDescription: "Plateforme de gestion de stocks de batteries électriques",
     context: "Bib Batteries est une plateforme web pour centraliser la gestion des stocks de batteries électriques, permettant aux fournisseurs, partenaires et équipes internes de collaborer et d'accéder à des informations fiables.",
@@ -103,7 +111,9 @@ export const projects: Project[] = [
     slug: "workadventure",
     image: "/images/projects/workadventure.png",
     images: [
-      "/images/projects/workadventure.png",
+      "/images/projects/wa/wa-1.png",
+      "/images/projects/wa/wa-2.png",
+      "/images/projects/wa/wa-3.png",
     ],
     shortDescription: "Plateforme interactive collaborative immersive",
     context: "WorkAdventure est une plateforme immersive pour événements et expériences collaboratives en ligne, où les utilisateurs naviguent dans des espaces interactifs.",
@@ -147,7 +157,7 @@ export const projects: Project[] = [
     ],
     year: "2023",
     technologies: ["Ruby on Rails", "JavaScript", "PostgreSQL", "Figma"],
-    type: "mobile",
+    type: "web",
     projectType: "personal",
   },
   {
@@ -155,7 +165,12 @@ export const projects: Project[] = [
     slug: "tudobemmaman",
     image: "/images/projects/tudobemmaman.png",
     images: [
-      "/images/projects/tudobemmaman.png",
+      "/images/projects/tudobemmaman/homepage.png",
+      "/images/projects/tudobemmaman/clothes.png",
+      "/images/projects/tudobemmaman/unique.png",
+      "/images/projects/tudobemmaman/cart.png",
+      "/images/projects/tudobemmaman/dash-1.png",
+      "/images/projects/tudobemmaman/dash-2.png",
     ],
     shortDescription: "E-commerce pour marque de vêtements",
     context: "Boutique en ligne pour une marque de vêtements, permettant de parcourir produits, gérer panier et achats, avec un dashboard back-office pour gérer collections et ventes.",
@@ -209,7 +224,10 @@ export const projects: Project[] = [
     slug: "callixte",
     image: "/images/projects/callixte.png",
     images: [
-      "/images/projects/callixte.png",
+      "/images/projects/cal/cal-1.png",
+      "/images/projects/cal/cal-2.png",
+      "/images/projects/cal/cal-3.png",
+      "/images/projects/cal/cal-4.png",
     ],
     shortDescription: "Site vitrine pour danseuse professionnelle",
     context: "Portfolio Callixte est un site vitrine destiné à une danseuse professionnelle. L'objectif est de proposer un site élégant, immersif et visuellement fort, mettant en avant son univers artistique et son identité.",
@@ -237,6 +255,7 @@ export const projects: Project[] = [
     image: "/images/projects/mascotte.png",
     images: [
       "/images/projects/mascotte.png",
+      "/images/projects/mascotte/mascotte-ocean.png",
     ],
     shortDescription: "Site vitrine pour restaurant à Carcans Plage",
     context: "La Mascotte de l'Océan est un site vitrine pour un restaurant convivial situé à Carcans Plage. Le site présente le menu complet (salé, sucré, glaces, boissons), l'ambiance du lieu et permet aux clients de découvrir l'établissement avant leur visite.",
