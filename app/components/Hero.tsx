@@ -163,17 +163,6 @@ export default function Hero() {
               {t.hero.cta.contact}
             </a>
           </div>
-
-          {/* Scroll Indicator */}
-          <div className="hidden md:flex flex-col items-center gap-2">
-            <span
-              className="text-[10px] font-light tracking-[0.2em] text-white/40 uppercase"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              Scroll
-            </span>
-            <div className="h-8 w-px bg-gradient-to-b from-white/40 to-transparent animate-pulse" />
-          </div>
         </div>
       </div>
     </section>
