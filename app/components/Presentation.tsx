@@ -104,7 +104,7 @@ export default function Presentation() {
               className="mt-8 grid grid-cols-3 gap-4 border-t border-neutral-200 pt-8"
             >
               {[
-                { value: "3+", label: t.presentation.stats.experience },
+                { value: "2.5", label: t.presentation.stats.experience },
                 { value: "10+", label: t.presentation.stats.projects },
                 { value: "100%", label: t.presentation.stats.satisfaction },
               ].map((stat, index) => (

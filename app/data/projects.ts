@@ -6,12 +6,13 @@ export interface Project {
   video?: string;
   shortDescription: string;
   context: string;
-  missions: string[];
-  learnings: string[];
+  technical: string[];
+  features: string[];
   year: string;
   technologies: string[];
   type: "web" | "mobile";
   projectType: "professional" | "freelance" | "personal";
+  clientBenefit: string;
   liveUrl?: string;
   githubUrl?: string;
 }
@@ -31,23 +32,25 @@ export const projects: Project[] = [
     ],
     shortDescription: "Plateforme SaaS de gestion de flottes de véhicules",
     context: "Evera est une solution SaaS pour les entreprises qui gèrent des flottes de véhicules. Elle centralise toutes les informations liées aux véhicules : trajets, coûts, entretiens, infractions et abonnements, pour permettre une gestion proactive et en temps réel.",
-    missions: [
-      "Développement complet du tableau de bord principal, intégrant toutes les données véhicules, trajets, coûts et alertes",
-      "Mise en place de remontées d'alertes en temps réel via CRON jobs et scripts serveur pour prévenir immédiatement des incidents",
-      "Intégration de la télémétrie des véhicules via MQTT pour le suivi live des données",
-      "Automatisation des paiements et abonnements clients via Stripe",
-      "Conception de reportings analytiques pour optimiser la gestion de la flotte",
+    technical: [
+      "Architecture full-stack Next.js (front) + Nest.js (API) avec PostgreSQL, déployée en SaaS multi-tenant",
+      "Pipeline de données temps réel via MQTT pour la télémétrie véhicules, avec ingestion et stockage en base",
+      "CRON jobs et scripts Python côté serveur pour la détection d'anomalies et la remontée d'alertes automatiques",
+      "Intégration Stripe pour la gestion des abonnements, paiements récurrents et facturation automatisée",
+      "Reportings analytiques avec agrégation de données côté backend et visualisation côté front",
     ],
-    learnings: [
-      "Expérience full-stack avec intégration front-back-serveur en temps réel",
-      "Maîtrise de solutions techniques pour des besoins produits complexes",
-      "Capacité à penser produit, prioriser les fonctionnalités et proposer des alertes et reportings pertinents pour l'utilisateur final",
-      "Renforcement de ma vision produit-technique, combinant backend, front-end et automatisation serveur",
+    features: [
+      "Dashboard centralisé avec vue temps réel sur la flotte : trajets, coûts, entretiens, infractions",
+      "Système d'alertes proactif notifiant les incidents avant qu'ils ne deviennent critiques",
+      "Suivi live des véhicules via télémétrie MQTT avec historique des trajets",
+      "Gestion automatisée des abonnements et paiements clients",
+      "Reportings et KPIs pour optimiser les coûts d'exploitation de la flotte",
     ],
     year: "2026",
     technologies: ["Next.js", "Nest.js", "PostgreSQL", "Python", "Stripe", "MQTT"],
     type: "web",
     projectType: "professional",
+    clientBenefit: "Réduction significative des coûts d'exploitation de la flotte grâce au suivi centralisé des trajets, entretiens et infractions. Les alertes en temps réel permettent une gestion proactive des incidents, évitant les pannes coûteuses et garantissant une disponibilité optimale des véhicules.",
     liveUrl: "https://evera.co/",
   },
   {
@@ -61,22 +64,23 @@ export const projects: Project[] = [
     ],
     shortDescription: "Plateforme de gestion de stocks de batteries électriques",
     context: "Bib Batteries est une plateforme web pour centraliser la gestion des stocks de batteries électriques, permettant aux fournisseurs, partenaires et équipes internes de collaborer et d'accéder à des informations fiables.",
-    missions: [
-      "Développement d'un dashboard interactif pour visualiser stocks, état des batteries et garanties",
-      "Mise en place de scripts de synchronisation automatiques avec Notion pour actualiser les données sans intervention manuelle",
-      "Création de rapports dynamiques pour le suivi de l'état des batteries et la gestion des locations",
-      "Gestion des droits d'accès multi-utilisateurs pour adapter les vues selon les rôles",
+    technical: [
+      "Frontend React avec backend Python et base PostgreSQL pour la gestion des données batteries",
+      "Synchronisation automatisée bidirectionnelle avec l'API Notion pour maintenir les données à jour sans intervention",
+      "Système de rôles et permissions multi-utilisateurs (fournisseurs, partenaires, équipes internes)",
+      "Scripts serveur Python pour l'automatisation des imports/exports et la génération de rapports",
     ],
-    learnings: [
-      "Approche produit centrée utilisateur, en concevant des dashboards adaptés à différents rôles",
-      "Développement de logiques serveur et automatisation, pour simplifier des processus manuels",
-      "Capacité à résoudre des problèmes multi-utilisateurs, en garantissant cohérence et sécurité des données",
-      "Renforcement de ma vision full-stack et produit, en combinant front interactif et backend robuste",
+    features: [
+      "Dashboard interactif avec visualisation des stocks, état des batteries et suivi des garanties",
+      "Synchronisation automatique des données avec Notion en temps réel",
+      "Rapports dynamiques pour le suivi des batteries et la gestion des locations",
+      "Vues personnalisées selon le rôle de l'utilisateur (fournisseur, partenaire, admin)",
     ],
-    year: "2025",
+    year: "2024 - 2025",
     technologies: ["React", "Python", "PostgreSQL", "Notion API"],
     type: "web",
     projectType: "professional",
+    clientBenefit: "Gain de temps considérable sur la gestion des stocks grâce à la synchronisation automatisée et un dashboard centralisé. Fournisseurs, partenaires et équipes internes accèdent à des données fiables et à jour sans intervention manuelle, réduisant les erreurs et améliorant la prise de décision.",
     liveUrl: "https://bib-batteries.com/",
   },
   {
@@ -84,27 +88,37 @@ export const projects: Project[] = [
     slug: "runmate",
     image: "/images/projects/runmate.png",
     images: [
-      "/images/projects/runmate.png",
+      "/images/projects/runmate/runmate_1.png",
+      "/images/projects/runmate/runmate_2.png",
+      "/images/projects/runmate/runmate_3.png",
+      "/images/projects/runmate/runmate_4.png",
+      "/images/projects/runmate/runmate_5.png",
+      "/images/projects/runmate/runmate_6.png",
+      "/images/projects/runmate/runmate_7.png",
     ],
-    shortDescription: "Application mobile sociale pour coureurs",
-    context: "RunMate est une application mobile permettant de connecter les coureurs, organiser des sorties et créer une communauté autour de la course à pied.",
-    missions: [
-      "Développement complet de l'interface mobile en React Native et NativeWind",
-      "Création du backend en Ruby on Rails, incluant gestion utilisateurs, profils, groupes, événements et messagerie interne",
-      "Mise en place de notifications push et messagerie en temps réel",
-      "Conception d'un système de gestion des disponibilités des coureurs",
-      "Intégration de statistiques et suivi d'objectifs pour motiver les utilisateurs",
+    shortDescription: "Application mobile de matching intelligent entre coureurs",
+    context: "RunMate est une application mobile communautaire qui connecte les coureurs grâce à un système de matching intelligent. L'application analyse le profil de chaque utilisateur — allure, distance, objectifs, préférences sociales et localisation — pour proposer des matchs classés par score de compatibilité. Au-delà du matching, RunMate offre un écosystème complet : groupes de course, événements, messagerie temps réel et calendrier de courses officielles.",
+    technical: [
+      "Application mobile React Native + Expo SDK 54 avec TypeScript et NativeWind, animations Reanimated (spring, glow, scale)",
+      "API REST Ruby on Rails 7.1 avec 14 controllers, 14 modèles ActiveRecord et authentification Devise + Bearer token",
+      "Algorithme de matching multi-critères avec scoring pondéré : profil Performance (proximité 35%, objectifs 35%, allure 20%) et profil Chill (proximité 60%, social 30%)",
+      "Système de notifications push intelligentes avec regroupement et envoi différé, deep linking vers l'écran concerné",
+      "Intégration Stripe React Native pour l'abonnement Premium avec gestion des souscriptions et paiements",
+      "Géolocalisation via Expo Location et Geocoder (Haversine) pour la découverte de coureurs, groupes et événements à proximité",
     ],
-    learnings: [
-      "Expérience dans la conception produit centrée utilisateur, pour répondre aux besoins de motivation et socialisation",
-      "Développement de solutions techniques temps réel, comme messagerie et notifications",
-      "Coordination front-end et backend mobile pour une expérience fluide",
-      "Réflexion sur la valeur fonctionnelle et la priorisation des fonctionnalités",
+    features: [
+      "Matching intelligent par swipe avec scoring de compatibilité multi-critères et filtres avancés (distance, âge, allure, fréquence)",
+      "Double profil coureur : Performance (allure cible, km hebdomadaire, objectifs marathon/trail) ou Chill (distance, créneau préféré, activités post-run)",
+      "Groupes de course avec système d'adhésion en 2 étapes (demande puis validation admin), chat de groupe et gestion des rôles",
+      "Événements avec inscription, capacité maximale, niveaux de difficulté et découverte par géolocalisation",
+      "Messagerie privée et de groupe avec indicateurs de messages non lus en temps réel",
+      "Calendrier de courses officielles agrégées depuis Finishers.com avec recherche et filtrage",
     ],
     year: "2025",
-    technologies: ["React Native", "Expo", "NativeWind", "Ruby on Rails", "PostgreSQL"],
+    technologies: ["React Native", "Expo", "TypeScript", "NativeWind", "Ruby on Rails", "PostgreSQL", "Stripe"],
     type: "mobile",
     projectType: "personal",
+    clientBenefit: "Une solution de mise en relation entre coureurs qui va au-delà du simple réseau social. Le système de double profil (Performance / Chill) garantit des matchs pertinents selon les objectifs de chacun, tandis que l'écosystème complet — groupes, événements, messagerie — fédère une communauté engagée autour de la course à pied.",
   },
   {
     title: "WorkAdventure",
@@ -117,22 +131,23 @@ export const projects: Project[] = [
     ],
     shortDescription: "Plateforme interactive collaborative immersive",
     context: "WorkAdventure est une plateforme immersive pour événements et expériences collaboratives en ligne, où les utilisateurs naviguent dans des espaces interactifs.",
-    missions: [
-      "Refonte UI/UX pour améliorer la navigation et l'expérience utilisateur",
-      "Développement de popups interactifs et gestion caméra pour enrichir l'interaction",
-      "Création d'un outil CLI pour permettre aux partenaires de publier facilement leurs cartes",
-      "Automatisation du déploiement des cartes interactives via GitHub Actions",
+    technical: [
+      "Frontend Svelte avec TypeScript pour une UI réactive et performante dans des espaces interactifs",
+      "Outil CLI custom en TypeScript permettant aux partenaires de publier leurs cartes en autonomie",
+      "Pipeline CI/CD via GitHub Actions pour le déploiement automatisé des cartes interactives",
+      "Architecture modulaire de cartes réutilisables avec gestion avancée de la caméra et des popups",
     ],
-    learnings: [
-      "Expérience très technique, avec création d'outils CLI et workflows automatisés pour partenaires",
-      "Maîtrise de l'architecture frontend complexe, pour gérer des interactions avancées et cartes modulaires",
-      "Optimisation de la performance et la scalabilité pour des espaces interactifs réutilisables",
-      "Développement de compétences en CI/CD et automatisation de déploiement",
+    features: [
+      "Espaces interactifs immersifs où les utilisateurs naviguent en temps réel",
+      "Popups interactifs et contrôle caméra pour enrichir l'expérience collaborative",
+      "CLI de publication pour que les partenaires déploient leurs cartes sans dépendance technique",
+      "Déploiement automatisé des cartes via GitHub Actions",
     ],
     year: "2023",
     technologies: ["Svelte", "TypeScript", "Tailwind CSS", "GitHub Actions"],
     type: "web",
     projectType: "professional",
+    clientBenefit: "Une expérience plus immersive et engageante pour les participants aux événements, générant des taux d'interaction plus élevés. Les partenaires peuvent également publier et déployer leurs propres cartes interactives en autonomie, accélérant la mise en ligne de contenus sans dépendance technique.",
     liveUrl: "https://workadventu.re/fr/",
   },
   {
@@ -144,21 +159,21 @@ export const projects: Project[] = [
     ],
     shortDescription: "Guide d'achat de matériel de surf personnalisé",
     context: "The Surf Course est une application web qui guide les surfeurs débutants dans le choix de leur matériel selon niveau, taille et conditions de pratique.",
-    missions: [
-      "Développement d'un parcours interactif avec recommandations personnalisées",
-      "Implémentation d'un algorithme de matching produit/utilisateur",
-      "Optimisation de l'interface pour une navigation fluide sur smartphones et tablettes",
+    technical: [
+      "Application Ruby on Rails full-stack avec PostgreSQL et JavaScript côté client",
+      "Algorithme de matching multicritères (niveau, taille, conditions) pour les recommandations produit",
+      "Interface responsive mobile-first optimisée pour smartphones et tablettes",
     ],
-    learnings: [
-      "Réflexion produit autour de la personnalisation et recommandations",
-      "Capacité à traduire des contraintes utilisateurs en algorithmes simples et efficaces",
-      "Amélioration de l'UX mobile et navigation fluide",
-      "Priorisation des fonctionnalités pour maximiser la valeur utilisateur",
+    features: [
+      "Parcours interactif guidé qui adapte les recommandations au profil du surfeur",
+      "Système de recommandation personnalisé basé sur le niveau, la morphologie et les conditions de pratique",
+      "Fiches produit détaillées avec comparaison et aide à la décision",
     ],
     year: "2023",
     technologies: ["Ruby on Rails", "JavaScript", "PostgreSQL", "Figma"],
     type: "web",
     projectType: "personal",
+    clientBenefit: "Les surfeurs débutants peuvent choisir en toute confiance l'équipement adapté à leur niveau, leur taille et leurs conditions de pratique. Le système de recommandation personnalisé élimine les hésitations et réduit le risque d'erreurs d'achat coûteuses.",
   },
   {
     title: "Tudo Bem Maman",
@@ -174,50 +189,55 @@ export const projects: Project[] = [
     ],
     shortDescription: "E-commerce pour marque de vêtements",
     context: "Boutique en ligne pour une marque de vêtements, permettant de parcourir produits, gérer panier et achats, avec un dashboard back-office pour gérer collections et ventes.",
-    missions: [
-      "Développement du catalogue produits et panier, avec navigation fluide",
-      "Intégration d'un système de paiement sécurisé via Stripe",
-      "Création du dashboard back-office pour gérer produits, stocks et ventes",
-      "Optimisation de l'interface responsive pour desktop et mobile",
+    technical: [
+      "Application Ruby on Rails monolithique avec PostgreSQL et intégration Stripe pour les paiements",
+      "Architecture MVC avec séparation front boutique / back-office administration",
+      "Intégration Stripe sécurisée pour le traitement des paiements et la gestion des commandes",
+      "Interface responsive avec design mobile-first et optimisation des performances",
     ],
-    learnings: [
-      "Maîtrise de la conception d'une application e-commerce complète, du front au back",
-      "Développement de solutions techniques robustes pour la gestion et paiement en ligne",
-      "Réflexion produit sur l'expérience utilisateur et parcours d'achat",
-      "Capacité à prendre des décisions techniques orientées valeur produit",
+    features: [
+      "Catalogue produits avec navigation par collections, filtres et recherche",
+      "Panier d'achat complet avec gestion des quantités et paiement sécurisé via Stripe",
+      "Dashboard back-office pour gérer produits, stocks, collections et suivi des ventes",
+      "Interface responsive adaptée desktop et mobile avec parcours d'achat fluide",
     ],
     year: "2023",
     technologies: ["Ruby on Rails", "JavaScript", "PostgreSQL", "Stripe"],
     type: "web",
     projectType: "personal",
+    clientBenefit: "Un nouveau canal de vente en ligne avec un parcours d'achat fluide qui favorise les conversions et fait croître le chiffre d'affaires. Le dashboard back-office donne à la marque une autonomie totale pour gérer produits, stocks et collections sans aucune dépendance technique.",
   },
   {
     title: "TripMate",
     slug: "tripmate",
     image: "/images/projects/travelmate.png",
     images: [
-      "/images/projects/travelmate.png",
+      "/images/projects/tripmate/tripmate_1.png",
+      "/images/projects/tripmate/tripmate_2.png",
+      "/images/projects/tripmate/tripmate_3.png",
+      "/images/projects/tripmate/tripmate_4.png",
+      "/images/projects/tripmate/tripmate_5.png",
     ],
     shortDescription: "Application mobile de voyage collaborative",
     context: "TripMate est une application mobile permettant de créer et partager des voyages à plusieurs. Chaque voyage devient un journal collaboratif, où les participants peuvent documenter les destinations, suivre les dépenses communes et conserver une trace complète du séjour.",
-    missions: [
-      "Développement d'une application mobile complète, avec création de compte et authentification",
-      "Mise en place de la création de voyages collaboratifs, avec système d'invitation des participants",
-      "Développement d'un journal de voyage partagé, permettant d'ajouter destinations, photos, descriptions et prix",
-      "Implémentation d'un module de gestion des dépenses de type Tricount, avec calcul automatique des remboursements",
-      "Création d'une fonctionnalité d'export du voyage, pour conserver ou partager le journal après le séjour",
-      "Gestion des données temps réel pour assurer une synchronisation fluide entre les utilisateurs",
+    technical: [
+      "Application mobile React Native + Expo avec TypeScript, ciblant iOS et Android",
+      "Backend Firebase (Auth, Firestore, Storage) pour l'authentification, les données temps réel et le stockage de médias",
+      "Synchronisation temps réel via Firestore pour la collaboration multi-utilisateurs simultanée",
+      "Architecture modulaire : journal de voyage, gestion des dépenses, export, le tout en composants réutilisables",
     ],
-    learnings: [
-      "Solide expérience en développement mobile cross-platform, avec une attention particulière aux usages réels sur smartphone",
-      "Compréhension des bonnes pratiques mobiles, notamment les guidelines Apple (UX, performances, navigation, contraintes iOS/iPadOS)",
-      "Capacité à concevoir une application collaborative fluide, même avec plusieurs utilisateurs actifs en simultané",
-      "Renforcement de ma réflexion produit sur la simplicité d'usage, la clarté des fonctionnalités et la valeur apportée à l'utilisateur final",
+    features: [
+      "Création de voyages collaboratifs avec système d'invitation des participants",
+      "Journal de voyage partagé : destinations, photos, descriptions et prix",
+      "Module de gestion des dépenses type Tricount avec calcul automatique des remboursements",
+      "Export du voyage complet pour conserver ou partager le journal après le séjour",
+      "Synchronisation temps réel entre tous les participants du voyage",
     ],
     year: "2025",
     technologies: ["React Native", "Expo", "TypeScript", "Firebase"],
     type: "mobile",
     projectType: "personal",
+    clientBenefit: "Simplifie toute l'expérience de voyage en groupe — de la planification des destinations ensemble au partage équitable des dépenses avec calcul automatique des remboursements. Les participants conservent un journal de voyage collaboratif qu'ils peuvent exporter et partager comme souvenir durable du séjour.",
   },
   {
     title: "Portfolio Callixte",
@@ -231,22 +251,23 @@ export const projects: Project[] = [
     ],
     shortDescription: "Site vitrine pour danseuse professionnelle",
     context: "Portfolio Callixte est un site vitrine destiné à une danseuse professionnelle. L'objectif est de proposer un site élégant, immersif et visuellement fort, mettant en avant son univers artistique et son identité.",
-    missions: [
-      "Conception d'un site vitrine sur-mesure, centré sur l'image et la mise en valeur du contenu",
-      "Intégration d'animations fluides pour renforcer l'immersion",
-      "Travail sur la hiérarchie visuelle, les transitions et le rythme de navigation",
-      "Développement d'un site responsive, adapté desktop et mobile",
+    technical: [
+      "Site Next.js avec TypeScript et Tailwind CSS, optimisé pour les performances et le SEO",
+      "Animations CSS et transitions fluides pour une navigation immersive",
+      "Architecture statique (SSG) pour un chargement instantané et un hébergement simple",
+      "Design responsive mobile-first avec attention particulière à la hiérarchie visuelle",
     ],
-    learnings: [
-      "Approfondissement de mes compétences en design web et sens du détail visuel",
-      "Capacité à traduire une identité artistique en expérience digitale cohérente",
-      "Travail sur l'esthétique, les animations et la narration visuelle, sans sur-technicité inutile",
-      "Compréhension de l'importance d'un site vitrine clair, élégant et impactant pour une marque personnelle",
+    features: [
+      "Site vitrine immersif centré sur l'image et l'univers artistique de la danseuse",
+      "Animations fluides et transitions soignées renforçant l'expérience visuelle",
+      "Navigation rythmée avec hiérarchie visuelle travaillée pour guider le visiteur",
+      "Interface responsive adaptée desktop et mobile",
     ],
     year: "2026",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
     type: "web",
-    projectType: "personal",
+    projectType: "freelance",
+    clientBenefit: "Une présence en ligne marquante qui reflète son identité artistique et la distingue des autres danseuses. Le site immersif et visuel renforce son image professionnelle et permet aux directeurs de casting et organisateurs d'événements de découvrir facilement son travail.",
     liveUrl: "https://callixte-portfolio.netlify.app/",
   },
   {
@@ -259,23 +280,24 @@ export const projects: Project[] = [
     ],
     shortDescription: "Site vitrine pour restaurant à Carcans Plage",
     context: "La Mascotte de l'Océan est un site vitrine pour un restaurant convivial situé à Carcans Plage. Le site présente le menu complet (salé, sucré, glaces, boissons), l'ambiance du lieu et permet aux clients de découvrir l'établissement avant leur visite.",
-    missions: [
-      "Développement d'un site vitrine responsive avec Next.js pour une navigation fluide",
-      "Création d'une interface élégante et épurée mettant en valeur le menu et les produits",
-      "Intégration de la carte interactive avec sections salé, sucré, glaces et boissons",
-      "Optimisation mobile-first pour une expérience utilisateur optimale sur tous les appareils",
-      "Mise en place d'animations subtiles et transitions pour une navigation fluide",
+    technical: [
+      "Site Next.js avec TypeScript et Tailwind CSS, architecture statique pour des performances optimales",
+      "Approche mobile-first avec optimisation des images et lazy loading",
+      "Animations CSS subtiles et transitions pour une navigation fluide",
+      "Déploiement sur Netlify avec CI/CD automatisé",
     ],
-    learnings: [
-      "Expérience dans la création de sites vitrines pour le secteur de la restauration",
-      "Maîtrise de l'optimisation des performances web avec Next.js",
-      "Développement d'interfaces intuitives et attractives pour mettre en valeur une offre commerciale",
-      "Capacité à traduire l'identité d'un lieu en expérience digitale cohérente",
+    features: [
+      "Présentation du restaurant avec mise en valeur de l'ambiance et du lieu",
+      "Carte interactive organisée par sections : salé, sucré, glaces et boissons",
+      "Interface épurée et élégante mettant en avant les produits et le menu",
+      "Navigation fluide avec animations subtiles et transitions soignées",
+      "Site responsive optimisé pour tous les appareils",
     ],
     year: "2025",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
     type: "web",
     projectType: "freelance",
+    clientBenefit: "Une meilleure visibilité en ligne qui permet aux futurs clients de découvrir le restaurant, parcourir la carte complète et ressentir l'ambiance du lieu avant de s'y rendre. Une vitrine digitale soignée qui inspire confiance et génère du trafic vers Carcans Plage.",
     liveUrl: "https://mascotte-ocean.netlify.app/fr",
   },
 ];

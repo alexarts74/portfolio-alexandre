@@ -263,6 +263,26 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               </div>
             </div>
 
+            {/* Client Benefit */}
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20 md:mb-28">
+              <div className="lg:col-span-4">
+                <h2
+                  className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {t.projectDetails.clientBenefit}
+                </h2>
+              </div>
+              <div className="lg:col-span-8">
+                <p
+                  className="text-lg md:text-xl font-light leading-[1.8] text-neutral-700"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {projectTranslations?.clientBenefit || project.clientBenefit}
+                </p>
+              </div>
+            </div>
+
             {/* Separator */}
             <div className="w-24 h-px bg-neutral-200 mb-20 md:mb-28" />
 
@@ -273,12 +293,12 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                   className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  {locale === "en" ? "Missions" : "Missions"}
+                  {locale === "en" ? "Technical" : "Technique"}
                 </h2>
               </div>
               <div className="lg:col-span-8">
                 <ul className="space-y-6">
-                  {(projectTranslations?.missions || project.missions).map((mission, index) => (
+                  {(projectTranslations?.technical || project.technical).map((item, index) => (
                     <li
                       key={index}
                       className="flex items-baseline gap-6 group"
@@ -293,7 +313,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                         className="text-base md:text-lg font-light leading-relaxed text-neutral-700 group-hover:text-neutral-900 transition-colors"
                         style={{ fontFamily: "var(--font-body)" }}
                       >
-                        {mission}
+                        {item}
                       </p>
                     </li>
                   ))}
@@ -313,12 +333,12 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                   className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  {locale === "en" ? "What I learned" : "Ce que cela m'a apporté"}
+                  {locale === "en" ? "Features" : "Fonctionnalités"}
                 </h2>
               </div>
               <div className="lg:col-span-8">
                 <ul className="space-y-6">
-                  {(projectTranslations?.learnings || project.learnings).map((learning, index) => (
+                  {(projectTranslations?.features || project.features).map((feature, index) => (
                     <li
                       key={index}
                       className="flex items-start gap-4 group"
@@ -328,7 +348,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                         className="text-base md:text-lg font-light leading-relaxed text-neutral-600 group-hover:text-neutral-800 transition-colors"
                         style={{ fontFamily: "var(--font-body)" }}
                       >
-                        {learning}
+                        {feature}
                       </p>
                     </li>
                   ))}
