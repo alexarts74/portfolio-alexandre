@@ -7,7 +7,16 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -25,12 +34,22 @@ export default function Navigation() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "bg-white border-b border-neutral-200"
+            : "bg-transparent"
+        }`}
       >
         <div className="mx-6 flex items-center justify-between py-5 md:mx-12 md:py-6 lg:mx-16 xl:mx-24">
           <Link
             href="/"
-            className="text-sm font-light tracking-[0.3em] uppercase transition-colors text-white hover:opacity-60 z-50"
+            className={`text-sm font-light tracking-[0.3em] uppercase transition-colors duration-500 z-50 ${
+              isMenuOpen
+                ? "text-white hover:opacity-60"
+                : isScrolled
+                  ? "text-neutral-900 hover:text-neutral-500"
+                  : "text-white hover:opacity-60"
+            }`}
             onClick={closeMenu}
             style={{ fontFamily: "var(--font-display)" }}
           >
@@ -41,33 +60,53 @@ export default function Navigation() {
           <div className="hidden md:flex items-center gap-8">
             <Link
               href="#projets"
-              className="text-xs font-light tracking-[0.2em] uppercase transition-colors text-white/60 hover:text-white"
+              className={`text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
+                isScrolled
+                  ? "text-neutral-400 hover:text-neutral-900"
+                  : "text-white/60 hover:text-white"
+              }`}
               style={{ fontFamily: "var(--font-body)" }}
             >
               {t.nav.projects}
             </Link>
             <Link
               href="#skills"
-              className="text-xs font-light tracking-[0.2em] uppercase transition-colors text-white/60 hover:text-white"
+              className={`text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
+                isScrolled
+                  ? "text-neutral-400 hover:text-neutral-900"
+                  : "text-white/60 hover:text-white"
+              }`}
               style={{ fontFamily: "var(--font-body)" }}
             >
               {t.nav.skills}
             </Link>
             <Link
               href="#about"
-              className="text-xs font-light tracking-[0.2em] uppercase transition-colors text-white/60 hover:text-white"
+              className={`text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
+                isScrolled
+                  ? "text-neutral-400 hover:text-neutral-900"
+                  : "text-white/60 hover:text-white"
+              }`}
               style={{ fontFamily: "var(--font-body)" }}
             >
               {t.nav.about}
             </Link>
             <Link
               href="/contact"
-              className="text-xs font-light tracking-[0.2em] uppercase transition-colors text-white/60 hover:text-white"
+              className={`text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
+                isScrolled
+                  ? "text-neutral-400 hover:text-neutral-900"
+                  : "text-white/60 hover:text-white"
+              }`}
               style={{ fontFamily: "var(--font-body)" }}
             >
               {t.nav.contact}
             </Link>
-            <LanguageSwitcher className="text-white/60" />
+            <LanguageSwitcher
+              className={`transition-colors duration-500 ${
+                isScrolled ? "text-neutral-400" : "text-white/60"
+              }`}
+            />
           </div>
 
           {/* Mobile Menu Button */}
@@ -81,21 +120,27 @@ export default function Navigation() {
               className={`block h-[1px] w-full transition-all duration-300 origin-center ${
                 isMenuOpen
                   ? "bg-white rotate-45 translate-y-[9px]"
-                  : "bg-white"
+                  : isScrolled
+                    ? "bg-neutral-900"
+                    : "bg-white"
               }`}
             />
             <span
               className={`block h-[1px] w-full transition-all duration-300 ${
                 isMenuOpen
                   ? "bg-white opacity-0"
-                  : "bg-white"
+                  : isScrolled
+                    ? "bg-neutral-900"
+                    : "bg-white"
               }`}
             />
             <span
               className={`block h-[1px] w-full transition-all duration-300 origin-center ${
                 isMenuOpen
                   ? "bg-white -rotate-45 -translate-y-[9px]"
-                  : "bg-white"
+                  : isScrolled
+                    ? "bg-neutral-900"
+                    : "bg-white"
               }`}
             />
           </button>
