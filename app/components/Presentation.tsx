@@ -105,8 +105,8 @@ export default function Presentation() {
             >
               {[
                 { value: "3+", label: t.presentation.stats.experience },
-                { value: "20+", label: t.presentation.stats.projects },
-                { value: "15+", label: t.presentation.stats.technologies },
+                { value: "10+", label: t.presentation.stats.projects },
+                { value: "100%", label: t.presentation.stats.satisfaction },
               ].map((stat, index) => (
                 <div
                   key={stat.label}

@@ -72,10 +72,10 @@ export default function ContactPage() {
 
       <main className="h-screen bg-white pt-16 flex flex-col overflow-hidden">
         {/* Hero Section */}
-        <section className="py-6 md:py-8 shrink-0">
+        <section className="pt-6 md:pt-8 pb-10 md:pb-16 shrink-0">
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             {/* Section Header */}
-            <div className="mb-4 flex items-center gap-4">
+            <div className="mb-10 md:mb-14 flex items-center gap-4">
               <span
                 className="shrink-0 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
                 style={{ fontFamily: "var(--font-body)" }}

@@ -36,7 +36,7 @@ export const translations = {
       stats: {
         experience: "Years of exp.",
         projects: "Projects",
-        technologies: "Technologies",
+        satisfaction: "Client satisfaction",
       },
     },
     // Projects
@@ -325,7 +325,7 @@ export const translations = {
       stats: {
         experience: "Années d'exp.",
         projects: "Projets",
-        technologies: "Technologies",
+        satisfaction: "Satisfaction client",
       },
     },
     // Projects
