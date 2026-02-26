@@ -13,74 +13,60 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden bg-black">
-      {/* Mobile Background - Animated geometric design */}
-      <div className="absolute inset-0 md:hidden overflow-hidden">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-black" />
-
-        {/* Animated lines */}
-        <div className="absolute inset-0">
-          {/* Diagonal line 1 */}
-          <div
-            className="absolute w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/20 to-transparent animate-pulse"
-            style={{
-              left: '20%',
-              top: '-50%',
-              transform: 'rotate(25deg)',
-              animationDuration: '3s'
-            }}
-          />
-          {/* Diagonal line 2 */}
-          <div
-            className="absolute w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/10 to-transparent animate-pulse"
-            style={{
-              left: '60%',
-              top: '-50%',
-              transform: 'rotate(25deg)',
-              animationDuration: '4s',
-              animationDelay: '1s'
-            }}
-          />
-          {/* Diagonal line 3 */}
-          <div
-            className="absolute w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/15 to-transparent animate-pulse"
-            style={{
-              left: '85%',
-              top: '-50%',
-              transform: 'rotate(25deg)',
-              animationDuration: '3.5s',
-              animationDelay: '0.5s'
-            }}
-          />
-        </div>
-
-        {/* Floating circles */}
+      {/* Mobile/Tablet Background - Aurora blobs */}
+      <div className="absolute inset-0 md:hidden overflow-hidden bg-[#050510]">
+        {/* Blob 1 - blue top right */}
         <div
-          className="absolute w-64 h-64 rounded-full border border-white/5"
+          className="absolute rounded-full blur-[80px]"
           style={{
-            right: '-5rem',
-            top: '15%',
-            animation: 'float 8s ease-in-out infinite'
+            width: '80vw',
+            height: '80vw',
+            background: '#1a3f6f',
+            opacity: 0.6,
+            top: '-20%',
+            right: '-20%',
+            animation: 'blobMove1 14s ease-in-out infinite',
           }}
         />
+        {/* Blob 2 - purple center left */}
         <div
-          className="absolute w-96 h-96 rounded-full border border-white/5"
+          className="absolute rounded-full blur-[80px]"
           style={{
-            left: '-8rem',
-            bottom: '10%',
-            animation: 'float 10s ease-in-out infinite reverse'
+            width: '90vw',
+            height: '90vw',
+            background: '#4a1a6b',
+            opacity: 0.5,
+            top: '20%',
+            left: '-30%',
+            animation: 'blobMove2 18s ease-in-out infinite',
           }}
         />
+        {/* Blob 3 - teal bottom */}
         <div
-          className="absolute w-32 h-32 rounded-full bg-white/5"
+          className="absolute rounded-full blur-[80px]"
           style={{
-            right: '20%',
-            bottom: '25%',
-            animation: 'float 6s ease-in-out infinite',
-            animationDelay: '2s'
+            width: '70vw',
+            height: '70vw',
+            background: '#0f4f5c',
+            opacity: 0.55,
+            bottom: '-15%',
+            right: '-10%',
+            animation: 'blobMove3 16s ease-in-out infinite',
           }}
         />
-
+        {/* Blob 4 - indigo accent */}
+        <div
+          className="absolute rounded-full blur-[60px]"
+          style={{
+            width: '50vw',
+            height: '50vw',
+            background: '#2a1a5e',
+            opacity: 0.5,
+            top: '50%',
+            left: '20%',
+            animation: 'blobMove1 20s ease-in-out infinite reverse',
+          }}
+        />
       </div>
 
       {/* Video Background - Desktop only */}
