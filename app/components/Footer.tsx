@@ -1,33 +1,140 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/app/i18n/LanguageContext";
-import { useInView } from "@/app/hooks/useInView";
+import { gsap } from "@/app/lib/gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function Footer() {
   const { t, locale } = useLanguage();
-  const { ref: footerRef, isVisible } = useInView({ threshold: 0.1 });
+  const footerRef = useRef<HTMLElement>(null);
+  const ctaTitleRef = useRef<HTMLHeadingElement>(null);
+  const ctaButtonRef = useRef<HTMLAnchorElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const columnsRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    gsap.to(window, {
+      scrollTo: { y: 0, autoKill: false },
+      duration: 1.2,
+      ease: "power3.inOut",
+    });
   };
+
+  useGSAP(
+    () => {
+      if (!footerRef.current) return;
+
+      // --- CTA title: zoom-in ---
+      if (ctaTitleRef.current) {
+        gsap.fromTo(
+          ctaTitleRef.current,
+          { scale: 0.4, y: 60, opacity: 0 },
+          {
+            scale: 1, y: 0, opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // --- CTA button: elastic slide-up ---
+      if (ctaButtonRef.current) {
+        gsap.fromTo(
+          ctaButtonRef.current,
+          { y: 40, opacity: 0 },
+          {
+            y: 0, opacity: 1,
+            duration: 1,
+            ease: "elastic.out(1, 0.5)",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // --- Divider: scaleX from center ---
+      if (dividerRef.current) {
+        gsap.fromTo(
+          dividerRef.current,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 60%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // --- Footer columns: stagger from bottom ---
+      if (columnsRef.current) {
+        const columns = columnsRef.current.children;
+        gsap.fromTo(
+          columns,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 50%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // --- Bottom bar fade-in ---
+      if (bottomRef.current) {
+        gsap.fromTo(
+          bottomRef.current,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.6,
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 40%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+    },
+    { scope: footerRef }
+  );
 
   return (
     <footer ref={footerRef} className="w-full bg-black py-16 md:py-20 lg:py-24 text-white">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         {/* CTA Section */}
-        <div
-          className={`mb-16 text-center transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
+        <div className="mb-16 text-center">
           <h3
+            ref={ctaTitleRef}
             className="text-3xl font-light tracking-wide md:text-4xl lg:text-5xl mb-6"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {locale === "en" ? "Have a project in mind?" : "Un projet en tête ?"}
           </h3>
           <Link
+            ref={ctaButtonRef}
             href="/contact"
             className="group inline-flex items-center gap-3 border border-white/30 px-8 py-4 text-sm font-light tracking-wider text-white uppercase transition-all duration-300 hover:bg-white hover:text-black"
             style={{ fontFamily: "var(--font-body)" }}
@@ -45,17 +152,12 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="h-px w-full bg-white/10 mb-12" />
+        <div ref={dividerRef} className="h-px w-full bg-white/10 mb-12 origin-center" />
 
         {/* Main Footer Content */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-10">
+        <div ref={columnsRef} className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-10">
           {/* Brand */}
-          <div
-            className={`lg:col-span-2 transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-            style={{ transitionDelay: "0.1s" }}
-          >
+          <div className="lg:col-span-2">
             <h4
               className="text-2xl font-light tracking-[0.1em] uppercase md:text-3xl"
               style={{ fontFamily: "var(--font-display)" }}
@@ -73,12 +175,7 @@ export default function Footer() {
           </div>
 
           {/* Navigation */}
-          <div
-            className={`transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-            style={{ transitionDelay: "0.2s" }}
-          >
+          <div>
             <h4
               className="mb-4 text-sm font-light tracking-[0.2em] text-white/50 uppercase"
               style={{ fontFamily: "var(--font-body)" }}
@@ -118,12 +215,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div
-            className={`transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-            style={{ transitionDelay: "0.3s" }}
-          >
+          <div>
             <h4
               className="mb-4 text-sm font-light tracking-[0.2em] text-white/50 uppercase"
               style={{ fontFamily: "var(--font-body)" }}
@@ -162,10 +254,8 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div
-          className={`mt-12 md:mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/20 pt-6 md:flex-row transition-all duration-700 ${
-            isVisible ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ transitionDelay: "0.4s" }}
+          ref={bottomRef}
+          className="mt-12 md:mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/20 pt-6 md:flex-row"
         >
           <p
             className="text-sm font-light text-white/50 tracking-wider uppercase"

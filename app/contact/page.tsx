@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLanguage } from "@/app/i18n/LanguageContext";
+import { gsap } from "@/app/lib/gsap";
+import { useGSAP } from "@gsap/react";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 
 export default function ContactPage() {
@@ -15,6 +17,158 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const mainRef = useRef<HTMLElement>(null);
+  const backLinkRef = useRef<HTMLAnchorElement>(null);
+  const headerLineRef = useRef<HTMLDivElement>(null);
+  const sectionLabelRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const contactInfoRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
+  const confirmationRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
+
+  // Entrance timeline
+  useGSAP(
+    () => {
+      if (!mainRef.current) return;
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        delay: 0.2,
+      });
+
+      // Back arrow + label slide-in from left
+      if (backLinkRef.current) {
+        tl.fromTo(
+          backLinkRef.current,
+          { opacity: 0, x: -30 },
+          { opacity: 1, x: 0, duration: 0.6 }
+        );
+      }
+
+      // Header line scale from left
+      if (headerLineRef.current) {
+        tl.fromTo(
+          headerLineRef.current,
+          { scaleX: 0, transformOrigin: "left" },
+          { scaleX: 1, duration: 0.6 },
+          "-=0.3"
+        );
+      }
+
+      // Section label fade-in
+      if (sectionLabelRef.current) {
+        tl.fromTo(
+          sectionLabelRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4 },
+          "-=0.4"
+        );
+      }
+
+      // Title words stagger slide-up
+      if (titleRef.current) {
+        const titleWords = titleRef.current.querySelectorAll(".title-word");
+        tl.fromTo(
+          titleWords,
+          { y: 50, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 },
+          "-=0.2"
+        );
+      }
+
+      // Description paragraph fade-in from bottom
+      if (descRef.current) {
+        tl.fromTo(
+          descRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          "-=0.3"
+        );
+      }
+
+      // Contact info blocks stagger
+      if (contactInfoRef.current) {
+        const blocks = contactInfoRef.current.querySelectorAll(".contact-block");
+        tl.fromTo(
+          blocks,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.12 },
+          "-=0.2"
+        );
+      }
+
+      // Form fields slide-in from right
+      if (formRef.current) {
+        const fields = formRef.current.querySelectorAll(".form-field");
+        tl.fromTo(
+          fields,
+          { opacity: 0, x: 60 },
+          { opacity: 1, x: 0, duration: 0.5, stagger: 0.1 },
+          "-=0.4"
+        );
+      }
+
+      // Submit button fade-in with scale
+      if (submitBtnRef.current) {
+        tl.fromTo(
+          submitBtnRef.current,
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
+          "-=0.2"
+        );
+      }
+
+      // Footer slide-up
+      if (footerRef.current) {
+        tl.fromTo(
+          footerRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          "-=0.3"
+        );
+      }
+    },
+    { scope: mainRef, dependencies: [] }
+  );
+
+  // Animate success transition
+  useGSAP(
+    () => {
+      if (!submitted || !confirmationRef.current) return;
+
+      gsap.fromTo(
+        confirmationRef.current,
+        { opacity: 0, scale: 0.8 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          ease: "back.out(1.7)",
+        }
+      );
+
+      // Animate checkmark SVG stroke
+      const checkPath = confirmationRef.current.querySelector(".check-path");
+      if (checkPath) {
+        const length = (checkPath as SVGPathElement).getTotalLength();
+        gsap.fromTo(
+          checkPath,
+          { strokeDasharray: length, strokeDashoffset: length },
+          {
+            strokeDashoffset: 0,
+            duration: 0.6,
+            delay: 0.3,
+            ease: "power2.out",
+          }
+        );
+      }
+    },
+    { scope: mainRef, dependencies: [submitted] }
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({
@@ -30,6 +184,16 @@ export default function ContactPage() {
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
+    // Animate form out before showing success
+    if (formRef.current) {
+      await gsap.to(formRef.current, {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        ease: "power2.in",
+      });
+    }
+
     setIsSubmitting(false);
     setSubmitted(true);
     setFormData({ name: "", email: "", subject: "", message: "" });
@@ -41,8 +205,10 @@ export default function ContactPage() {
       <nav className="fixed left-0 right-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-100">
         <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 flex justify-between items-center py-4">
           <Link
+            ref={backLinkRef}
             href="/"
             className="group flex items-center gap-3 text-neutral-600 transition-colors hover:text-black"
+            style={{ opacity: 0 }}
           >
             <svg
               width="20"
@@ -70,36 +236,48 @@ export default function ContactPage() {
         </div>
       </nav>
 
-      <main className="h-screen bg-white pt-16 flex flex-col overflow-hidden">
+      <main ref={mainRef} className="h-screen bg-white pt-16 flex flex-col overflow-hidden">
         {/* Hero Section */}
         <section className="pt-6 md:pt-8 pb-10 md:pb-16 shrink-0">
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             {/* Section Header */}
             <div className="mb-10 md:mb-14 flex items-center gap-4">
               <span
+                ref={sectionLabelRef}
                 className="shrink-0 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
-                style={{ fontFamily: "var(--font-body)" }}
+                style={{ fontFamily: "var(--font-body)", opacity: 0 }}
               >
                 {locale === "en" ? "Get in touch" : "Contact"}
               </span>
-              <div className="h-px flex-1 bg-neutral-200" />
+              <div
+                ref={headerLineRef}
+                className="h-px flex-1 bg-neutral-200"
+                style={{ transform: "scaleX(0)", transformOrigin: "left" }}
+              />
             </div>
 
             {/* Title */}
             <h1
+              ref={titleRef}
               className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-3"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              {locale === "en" ? "Let's work" : "Travaillons"}
-              {" "}
-              <span className="italic text-neutral-400">
-                {locale === "en" ? "together" : "ensemble"}
+              <span className="inline-block overflow-hidden align-top">
+                <span className="title-word inline-block" style={{ opacity: 0 }}>
+                  {locale === "en" ? "Let's" : "Travaillons"}
+                </span>
+              </span>{" "}
+              <span className="inline-block overflow-hidden align-top">
+                <span className="title-word inline-block italic text-neutral-400" style={{ opacity: 0 }}>
+                  {locale === "en" ? "work together" : "ensemble"}
+                </span>
               </span>
             </h1>
 
             <p
+              ref={descRef}
               className="max-w-xl text-base font-light text-neutral-600 leading-relaxed"
-              style={{ fontFamily: "var(--font-body)" }}
+              style={{ fontFamily: "var(--font-body)", opacity: 0 }}
             >
               {locale === "en"
                 ? "Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing together."
@@ -113,9 +291,9 @@ export default function ContactPage() {
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
               {/* Left - Contact Info */}
-              <div className="flex flex-col justify-center">
+              <div ref={contactInfoRef} className="flex flex-col justify-center">
                 {/* Email */}
-                <div className="mb-6">
+                <div className="contact-block mb-6" style={{ opacity: 0 }}>
                   <h3
                     className="mb-2 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
                     style={{ fontFamily: "var(--font-body)" }}
@@ -132,7 +310,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Social Links */}
-                <div className="mb-6">
+                <div className="contact-block mb-6" style={{ opacity: 0 }}>
                   <h3
                     className="mb-2 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
                     style={{ fontFamily: "var(--font-body)" }}
@@ -168,7 +346,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Location */}
-                <div>
+                <div className="contact-block" style={{ opacity: 0 }}>
                   <h3
                     className="mb-2 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
                     style={{ fontFamily: "var(--font-body)" }}
@@ -193,10 +371,20 @@ export default function ContactPage() {
               {/* Right - Contact Form */}
               <div>
                 {submitted ? (
-                  <div className="bg-neutral-50 p-6 text-center flex flex-col items-center justify-center h-full">
+                  <div
+                    ref={confirmationRef}
+                    className="bg-neutral-50 p-6 text-center flex flex-col items-center justify-center h-full"
+                    style={{ opacity: 0 }}
+                  >
                     <div className="w-12 h-12 mb-4 rounded-full bg-neutral-900 flex items-center justify-center">
                       <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <path
+                          className="check-path"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                     </div>
                     <h3
@@ -222,9 +410,9 @@ export default function ContactPage() {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-3">
+                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
                     {/* Name & Email Row */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="form-field grid grid-cols-2 gap-4" style={{ opacity: 0 }}>
                       <div>
                         <label
                           htmlFor="name"
@@ -267,7 +455,7 @@ export default function ContactPage() {
                     </div>
 
                     {/* Subject */}
-                    <div>
+                    <div className="form-field" style={{ opacity: 0 }}>
                       <label
                         htmlFor="subject"
                         className="block mb-1 text-xs font-light tracking-[0.2em] text-neutral-400 uppercase"
@@ -288,7 +476,7 @@ export default function ContactPage() {
                     </div>
 
                     {/* Message */}
-                    <div>
+                    <div className="form-field" style={{ opacity: 0 }}>
                       <label
                         htmlFor="message"
                         className="block mb-1 text-xs font-light tracking-[0.2em] text-neutral-400 uppercase"
@@ -310,14 +498,15 @@ export default function ContactPage() {
 
                     {/* Submit Button */}
                     <button
+                      ref={submitBtnRef}
                       type="submit"
                       disabled={isSubmitting}
                       className="group w-full bg-neutral-900 px-6 py-3 text-sm font-light tracking-wider text-white uppercase transition-all duration-300 hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                     >
                       {isSubmitting ? (
                         <>
-                          <svg className="w-5 h-5 animate-spin\" fill="none" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
@@ -345,7 +534,7 @@ export default function ContactPage() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-neutral-200 py-4 shrink-0">
+        <footer ref={footerRef} className="border-t border-neutral-200 py-4 shrink-0" style={{ opacity: 0 }}>
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 flex justify-between items-center">
             <p
               className="text-xs font-light text-neutral-400 tracking-wider uppercase"

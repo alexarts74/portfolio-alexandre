@@ -21,6 +21,7 @@ npm run lint     # Run ESLint
 - **React 19** with client components for interactivity
 - **TypeScript** with strict mode and path alias `@/*` mapping to root
 - **Tailwind CSS 4** via PostCSS plugin
+- **GSAP** (GreenSock) for all animations: scroll-triggered reveals, parallax, page transitions, mobile menu
 
 ### Project Structure
 
@@ -29,30 +30,44 @@ app/
 ├── layout.tsx           # Root layout with fonts (Cormorant Garamond + Inter)
 ├── page.tsx             # Home page assembling all sections
 ├── globals.css          # Tailwind + custom animations
-├── components/          # React components
-│   ├── Navigation.tsx   # Fixed header with mobile menu
-│   ├── Hero.tsx         # Full-screen hero section
+├── lib/
+│   └── gsap.ts          # GSAP setup (registers ScrollTrigger + ScrollToPlugin)
+├── components/
+│   ├── Navigation.tsx   # Fixed header with GSAP mobile menu (clip-path reveal)
+│   ├── Hero.tsx         # Full-screen hero with GSAP entrance + parallax
 │   ├── Presentation.tsx # About section with stats
-│   ├── ProjectsGrid.tsx # Projects showcase grid
+│   ├── ProjectsGrid.tsx # Projects showcase (horizontal scroll on desktop via GSAP)
 │   ├── ProjectCard.tsx  # Individual project card
+│   ├── ProjectDetail.tsx # Full project page with GSAP scroll animations
+│   ├── ProjectGallery.tsx # Image gallery component
 │   ├── Skills.tsx       # Skills/technologies section
-│   ├── Footer.tsx       # Footer with contact info
+│   ├── Footer.tsx       # Footer with GSAP scroll-triggered animations
+│   ├── PageTransition.tsx # GSAP page transition (fade on route change via usePathname)
+│   ├── CustomCursor.tsx # Custom cursor (desktop only)
 │   └── LanguageSwitcher.tsx
-├── hooks/
-│   └── useInView.ts     # IntersectionObserver hook for scroll animations
+├── hooks/               # (currently empty — useInView removed, replaced by GSAP ScrollTrigger)
 ├── i18n/
-│   ├── LanguageContext.tsx  # Language provider
-│   └── translations.ts      # EN/FR translations
-└── data/
-    └── projects.ts      # Project data
+│   ├── LanguageContext.tsx  # Language provider (FR/EN)
+│   └── translations.ts     # All translations
+├── data/
+│   └── projects.ts      # Project data with images, videos, tech stacks
+└── contact/
+    └── page.tsx         # Contact page with GSAP entrance animations
 ```
+
+### Animation Strategy
+
+- **GSAP is the single animation library** — do not introduce Framer Motion, CSS View Transitions API, or other animation libs
+- `app/lib/gsap.ts` registers plugins once; import `{ gsap, ScrollTrigger }` from there
+- Use `useGSAP` hook from `@gsap/react` for component-scoped animations (auto-cleanup)
+- Page transitions: `PageTransition.tsx` wraps children in layout, detects route changes via `usePathname()`, fades new page in with GSAP
+- All internal navigation uses standard `<Link>` from `next/link` — no custom TransitionLink needed
 
 ### Styling
 
 - **Fonts**: Cormorant Garamond (display) + Inter (body) via `next/font`
 - **Colors**: Minimalist black/white/neutral palette
-- **Animations**: Custom keyframes in globals.css (fadeInUp, slideIn, lineExpand, etc.)
-- **Scroll animations**: Triggered via `useInView` hook with IntersectionObserver
+- **Animations**: GSAP for all interactive/scroll animations, CSS keyframes only for simple infinite loops (scroll marquee, blob floats, cursor pulse)
 
 ### Customization
 
