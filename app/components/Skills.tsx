@@ -26,7 +26,7 @@ const skillCategories = [
   },
   {
     key: "tools",
-    skills: ["Figma", "Notion", "VS Code", "Cursor", "Linear"],
+    skills: ["Figma", "Webflow", "Notion", "VS Code", "Cursor", "Linear"],
   },
 ];
 
