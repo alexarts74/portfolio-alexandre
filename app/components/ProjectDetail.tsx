@@ -34,6 +34,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
   const separatorRef = useRef<HTMLDivElement>(null);
   const technicalSectionRef = useRef<HTMLDivElement>(null);
   const featuresSectionRef = useRef<HTMLElement>(null);
+  const gallerySectionRef = useRef<HTMLDivElement>(null);
   const nextProjectRef = useRef<HTMLElement>(null);
   const nextProjectImageRef = useRef<HTMLDivElement>(null);
 
@@ -301,14 +302,15 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         );
       }
 
-      // Technical section
+      // Technical section — pinned dramatic per-item reveal
       if (technicalSectionRef.current) {
-        const label = technicalSectionRef.current.querySelector(".section-label");
-        const items = technicalSectionRef.current.querySelectorAll(".tech-item");
+        const techLabel = technicalSectionRef.current.querySelector(".section-label");
+        const techItems = technicalSectionRef.current.querySelectorAll(".tech-item");
 
-        if (label) {
+        // Label appears before pinning
+        if (techLabel) {
           gsap.fromTo(
-            label,
+            techLabel,
             { opacity: 0, x: -30, clipPath: "inset(0 100% 0 0)" },
             {
               opacity: 1,
@@ -323,34 +325,112 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             }
           );
         }
-        if (items.length) {
-          gsap.fromTo(
-            items,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              stagger: 0.1,
-              ease: "power3.out",
+
+        if (techItems.length) {
+          mm.add("(min-width: 768px)", () => {
+            const totalItems = techItems.length;
+
+            const techTl = gsap.timeline({
               scrollTrigger: {
                 trigger: technicalSectionRef.current,
-                start: "top 75%",
+                start: "top top+=60",
+                end: `+=${totalItems * 150}`,
+                scrub: 0.5,
+                pin: true,
               },
-            }
-          );
+            });
+
+            techItems.forEach((item, i) => {
+              const number = item.querySelector(".tech-number");
+              const line = item.querySelector(".tech-line");
+              const text = item.querySelector(".tech-text");
+              // Leave 15% dead zone at start so first item is visible
+              const progress = 0.15 + (i / totalItems) * 0.85;
+
+              // Number zooms in from 3x
+              if (number) {
+                techTl.fromTo(
+                  number,
+                  { opacity: 0, scale: 3 },
+                  { opacity: 1, scale: 1, duration: 0.12, ease: "power3.out" },
+                  progress
+                );
+              }
+
+              // Line draws in
+              if (line) {
+                techTl.fromTo(
+                  line,
+                  { scaleX: 0 },
+                  { scaleX: 1, duration: 0.08, ease: "power2.out" },
+                  progress + 0.04
+                );
+              }
+
+              // Text clip-path wipe
+              if (text) {
+                techTl.fromTo(
+                  text,
+                  { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+                  { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.1, ease: "power2.out" },
+                  progress + 0.06
+                );
+              }
+            });
+          });
+
+          // Mobile: simple stagger, no pin
+          mm.add("(max-width: 767px)", () => {
+            techItems.forEach((item) => {
+              const number = item.querySelector(".tech-number");
+              const line = item.querySelector(".tech-line");
+              const text = item.querySelector(".tech-text");
+
+              const itemTl = gsap.timeline({
+                scrollTrigger: {
+                  trigger: item,
+                  start: "top 85%",
+                  toggleActions: "play none none none",
+                },
+              });
+
+              if (number) {
+                itemTl.fromTo(
+                  number,
+                  { opacity: 0, scale: 3 },
+                  { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }
+                );
+              }
+              if (line) {
+                itemTl.fromTo(
+                  line,
+                  { scaleX: 0 },
+                  { scaleX: 1, duration: 0.5, ease: "power2.out" },
+                  "-=0.3"
+                );
+              }
+              if (text) {
+                itemTl.fromTo(
+                  text,
+                  { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+                  { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.5, ease: "power2.out" },
+                  "-=0.3"
+                );
+              }
+            });
+          });
         }
       }
 
-      // Features section
+      // Features section — pinned sequential reveal
       if (featuresSectionRef.current) {
-        const label = featuresSectionRef.current.querySelector(".section-label");
-        const items = featuresSectionRef.current.querySelectorAll(".feature-item");
-        const bullets = featuresSectionRef.current.querySelectorAll(".feature-bullet");
+        const featLabel = featuresSectionRef.current.querySelector(".section-label");
+        const featLis = featuresSectionRef.current.querySelectorAll(".feature-li");
 
-        if (label) {
+        // Label appears before pinning
+        if (featLabel) {
           gsap.fromTo(
-            label,
+            featLabel,
             { opacity: 0, x: -30, clipPath: "inset(0 100% 0 0)" },
             {
               opacity: 1,
@@ -365,108 +445,268 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             }
           );
         }
-        if (bullets.length) {
-          gsap.fromTo(
-            bullets,
-            { scale: 0 },
-            {
-              scale: 1,
-              duration: 0.4,
-              stagger: 0.08,
-              ease: "back.out(2)",
+
+        if (featLis.length) {
+          mm.add("(min-width: 768px)", () => {
+            const totalFeats = featLis.length;
+
+            const featTl = gsap.timeline({
               scrollTrigger: {
                 trigger: featuresSectionRef.current,
-                start: "top 75%",
+                start: "top top+=60",
+                end: `+=${totalFeats * 120}`,
+                scrub: 0.5,
+                pin: true,
               },
-            }
-          );
-        }
-        if (items.length) {
-          gsap.fromTo(
-            items,
-            { opacity: 0, x: 20 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.5,
-              stagger: 0.08,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: featuresSectionRef.current,
-                start: "top 75%",
-              },
-            }
-          );
+            });
+
+            featLis.forEach((li, i) => {
+              const bullet = li.querySelector(".feature-bullet");
+              const text = li.querySelector(".feature-item");
+              const progress = 0.15 + (i / totalFeats) * 0.85;
+
+              // Bullet pops in
+              if (bullet) {
+                featTl.fromTo(
+                  bullet,
+                  { scale: 0 },
+                  { scale: 1, duration: 0.08, ease: "back.out(3)" },
+                  progress
+                );
+              }
+
+              // Text slides in from right with clip-path
+              if (text) {
+                featTl.fromTo(
+                  text,
+                  { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+                  { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.12, ease: "power2.out" },
+                  progress + 0.03
+                );
+              }
+            });
+          });
+
+          // Mobile: simple stagger, no pin
+          mm.add("(max-width: 767px)", () => {
+            featLis.forEach((li) => {
+              const bullet = li.querySelector(".feature-bullet");
+              const text = li.querySelector(".feature-item");
+
+              const liTl = gsap.timeline({
+                scrollTrigger: {
+                  trigger: li,
+                  start: "top 85%",
+                  toggleActions: "play none none none",
+                },
+              });
+
+              if (bullet) {
+                liTl.fromTo(
+                  bullet,
+                  { scale: 0 },
+                  { scale: 1, duration: 0.4, ease: "back.out(2)" }
+                );
+              }
+              if (text) {
+                liTl.fromTo(
+                  text,
+                  { opacity: 0, x: 20 },
+                  { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" },
+                  "-=0.2"
+                );
+              }
+            });
+          });
         }
       }
 
-      // --- Next Project Section ---
-      if (nextProjectRef.current) {
-        const nextLabel = nextProjectRef.current.querySelector(".next-label");
-        const nextTitle = nextProjectRef.current.querySelector(".next-title");
-        const nextCta = nextProjectRef.current.querySelector(".next-cta");
+      // --- Gallery Section ---
+      if (gallerySectionRef.current) {
+        const galleryLabel = gallerySectionRef.current.querySelector(".gallery-label");
+        const galleryContainer = gallerySectionRef.current.querySelector(".gallery-container");
 
-        if (nextLabel) {
+        if (galleryLabel) {
           gsap.fromTo(
-            nextLabel,
-            { opacity: 0 },
+            galleryLabel,
+            { opacity: 0, clipPath: "inset(0 100% 0 0)" },
             {
               opacity: 1,
-              duration: 0.5,
+              clipPath: "inset(0 0% 0 0)",
+              duration: 0.6,
+              ease: "power3.out",
               scrollTrigger: {
-                trigger: nextProjectRef.current,
+                trigger: gallerySectionRef.current,
                 start: "top 80%",
               },
             }
           );
         }
-        if (nextTitle) {
+
+        if (galleryContainer) {
           gsap.fromTo(
-            nextTitle,
-            { opacity: 0, y: 40 },
+            galleryContainer,
+            { clipPath: "inset(10%)", scale: 0.9, opacity: 0 },
             {
+              clipPath: "inset(0%)",
+              scale: 1,
               opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: nextProjectRef.current,
-                start: "top 75%",
-              },
-            }
-          );
-        }
-        if (nextCta) {
-          gsap.fromTo(
-            nextCta,
-            { opacity: 0, x: -20 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.5,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: nextProjectRef.current,
-                start: "top 70%",
-              },
-            }
-          );
-        }
-        if (nextProjectImageRef.current) {
-          gsap.fromTo(
-            nextProjectImageRef.current,
-            { clipPath: "inset(0 100% 0 0)" },
-            {
-              clipPath: "inset(0 0% 0 0)",
               duration: 0.8,
               ease: "power3.out",
               scrollTrigger: {
-                trigger: nextProjectRef.current,
+                trigger: gallerySectionRef.current,
                 start: "top 70%",
               },
             }
           );
         }
+      }
+
+      // --- Next Project Section — scrubbed expansion with char split ---
+      if (nextProjectRef.current) {
+        const nextLabel = nextProjectRef.current.querySelector(".next-label");
+        const nextTitleEl = nextProjectRef.current.querySelector(".next-title") as HTMLElement | null;
+        const nextCta = nextProjectRef.current.querySelector(".next-cta");
+
+        mm.add("(min-width: 768px)", () => {
+          const scrubTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: nextProjectRef.current,
+              start: "top 80%",
+              end: "top 10%",
+              scrub: 0.5,
+            },
+          });
+
+          // Image reveals from center clip-path with scale
+          if (nextProjectImageRef.current) {
+            scrubTl.fromTo(
+              nextProjectImageRef.current,
+              { clipPath: "inset(20% 30%)", scale: 0.7 },
+              { clipPath: "inset(0% 0%)", scale: 1, ease: "none" },
+              0
+            );
+          }
+
+          // Label fades in
+          if (nextLabel) {
+            scrubTl.fromTo(
+              nextLabel,
+              { opacity: 0 },
+              { opacity: 1, ease: "none" },
+              0.1
+            );
+          }
+
+          // Title character split with rotateX
+          if (nextTitleEl) {
+            const text = nextTitleEl.textContent || "";
+            nextTitleEl.innerHTML = "";
+            text.split("").forEach((char) => {
+              const span = document.createElement("span");
+              span.textContent = char === " " ? "\u00A0" : char;
+              span.style.display = "inline-block";
+              nextTitleEl.appendChild(span);
+            });
+
+            const chars = nextTitleEl.querySelectorAll("span");
+            scrubTl.fromTo(
+              chars,
+              { opacity: 0, rotateX: -90, y: 30 },
+              {
+                opacity: 1,
+                rotateX: 0,
+                y: 0,
+                stagger: 0.02,
+                ease: "back.out(1.2)",
+              },
+              0.2
+            );
+          }
+
+          // CTA fades in
+          if (nextCta) {
+            scrubTl.fromTo(
+              nextCta,
+              { opacity: 0, x: -20 },
+              { opacity: 1, x: 0, ease: "none" },
+              0.5
+            );
+          }
+        });
+
+        // Mobile: simplified, no scrub
+        mm.add("(max-width: 767px)", () => {
+          if (nextProjectImageRef.current) {
+            gsap.fromTo(
+              nextProjectImageRef.current,
+              { clipPath: "inset(10% 15%)", scale: 0.85 },
+              {
+                clipPath: "inset(0% 0%)",
+                scale: 1,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: nextProjectRef.current,
+                  start: "top 80%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+
+          if (nextLabel) {
+            gsap.fromTo(
+              nextLabel,
+              { opacity: 0 },
+              {
+                opacity: 1,
+                duration: 0.5,
+                scrollTrigger: {
+                  trigger: nextProjectRef.current,
+                  start: "top 80%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+
+          if (nextTitleEl) {
+            gsap.fromTo(
+              nextTitleEl,
+              { opacity: 0, y: 30 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: nextProjectRef.current,
+                  start: "top 75%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+
+          if (nextCta) {
+            gsap.fromTo(
+              nextCta,
+              { opacity: 0, x: -20 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.5,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: nextProjectRef.current,
+                  start: "top 70%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+        });
       }
 
       // Refresh ScrollTrigger after everything is set up
@@ -640,7 +880,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         </section>
 
         {/* Main Content - Editorial Layout */}
-        <section className={project.type === "web" ? "pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32" : "py-16 md:py-24 lg:py-32"}>
+        <section className={project.type === "web" ? "pt-16 md:pt-20 lg:pt-24 pb-0" : "pt-16 md:pt-24 lg:pt-32 pb-0"}>
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             {/* Context + Technologies Row */}
             <div ref={contextSectionRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20 md:mb-28">
@@ -727,7 +967,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             </div>
 
             {/* Client Benefit */}
-            <div ref={clientBenefitRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20 md:mb-28">
+            <div ref={clientBenefitRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-16 md:mb-24">
               <div className="lg:col-span-4">
                 <h2
                   className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
@@ -749,40 +989,42 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             {/* Separator */}
             <div
               ref={separatorRef}
-              className="w-24 h-px bg-neutral-200 mb-20 md:mb-28"
+              className="w-24 h-px bg-neutral-200 mb-16 md:mb-24"
               style={{ transform: "scaleX(0)", transformOrigin: "left" }}
             />
 
             {/* Missions */}
-            <div ref={technicalSectionRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20 md:mb-28">
+            <div ref={technicalSectionRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 pt-8 md:pt-12 mb-12 md:mb-16 lg:items-start">
               <div className="lg:col-span-4">
                 <h2
-                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
+                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {locale === "en" ? "Technical" : "Technique"}
                 </h2>
               </div>
               <div className="lg:col-span-8">
-                <ul className="space-y-6">
+                <ul className="space-y-8">
                   {(projectTranslations?.technical || project.technical).map((item, index) => (
                     <li
                       key={index}
-                      className="tech-item flex items-baseline gap-6 group"
-                      style={{ opacity: 0 }}
+                      className="tech-item group"
                     >
-                      <span
-                        className="flex-shrink-0 text-2xl md:text-3xl font-light text-neutral-300 tabular-nums"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <p
-                        className="text-base md:text-lg font-light leading-relaxed text-neutral-700 group-hover:text-neutral-900 transition-colors"
-                        style={{ fontFamily: "var(--font-body)" }}
-                      >
-                        {item}
-                      </p>
+                      <div className="flex items-center gap-6">
+                        <span
+                          className="tech-number flex-shrink-0 text-2xl md:text-3xl font-light text-neutral-300 tabular-nums"
+                          style={{ fontFamily: "var(--font-display)", opacity: 0 }}
+                        >
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <div className="tech-line h-px flex-shrink-0 w-8 bg-neutral-200 origin-left" style={{ transform: "scaleX(0)" }} />
+                        <p
+                          className="tech-text text-base md:text-lg font-light leading-relaxed text-neutral-700 group-hover:text-neutral-900 transition-colors"
+                          style={{ fontFamily: "var(--font-body)", opacity: 0 }}
+                        >
+                          {item}
+                        </p>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -793,12 +1035,12 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         </section>
 
         {/* Learnings */}
-        <section ref={featuresSectionRef} className="py-16 md:py-24">
+        <section ref={featuresSectionRef} className="py-10 md:py-14">
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               <div className="lg:col-span-4">
                 <h2
-                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
+                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {locale === "en" ? "Features" : "Fonctionnalités"}
@@ -809,7 +1051,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                   {(projectTranslations?.features || project.features).map((feature, index) => (
                     <li
                       key={index}
-                      className="flex items-start gap-4 group"
+                      className="feature-li flex items-start gap-4 group"
                     >
                       <span className="feature-bullet flex-shrink-0 mt-1.5 w-2 h-2 rounded-full bg-neutral-300 group-hover:bg-neutral-900 transition-colors" style={{ transform: "scale(0)" }} />
                       <p
@@ -827,27 +1069,29 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         </section>
 
         {/* Gallery */}
-        <section className="py-16 md:py-24 bg-white">
+        <section ref={gallerySectionRef} className="py-10 md:py-14 bg-white">
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             <h2
-              className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-10"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="gallery-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-10"
+              style={{ fontFamily: "var(--font-body)", opacity: 0 }}
             >
               {locale === "en" ? "Gallery" : "Galerie"}
             </h2>
-            <ProjectGallery
-              images={
-                [
-                  ...(
-                    project.type === "web"
-                      ? (project.images.length > 1 ? project.images.slice(1) : project.images)
-                      : project.images
-                  )
-                ].reverse()
-              }
-              title={project.title}
-              isMobile={project.type === "mobile"}
-            />
+            <div className="gallery-container" style={{ opacity: 0 }}>
+              <ProjectGallery
+                images={
+                  [
+                    ...(
+                      project.type === "web"
+                        ? (project.images.length > 1 ? project.images.slice(1) : project.images)
+                        : project.images
+                    )
+                  ].reverse()
+                }
+                title={project.title}
+                isMobile={project.type === "mobile"}
+              />
+            </div>
           </div>
         </section>
 
@@ -858,12 +1102,15 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-center">
                 {/* Text */}
                 <div>
-                  <span
-                    className="next-label text-xs font-light tracking-[0.3em] text-neutral-500 uppercase mb-3 block"
-                    style={{ fontFamily: "var(--font-body)", opacity: 0 }}
-                  >
-                    {locale === "en" ? "Next project" : "Projet suivant"}
-                  </span>
+                  <div className="next-label flex items-center gap-4 mb-4" style={{ opacity: 0 }}>
+                    <div className="h-px w-8 bg-white/20" />
+                    <span
+                      className="text-xs font-light tracking-[0.3em] text-neutral-500 uppercase"
+                      style={{ fontFamily: "var(--font-body)" }}
+                    >
+                      {locale === "en" ? "Next project" : "Projet suivant"}
+                    </span>
+                  </div>
                   <h2
                     className="next-title text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white transition-all duration-500 group-hover:tracking-wide"
                     style={{ fontFamily: "var(--font-display)", opacity: 0 }}
@@ -889,26 +1136,32 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                 </div>
 
                 {/* Image */}
-                <div
-                  ref={nextProjectImageRef}
-                  className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-800"
-                  style={{ clipPath: "inset(0 100% 0 0)" }}
-                >
-                  {nextError ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-700 transition-all duration-500 group-hover:scale-105">
-                      <div className="text-5xl font-light text-neutral-600" style={{ fontFamily: "var(--font-display)" }}>
-                        {nextProject.title.charAt(0)}
+                <div className="relative">
+                  {/* Decorative border offset */}
+                  <div className="absolute -inset-px border border-white/10 translate-x-3 translate-y-3 pointer-events-none transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
+                  <div
+                    ref={nextProjectImageRef}
+                    className="relative aspect-[16/9] w-full overflow-hidden"
+                    style={{ clipPath: "inset(20% 30%)" }}
+                  >
+                    {nextError ? (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-700 transition-all duration-500 group-hover:scale-105">
+                        <div className="text-5xl font-light text-neutral-600" style={{ fontFamily: "var(--font-display)" }}>
+                          {nextProject.title.charAt(0)}
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <Image
-                      src={nextProject.image}
-                      alt={nextProject.title}
-                      fill
-                      className="object-cover transition-all duration-700 group-hover:scale-105"
-                      onError={() => setNextError(true)}
-                    />
-                  )}
+                    ) : (
+                      <Image
+                        src={nextProject.image}
+                        alt={nextProject.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={() => setNextError(true)}
+                      />
+                    )}
+                    {/* Subtle overlay */}
+                    <div className="absolute inset-0 bg-white/5 transition-opacity duration-500 group-hover:opacity-0 pointer-events-none" />
+                  </div>
                 </div>
               </div>
             </div>

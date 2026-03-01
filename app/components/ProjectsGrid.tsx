@@ -434,7 +434,7 @@ export default function ProjectsGrid() {
       </div>
 
       {/* Projects Content */}
-      <div className="bg-neutral-50 py-16 md:py-20 lg:py-24">
+      <div className="bg-neutral-50 pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12">
         <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
           {/* Featured Project */}
           <div ref={featuredRef} className="mb-16 md:mb-20">

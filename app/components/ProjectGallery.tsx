@@ -78,7 +78,7 @@ export default function ProjectGallery({ images, title, isMobile = false }: Proj
     handleImageChange(prevIndex);
   }, [activeImage, images.length, handleImageChange]);
 
-  // Thumbnails stagger fade-in on mount
+  // Thumbnails stagger fade-in on scroll
   useGSAP(
     () => {
       if (!thumbnailsRef.current || isMobile) return;
@@ -93,7 +93,11 @@ export default function ProjectGallery({ images, title, isMobile = false }: Proj
             duration: 0.4,
             stagger: 0.06,
             ease: "power3.out",
-            delay: 0.2,
+            scrollTrigger: {
+              trigger: thumbnailsRef.current,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
           }
         );
       }

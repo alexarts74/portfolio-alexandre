@@ -27,15 +27,28 @@ export default function Footer() {
     () => {
       if (!footerRef.current) return;
 
-      // --- CTA title: zoom-in ---
+      // --- CTA title: character split reveal ---
       if (ctaTitleRef.current) {
+        const text = ctaTitleRef.current.textContent || "";
+        ctaTitleRef.current.innerHTML = "";
+        text.split("").forEach((char) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char;
+          span.style.display = "inline-block";
+          ctaTitleRef.current!.appendChild(span);
+        });
+
+        const chars = ctaTitleRef.current.querySelectorAll("span");
         gsap.fromTo(
-          ctaTitleRef.current,
-          { scale: 0.4, y: 60, opacity: 0 },
+          chars,
+          { opacity: 0, rotateX: -90, y: 40 },
           {
-            scale: 1, y: 0, opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
+            opacity: 1,
+            rotateX: 0,
+            y: 0,
+            duration: 0.7,
+            stagger: { each: 0.025, from: "center" },
+            ease: "back.out(1.4)",
             scrollTrigger: {
               trigger: footerRef.current,
               start: "top 85%",
@@ -63,15 +76,15 @@ export default function Footer() {
         );
       }
 
-      // --- Divider: scaleX from center ---
+      // --- Divider: scaleX from center with elastic bounce ---
       if (dividerRef.current) {
         gsap.fromTo(
           dividerRef.current,
           { scaleX: 0 },
           {
             scaleX: 1,
-            duration: 0.8,
-            ease: "power2.out",
+            duration: 1.2,
+            ease: "elastic.out(1, 0.5)",
             scrollTrigger: {
               trigger: footerRef.current,
               start: "top 60%",
@@ -81,17 +94,17 @@ export default function Footer() {
         );
       }
 
-      // --- Footer columns: stagger from bottom ---
+      // --- Footer columns: stagger from bottom with subtle scale ---
       if (columnsRef.current) {
         const columns = columnsRef.current.children;
         gsap.fromTo(
           columns,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: 40, scale: 0.95 },
           {
-            opacity: 1, y: 0,
-            duration: 0.6,
+            opacity: 1, y: 0, scale: 1,
+            duration: 0.7,
             stagger: 0.1,
-            ease: "power2.out",
+            ease: "power3.out",
             scrollTrigger: {
               trigger: footerRef.current,
               start: "top 50%",

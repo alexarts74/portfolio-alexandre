@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 const skillCategories = [
   {
     key: "frontend",
-    skills: ["React", "TypeScript", "Angular", "Svelte", "Tailwind CSS", "Next.js"],
+    skills: ["React", "TypeScript", "Svelte", "Tailwind CSS", "Next.js"],
   },
   {
     key: "backend",
@@ -47,10 +47,11 @@ export default function Skills() {
 
   useGSAP(
     () => {
-      if (!sectionRef.current) return;
+      if (!sectionRef.current || !gridRef.current) return;
 
-      // --- Header animation ---
-      // Use fromTo to guarantee correct initial+end states after pinned sections
+      const mm = gsap.matchMedia();
+
+      // --- Header animation (same for both) ---
       const headerTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -104,52 +105,113 @@ export default function Skills() {
         );
       }
 
-      // --- Category labels + tags ---
-      // Use fromTo instead of from to avoid stale-start issues after pinned sections
-      if (gridRef.current) {
-        const categoryLabels = gridRef.current.querySelectorAll(".category-label");
-        categoryLabels.forEach((label, i) => {
-          gsap.fromTo(
-            label,
-            { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-            {
-              clipPath: "inset(0 0% 0 0)",
-              opacity: 1,
-              duration: 0.6,
-              ease: "power2.out",
-              delay: i * 0.05,
-              scrollTrigger: {
-                trigger: gridRef.current,
-                start: "top 85%",
-                toggleActions: "play none none none",
-              },
-            }
-          );
+      // --- Desktop: pinned cascade ---
+      mm.add("(min-width: 768px)", () => {
+        const categories = gridRef.current!.querySelectorAll(".skill-category");
+        const totalCategories = categories.length;
+
+        const pinTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: `+=${totalCategories * 120}`,
+            scrub: 0.5,
+            pin: true,
+          },
         });
 
-        const tagGroups = gridRef.current.querySelectorAll(".skill-tags");
-        tagGroups.forEach((group, groupIndex) => {
-          const tags = group.querySelectorAll(".skill-tag");
-          gsap.fromTo(
-            tags,
-            { opacity: 0, y: 20, scale: 0.8 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.5,
-              stagger: 0.04,
-              ease: "back.out(1.7)",
-              delay: groupIndex * 0.08,
-              scrollTrigger: {
-                trigger: gridRef.current,
-                start: "top 85%",
-                toggleActions: "play none none none",
+        categories.forEach((cat, i) => {
+          const label = cat.querySelector(".category-label");
+          const tags = cat.querySelectorAll(".skill-tag");
+          const progress = i / totalCategories;
+
+          if (label) {
+            pinTl.fromTo(
+              label,
+              { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+              { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.15, ease: "power2.out" },
+              progress
+            );
+          }
+
+          if (tags.length) {
+            tags.forEach((tag) => {
+              const randomX = (Math.random() - 0.5) * 80;
+              const randomRotation = (Math.random() - 0.5) * 30;
+              gsap.set(tag, {
+                opacity: 0,
+                y: -40,
+                x: randomX,
+                rotation: randomRotation,
+                scale: 0.6,
+              });
+            });
+
+            pinTl.to(
+              tags,
+              {
+                opacity: 1,
+                y: 0,
+                x: 0,
+                rotation: 0,
+                scale: 1,
+                duration: 0.15,
+                stagger: 0.02,
+                ease: "back.out(1.4)",
               },
-            }
-          );
+              progress + 0.05
+            );
+          }
         });
-      }
+      });
+
+      // --- Mobile: independent triggers per category ---
+      mm.add("(max-width: 767px)", () => {
+        const categories = gridRef.current!.querySelectorAll(".skill-category");
+
+        categories.forEach((cat) => {
+          const label = cat.querySelector(".category-label");
+          const tags = cat.querySelectorAll(".skill-tag");
+
+          if (label) {
+            gsap.fromTo(
+              label,
+              { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+              {
+                clipPath: "inset(0 0% 0 0)",
+                opacity: 1,
+                duration: 0.6,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: cat,
+                  start: "top 85%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+
+          if (tags.length) {
+            gsap.fromTo(
+              tags,
+              { opacity: 0, y: 20, scale: 0.8 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.5,
+                stagger: 0.04,
+                ease: "back.out(1.7)",
+                scrollTrigger: {
+                  trigger: cat,
+                  start: "top 85%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+        });
+      });
     },
     { scope: sectionRef }
   );
@@ -194,7 +256,7 @@ export default function Skills() {
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {skillCategories.map((category) => (
-            <div key={category.key}>
+            <div key={category.key} className="skill-category">
               <h3
                 className="category-label mb-3 text-xs font-light tracking-[0.2em] text-neutral-400 uppercase"
                 style={{ fontFamily: "var(--font-body)" }}
