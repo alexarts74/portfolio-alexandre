@@ -256,6 +256,7 @@ export default function Presentation() {
                   src="/images/portrait.png"
                   alt="Portrait d'Alexandre"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-[filter,transform] duration-1000 ease-in-out hover:grayscale"
                   onError={() => setImageError(true)}
                 />

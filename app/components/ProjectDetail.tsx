@@ -779,6 +779,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     src={img}
                     alt={`${project.title} - Screen ${index + 1}`}
                     fill
+                    sizes="(max-width: 768px) 140px, (max-width: 1024px) 180px, 220px"
                     className="object-cover"
                     priority={index === 1}
                   />
@@ -820,6 +821,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     src={project.images?.[0] ?? project.image}
                     alt={project.title}
                     fill
+                    sizes="100vw"
                     className="object-cover"
                     priority
                     onError={() => setHeroError(true)}
@@ -1155,6 +1157,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                         src={nextProject.image}
                         alt={nextProject.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         onError={() => setNextError(true)}
                       />

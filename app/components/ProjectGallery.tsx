@@ -206,6 +206,7 @@ export default function ProjectGallery({ images, title, isMobile = false }: Proj
           src={img}
           alt={`${title} - Screen ${index + 1}`}
           fill
+          sizes="(max-width: 768px) 200px, (max-width: 1024px) 240px, 280px"
           className="object-cover"
           onError={() => handleImageError(index)}
         />
@@ -273,6 +274,7 @@ export default function ProjectGallery({ images, title, isMobile = false }: Proj
             src={images[activeImage]}
             alt={`${title} - Image ${activeImage + 1}`}
             fill
+            sizes="100vw"
             className="main-image-active object-cover object-top"
             priority
             onError={() => handleImageError(activeImage)}
@@ -347,6 +349,7 @@ export default function ProjectGallery({ images, title, isMobile = false }: Proj
                   src={img}
                   alt={`${title} - Thumbnail ${index + 1}`}
                   fill
+                  sizes="80px"
                   className="object-cover"
                   onError={() => handleImageError(index)}
                 />
