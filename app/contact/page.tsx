@@ -539,6 +539,7 @@ export default function ContactPage() {
             <p
               className="text-xs font-light text-neutral-400 tracking-wider uppercase"
               style={{ fontFamily: "var(--font-body)" }}
+              suppressHydrationWarning
             >
               © {new Date().getFullYear()} Alexandre Artus
             </p>

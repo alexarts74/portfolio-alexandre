@@ -273,6 +273,7 @@ export default function Footer() {
           <p
             className="text-sm font-light text-white/50 tracking-wider uppercase"
             style={{ fontFamily: "var(--font-body)" }}
+            suppressHydrationWarning
           >
             © {new Date().getFullYear()} Alexandre Design. {t.footer.rights}
           </p>

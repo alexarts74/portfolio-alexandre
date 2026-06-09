@@ -42,17 +42,17 @@ app/
 │   ├── ProjectGallery.tsx # Image gallery component
 │   ├── Skills.tsx       # Skills/technologies section
 │   ├── Footer.tsx       # Footer with GSAP scroll-triggered animations
-│   ├── PageTransition.tsx # GSAP page transition (fade on route change via usePathname)
 │   ├── CustomCursor.tsx # Custom cursor (desktop only)
 │   └── LanguageSwitcher.tsx
-├── hooks/               # (currently empty — useInView removed, replaced by GSAP ScrollTrigger)
 ├── i18n/
 │   ├── LanguageContext.tsx  # Language provider (FR/EN)
 │   └── translations.ts     # All translations
 ├── data/
 │   └── projects.ts      # Project data with images, videos, tech stacks
+├── projects/
+│   └── [slug]/page.tsx  # Dynamic project detail page
 └── contact/
-    └── page.tsx         # Contact page with GSAP entrance animations
+    └── page.tsx         # Contact page (form submission is simulated — no backend)
 ```
 
 ### Animation Strategy
@@ -60,8 +60,7 @@ app/
 - **GSAP is the single animation library** — do not introduce Framer Motion, CSS View Transitions API, or other animation libs
 - `app/lib/gsap.ts` registers plugins once; import `{ gsap, ScrollTrigger }` from there
 - Use `useGSAP` hook from `@gsap/react` for component-scoped animations (auto-cleanup)
-- Page transitions: `PageTransition.tsx` wraps children in layout, detects route changes via `usePathname()`, fades new page in with GSAP
-- All internal navigation uses standard `<Link>` from `next/link` — no custom TransitionLink needed
+- All internal navigation uses standard `<Link>` from `next/link`
 
 ### Styling
 
