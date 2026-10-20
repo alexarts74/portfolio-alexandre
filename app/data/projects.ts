@@ -26,11 +26,11 @@ export const projects: Project[] = [
   {
     title: "Pasang Trekking",
     slug: "pasangtrekking",
-    image: "/images/projects/pasang.png",
+    image: "/images/projects/pasang.jpg",
     images: [
-      "/images/projects/pasang/home.png",
-      "/images/projects/pasang/treks.png",
-      "/images/projects/pasang/contact.png",
+      "/images/projects/pasang/home.jpg",
+      "/images/projects/pasang/treks.jpg",
+      "/images/projects/pasang/contact.jpg",
     ],
     shortDescription: "Site vitrine pour un guide de trek au Népal",
     context: "Pasang Trekking est un site vitrine pour un guide de trek au Népal, qui accompagne des voyageurs sur des itinéraires comme l'Everest Base Camp, l'Annapurna ou le Manaslu. Avant le site, les voyageurs le trouvaient surtout par le bouche-à-oreille et WhatsApp. L'objectif : leur offrir un seul endroit pour découvrir ses treks et trouver les informations dont ils ont besoin.",
