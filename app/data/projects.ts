@@ -15,9 +15,49 @@ export interface Project {
   clientBenefit: string;
   liveUrl?: string;
   githubUrl?: string;
+  testimonial?: {
+    quote: string;
+    author: string;
+    role: { fr: string; en: string };
+  };
 }
 
 export const projects: Project[] = [
+  {
+    title: "Pasang Trekking",
+    slug: "pasangtrekking",
+    image: "/images/projects/pasang.png",
+    images: [
+      "/images/projects/pasang/home.png",
+      "/images/projects/pasang/treks.png",
+      "/images/projects/pasang/contact.png",
+    ],
+    shortDescription: "Site vitrine pour un guide de trek au Népal",
+    context: "Pasang Trekking est un site vitrine pour un guide de trek au Népal, qui accompagne des voyageurs sur des itinéraires comme l'Everest Base Camp, l'Annapurna ou le Manaslu. Avant le site, les voyageurs le trouvaient surtout par le bouche-à-oreille et WhatsApp. L'objectif : leur offrir un seul endroit pour découvrir ses treks et trouver les informations dont ils ont besoin.",
+    technical: [
+      "Site vitrine construit sur Webflow et livré en 3 jours",
+      "10 treks présentés avec durée et difficulté, des randonnées faciles de 4 jours aux itinéraires exigeants de 16 jours",
+      "FAQ sur la forme physique, ce qui est inclus, la meilleure saison et les itinéraires sur mesure",
+      "Page contact avec téléphone, email et formulaire de demande",
+    ],
+    features: [
+      "Présentation claire des services : treks guidés, permis et logistique, itinéraires sur mesure",
+      "Cartes de présentation des treks avec durée et difficulté en un coup d'œil",
+      "FAQ qui répond aux questions les plus fréquentes des trekkeurs",
+      "Contact direct : téléphone, email et formulaire de demande",
+    ],
+    year: "2026",
+    technologies: ["Webflow"],
+    type: "web",
+    projectType: "freelance",
+    clientBenefit: "Un seul endroit où les trekkeurs découvrent les services du guide, comparent les treks selon leur durée et leur difficulté, trouvent les réponses à leurs questions et le contactent directement, au lieu de dépendre uniquement du bouche-à-oreille et de WhatsApp.",
+    liveUrl: "https://trek-with-pasang.webflow.io/",
+    testimonial: {
+      quote: "Before having the website, most trekkers contacted me through word of mouth or directly on WhatsApp. Now, it's much easier for people to discover my services and get all the information they need in one place. I'm really happy with the result and would definitely recommend Alexandre to other guides!",
+      author: "Pasang",
+      role: { fr: "guide de trek, Népal", en: "trekking guide, Nepal" },
+    },
+  },
   {
     title: "Evera",
     slug: "evera",

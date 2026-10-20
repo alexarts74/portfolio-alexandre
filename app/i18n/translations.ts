@@ -253,6 +253,23 @@ export const translations = {
           "Real-time synchronization between all trip participants",
         ],
       },
+      pasangtrekking: {
+        shortDescription: "Showcase website for a trekking guide in Nepal",
+        context: "Pasang Trekking is a showcase website for a trekking guide in Nepal who leads travellers on routes such as Everest Base Camp, Annapurna and Manaslu. Before the site, travellers found him mostly through word of mouth and WhatsApp. The goal: give them one place to discover his treks and find the information they need.",
+        clientBenefit: "A single place where trekkers can discover the guide's services, compare treks by duration and difficulty, find answers to common questions and contact him directly, instead of relying only on word of mouth and WhatsApp.",
+        technical: [
+          "Showcase site built on Webflow and delivered in 3 days",
+          "10 treks presented with duration and difficulty, from easy 4-day hikes to demanding 16-day routes",
+          "FAQ covering fitness, what is included, the best season and tailor-made itineraries",
+          "Contact page with phone, email and an enquiry form",
+        ],
+        features: [
+          "Clear presentation of services: guided treks, permits and logistics, tailor-made itineraries",
+          "Trek overview cards with duration and difficulty at a glance",
+          "FAQ answering the questions trekkers ask most",
+          "Direct contact: phone, email and enquiry form",
+        ],
+      },
       callixte: {
         shortDescription: "Portfolio website for professional dancer",
         context: "Portfolio Callixte is a showcase website for a professional dancer. The goal is to offer an elegant, immersive, and visually striking site that highlights her artistic universe and identity.",
@@ -553,6 +570,23 @@ export const translations = {
           "Module de gestion des dépenses type Tricount avec calcul automatique des remboursements",
           "Export du voyage complet pour conserver ou partager le journal après le séjour",
           "Synchronisation temps réel entre tous les participants du voyage",
+        ],
+      },
+      pasangtrekking: {
+        shortDescription: "Site vitrine pour un guide de trek au Népal",
+        context: "Pasang Trekking est un site vitrine pour un guide de trek au Népal, qui accompagne des voyageurs sur des itinéraires comme l'Everest Base Camp, l'Annapurna ou le Manaslu. Avant le site, les voyageurs le trouvaient surtout par le bouche-à-oreille et WhatsApp. L'objectif : leur offrir un seul endroit pour découvrir ses treks et trouver les informations dont ils ont besoin.",
+        clientBenefit: "Un seul endroit où les trekkeurs découvrent les services du guide, comparent les treks selon leur durée et leur difficulté, trouvent les réponses à leurs questions et le contactent directement, au lieu de dépendre uniquement du bouche-à-oreille et de WhatsApp.",
+        technical: [
+          "Site vitrine construit sur Webflow et livré en 3 jours",
+          "10 treks présentés avec durée et difficulté, des randonnées faciles de 4 jours aux itinéraires exigeants de 16 jours",
+          "FAQ sur la forme physique, ce qui est inclus, la meilleure saison et les itinéraires sur mesure",
+          "Page contact avec téléphone, email et formulaire de demande",
+        ],
+        features: [
+          "Présentation claire des services : treks guidés, permis et logistique, itinéraires sur mesure",
+          "Cartes de présentation des treks avec durée et difficulté en un coup d'œil",
+          "FAQ qui répond aux questions les plus fréquentes des trekkeurs",
+          "Contact direct : téléphone, email et formulaire de demande",
         ],
       },
       callixte: {

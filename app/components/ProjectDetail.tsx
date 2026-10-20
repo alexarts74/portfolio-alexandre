@@ -988,6 +988,34 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               </div>
             </div>
 
+            {/* Client Testimonial */}
+            {project.testimonial && (
+              <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-16 md:mb-24">
+                <div className="lg:col-span-4">
+                  <h2
+                    className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    {locale === "en" ? "Client feedback" : "Retour client"}
+                  </h2>
+                </div>
+                <div className="lg:col-span-8">
+                  <blockquote
+                    className="text-xl md:text-2xl font-light italic leading-[1.7] text-neutral-800"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    “{project.testimonial.quote}”
+                  </blockquote>
+                  <p
+                    className="mt-6 text-sm tracking-wide text-neutral-500"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    — {project.testimonial.author}, {project.testimonial.role[locale]}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Separator */}
             <div
               ref={separatorRef}
