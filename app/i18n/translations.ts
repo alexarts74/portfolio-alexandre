@@ -270,6 +270,23 @@ export const translations = {
           "Direct contact: phone, email and enquiry form",
         ],
       },
+      billtag: {
+        shortDescription: "Website redesign concept for an RFID solutions company",
+        context: "BillTag is a demo project: a conceptual redesign of the website of a company offering RFID solutions (wristbands, badges, cashless payment) for hotels and events. It is not a live client site. The goal: show how to present a range of technical products in a clear, modern way.",
+        clientBenefit: "A demonstration of how I turn a technical offer into a clear website: the range at a glance, easy contact and a consistent design. Demo project, no real client.",
+        technical: [
+          "Multi-page site built on Webflow from a template, fully customized (palette, content, product pages)",
+          "Content written in French: home, products, cashless, about, contact",
+          "Dedicated product pages: Tyvek wristband, fabric wristband, RFID badge and vinyl",
+          "Contact form, basic SEO (titles and descriptions) and alt text on images",
+        ],
+        features: [
+          "Simple navigation to products, cashless and contact",
+          "Presentation of RFID supports: Tyvek wristband, fabric wristband, wooden wristband and vinyl",
+          "Dedicated cashless page about contactless payment at events",
+          "Responsive site with scroll animations",
+        ],
+      },
       callixte: {
         shortDescription: "Portfolio website for professional dancer",
         context: "Portfolio Callixte is a showcase website for a professional dancer. The goal is to offer an elegant, immersive, and visually striking site that highlights her artistic universe and identity.",
@@ -587,6 +604,23 @@ export const translations = {
           "Cartes de présentation des treks avec durée et difficulté en un coup d'œil",
           "FAQ qui répond aux questions les plus fréquentes des trekkeurs",
           "Contact direct : téléphone, email et formulaire de demande",
+        ],
+      },
+      billtag: {
+        shortDescription: "Concept de refonte de site pour une entreprise de solutions RFID",
+        context: "BillTag est un projet de démonstration : une refonte conceptuelle du site d'une entreprise de solutions RFID (bracelets, badges, paiement cashless) pour l'hôtellerie et l'événementiel. Ce n'est pas un site client en production. L'objectif : montrer comment présenter une gamme de produits techniques de façon claire et moderne.",
+        clientBenefit: "Une démonstration de ma façon de transformer une offre technique en un site clair : la gamme présentée en un coup d'œil, un contact facile et un design cohérent. Projet de démonstration, sans client réel.",
+        technical: [
+          "Site multi-pages construit sur Webflow à partir d'un template, entièrement personnalisé (palette, contenus, pages produit)",
+          "Contenus rédigés en français : accueil, produits, cashless, à propos, contact",
+          "Pages produit dédiées : bracelet Tyvek, bracelet tissu, badge et vinyle RFID",
+          "Formulaire de contact, SEO de base (titres et descriptions) et textes alternatifs sur les images",
+        ],
+        features: [
+          "Navigation simple vers les produits, le cashless et le contact",
+          "Présentation des supports RFID : bracelet Tyvek, bracelet tissu, bracelet en bois et vinyle",
+          "Page cashless dédiée au paiement sans contact en événement",
+          "Site responsive avec animations au défilement",
         ],
       },
       callixte: {
