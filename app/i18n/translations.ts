@@ -47,6 +47,7 @@ export const translations = {
       titleItalic: "realised",
       viewProject: "View project",
       more: "More Projects",
+      showcase: "Webflow & showcase sites",
     },
     // Skills
     skills: {
@@ -287,6 +288,24 @@ export const translations = {
           "Responsive site with scroll animations",
         ],
       },
+      divingwithmewan: {
+        shortDescription: "Showcase website for a diving and snorkelling guide in Trincomalee, Sri Lanka",
+        context: "Diving with Mewan is the website of a diving and snorkelling guide in Trincomalee, Sri Lanka, who takes travellers to swim with turtles, watch dolphins and whales, dive the reefs or go fishing the local way. Before the site, he was reached mostly by word of mouth and messages. The goal: give him one place to present his trips with their prices and let people contact him in one tap.",
+        clientBenefit: "A single place where travellers discover Mewan's trips, see photos and videos of the sea around Trincomalee, compare prices in dollars and contact him directly on WhatsApp, instead of relying only on word of mouth.",
+        technical: [
+          "Showcase site hand-coded (HTML, CSS, JavaScript) with GSAP scroll animations and Lenis smooth scrolling",
+          "Full-screen background video on the home page, autoplaying and muted, with a poster image",
+          "Slider gallery mixing photos and videos, playing only the video that is on screen",
+          "5 trips presented with photo, description and price in dollars, for an international audience",
+          "Delivered with all the code and published on Netlify, in an account in his name",
+        ],
+        features: [
+          "Immersive home page with an underwater video in the background",
+          "Trip cards: snorkelling, dolphin and whale watching, discovery dive, fun diving and fishing",
+          "WhatsApp and email buttons everywhere, including a fixed contact bar on mobile",
+          "Responsive site, tested on mobile",
+        ],
+      },
       callixte: {
         shortDescription: "Portfolio website for professional dancer",
         context: "Portfolio Callixte is a showcase website for a professional dancer. The goal is to offer an elegant, immersive, and visually striking site that highlights her artistic universe and identity.",
@@ -383,6 +402,7 @@ export const translations = {
       titleItalic: "réalisés",
       viewProject: "Voir le projet",
       more: "Autres Projets",
+      showcase: "Webflow & sites vitrines",
     },
     // Skills
     skills: {
@@ -621,6 +641,24 @@ export const translations = {
           "Présentation des supports RFID : bracelet Tyvek, bracelet tissu, bracelet en bois et vinyle",
           "Page cashless dédiée au paiement sans contact en événement",
           "Site responsive avec animations au défilement",
+        ],
+      },
+      divingwithmewan: {
+        shortDescription: "Site vitrine pour un guide de plongée et de snorkeling à Trincomalee, au Sri Lanka",
+        context: "Diving with Mewan est le site d'un guide de plongée et de snorkeling de Trincomalee, au Sri Lanka, qui emmène les voyageurs nager avec les tortues, observer les dauphins et les baleines, plonger sur les récifs ou pêcher à la manière locale. Avant le site, il était contacté surtout par bouche-à-oreille et par messages. L'objectif : lui donner un seul endroit pour présenter ses sorties avec leurs prix et permettre de le contacter en un clic.",
+        clientBenefit: "Un seul endroit où les voyageurs découvrent les sorties de Mewan, voient les photos et les vidéos de la mer de Trincomalee, comparent les prix en dollars et le contactent directement sur WhatsApp, au lieu de dépendre uniquement du bouche-à-oreille.",
+        technical: [
+          "Site vitrine codé à la main (HTML, CSS, JavaScript) avec animations au défilement GSAP et défilement fluide Lenis",
+          "Vidéo plein écran en fond de la page d'accueil, lancée automatiquement et sans son, avec image d'attente",
+          "Galerie en diaporama mêlant photos et vidéos, qui ne lit que la vidéo visible à l'écran",
+          "5 sorties présentées avec photo, description et prix en dollars, pour une clientèle internationale",
+          "Livré avec tout le code et publié sur Netlify, dans un compte à son nom",
+        ],
+        features: [
+          "Accueil immersif avec vidéo sous-marine en fond",
+          "Cartes des sorties : snorkeling, observation des dauphins et baleines, baptême de plongée, plongée loisir et pêche",
+          "Boutons WhatsApp et email partout, y compris une barre de contact fixe sur mobile",
+          "Site responsive, testé sur mobile",
         ],
       },
       callixte: {

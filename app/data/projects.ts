@@ -12,6 +12,8 @@ export interface Project {
   technologies: string[];
   type: "web" | "mobile";
   projectType: "professional" | "freelance" | "personal";
+  /** Site vitrine (regroupé dans sa propre section sur l'accueil). */
+  showcase?: boolean;
   clientBenefit: string;
   liveUrl?: string;
   githubUrl?: string;
@@ -83,8 +85,41 @@ export const projects: Project[] = [
     technologies: ["Webflow"],
     type: "web",
     projectType: "personal",
+    showcase: true,
     clientBenefit: "Une démonstration de ma façon de transformer une offre technique en un site clair : la gamme présentée en un coup d'œil, un contact facile et un design cohérent. Projet de démonstration, sans client réel.",
     liveUrl: "https://billtag-f4552c.webflow.io/",
+  },
+  {
+    title: "Diving with Mewan",
+    slug: "divingwithmewan",
+    image: "/images/projects/mewan.jpg",
+    images: [
+      "/images/projects/mewan/hero.jpg",
+      "/images/projects/mewan/home.jpg",
+      "/images/projects/mewan/services.jpg",
+      "/images/projects/mewan/gallery.jpg",
+    ],
+    shortDescription: "Site vitrine pour un guide de plongée et de snorkeling à Trincomalee, au Sri Lanka",
+    context: "Diving with Mewan est le site d'un guide de plongée et de snorkeling de Trincomalee, au Sri Lanka, qui emmène les voyageurs nager avec les tortues, observer les dauphins et les baleines, plonger sur les récifs ou pêcher à la manière locale. Avant le site, il était contacté surtout par bouche-à-oreille et par messages. L'objectif : lui donner un seul endroit pour présenter ses sorties avec leurs prix et permettre de le contacter en un clic.",
+    technical: [
+      "Site vitrine codé à la main (HTML, CSS, JavaScript) avec animations au défilement GSAP et défilement fluide Lenis",
+      "Vidéo plein écran en fond de la page d'accueil, lancée automatiquement et sans son, avec image d'attente",
+      "Galerie en diaporama mêlant photos et vidéos, qui ne lit que la vidéo visible à l'écran",
+      "5 sorties présentées avec photo, description et prix en dollars, pour une clientèle internationale",
+      "Livré avec tout le code et publié sur Netlify, dans un compte à son nom",
+    ],
+    features: [
+      "Accueil immersif avec vidéo sous-marine en fond",
+      "Cartes des sorties : snorkeling, observation des dauphins et baleines, baptême de plongée, plongée loisir et pêche",
+      "Boutons WhatsApp et email partout, y compris une barre de contact fixe sur mobile",
+      "Site responsive, testé sur mobile",
+    ],
+    year: "2026",
+    technologies: ["HTML/CSS", "JavaScript", "GSAP", "Netlify"],
+    type: "web",
+    projectType: "freelance",
+    showcase: true,
+    clientBenefit: "Un seul endroit où les voyageurs découvrent les sorties de Mewan, voient les photos et les vidéos de la mer de Trincomalee, comparent les prix en dollars et le contactent directement sur WhatsApp, au lieu de dépendre uniquement du bouche-à-oreille.",
   },
   {
     title: "Evera",

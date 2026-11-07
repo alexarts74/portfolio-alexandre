@@ -161,8 +161,11 @@ export default function ProjectsGrid() {
   const mobileProjects = allOtherProjects
     .filter(p => p.type === "mobile")
     .sort((a, b) => parseInt(b.year) - parseInt(a.year));
+  const showcaseProjects = allOtherProjects
+    .filter(p => p.type === "web" && p.showcase)
+    .sort((a, b) => parseInt(b.year) - parseInt(a.year));
   const webProjects = allOtherProjects
-    .filter(p => p.type === "web")
+    .filter(p => p.type === "web" && !p.showcase)
     .sort((a, b) => parseInt(b.year) - parseInt(a.year));
 
   useGSAP(
@@ -484,6 +487,29 @@ export default function ProjectsGrid() {
               </div>
             ))}
 
+            {/* Showcase (Webflow) Projects Label */}
+            {showcaseProjects.length > 0 && (
+              <div className="h-scroll-label shrink-0 flex items-center self-center ml-4">
+                <span
+                  className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    writingMode: "vertical-lr",
+                    transform: "rotate(180deg)",
+                  }}
+                >
+                  {t.projects.showcase}
+                </span>
+              </div>
+            )}
+
+            {/* Showcase Project Cards */}
+            {showcaseProjects.map((project, index) => (
+              <div key={project.slug} className="h-scroll-card shrink-0 w-[380px] lg:w-[420px]">
+                <ProjectCard project={project} index={index + mobileProjects.length + 1} />
+              </div>
+            ))}
+
             {/* Web Projects Label */}
             {webProjects.length > 0 && (
               <div className="h-scroll-label shrink-0 flex items-center self-center ml-4">
@@ -503,7 +529,7 @@ export default function ProjectsGrid() {
             {/* Web Project Cards */}
             {webProjects.map((project, index) => (
               <div key={project.slug} className="h-scroll-card shrink-0 w-[380px] lg:w-[420px]">
-                <ProjectCard project={project} index={index + mobileProjects.length + 1} />
+                <ProjectCard project={project} index={index + mobileProjects.length + showcaseProjects.length + 1} />
               </div>
             ))}
 
@@ -536,6 +562,25 @@ export default function ProjectsGrid() {
             </div>
           )}
 
+          {/* Showcase (Webflow) Projects */}
+          {showcaseProjects.length > 0 && (
+            <div className="mb-12">
+              <h3
+                className="mb-6 text-xl font-light tracking-wide text-neutral-700"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {t.projects.showcase}
+              </h3>
+              <div className="grid gap-8">
+                {showcaseProjects.map((project, index) => (
+                  <div key={project.slug} className="mobile-card">
+                    <ProjectCard project={project} index={index + mobileProjects.length + 1} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Web Projects */}
           {webProjects.length > 0 && (
             <div>
@@ -549,7 +594,7 @@ export default function ProjectsGrid() {
               <div className="grid gap-8">
                 {webProjects.map((project, index) => (
                   <div key={project.slug} className="mobile-card">
-                    <ProjectCard project={project} index={index + mobileProjects.length + 1} />
+                    <ProjectCard project={project} index={index + mobileProjects.length + showcaseProjects.length + 1} />
                   </div>
                 ))}
               </div>
