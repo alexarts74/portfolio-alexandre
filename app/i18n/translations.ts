@@ -48,6 +48,10 @@ export const translations = {
       viewProject: "View project",
       more: "More Projects",
       showcase: "Webflow & showcase sites",
+      webflow: "Webflow",
+      vitrine: "Showcase sites",
+      saas: "SaaS",
+      mobile: "Mobile",
     },
     // Skills
     skills: {
@@ -403,6 +407,10 @@ export const translations = {
       viewProject: "Voir le projet",
       more: "Autres Projets",
       showcase: "Webflow & sites vitrines",
+      webflow: "Webflow",
+      vitrine: "Sites vitrines",
+      saas: "SaaS",
+      mobile: "Mobile",
     },
     // Skills
     skills: {
