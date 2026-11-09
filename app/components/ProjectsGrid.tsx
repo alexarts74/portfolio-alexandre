@@ -101,7 +101,7 @@ export default function ProjectsGrid() {
     (p) => p.type === "web" && p.showcase && !p.technologies.includes("Webflow")
   );
   const saasProjects = projects.filter(
-    (p) => p.type === "web" && !p.showcase && !p.technologies.includes("Webflow")
+    (p) => p.type === "web" && !p.showcase && !p.featured && !p.technologies.includes("Webflow")
   );
   const mobileProjects = projects.filter((p) => p.type === "mobile");
 

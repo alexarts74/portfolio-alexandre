@@ -14,6 +14,8 @@ export interface Project {
   projectType: "professional" | "freelance" | "personal";
   /** Site vitrine (regroupé dans sa propre section sur l'accueil). */
   showcase?: boolean;
+  /** Projet phare — affiché dans la section dédiée FeaturedProject. */
+  featured?: boolean;
   clientBenefit: string;
   liveUrl?: string;
   githubUrl?: string;
@@ -25,6 +27,42 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    title: "PayeTaVie",
+    slug: "payetavie",
+    image: "/images/projects/payetavie.png",
+    images: [
+      "/images/projects/payetavie/dashboard.png",
+      "/images/projects/payetavie/topics.png",
+      "/images/projects/payetavie/freelance.png",
+      "/images/projects/payetavie/mobile-1.png",
+      "/images/projects/payetavie/mobile-2.png",
+    ],
+    shortDescription: "SaaS d'assistant administratif personnel — web + mobile",
+    context:
+      "PayeTaVie simplifie la gestion administrative du quotidien pour les Français : impôts, assurances, santé, logement. L'application web (Next.js) et mobile (React Native + Expo) proposent un modèle freemium avec 3 niveaux d'abonnement dont un module freelance complet (facturation, devis, clients).",
+    technical: [
+      "Monorepo Turborepo partagé entre l'app web (Next.js) et mobile (Expo)",
+      "Supabase avec sécurité niveau ligne (RLS) pour l'isolation des données multi-utilisateurs",
+      "Webhooks Stripe pour la gestion du cycle de vie des abonnements (freemium → Pro)",
+      "Server Actions Next.js pour les mutations sécurisées côté serveur sans API dédiée",
+      "Resend + Edge Functions pour l'envoi d'emails transactionnels",
+    ],
+    features: [
+      "10 thématiques administratives : impôts, assurances, santé, logement, banque, véhicules et plus",
+      "Module de suivi des dépenses et budget avec catégorisation et historique",
+      "Annuaire de services publics intégré avec les données service-public.fr",
+      "Module freelance complet : facturation, devis, gestion client et génération de PDF",
+      "Application mobile avec parité fonctionnelle complète via React Native + Expo",
+    ],
+    year: "2026",
+    technologies: ["Next.js", "React Native", "Expo", "Supabase", "Stripe", "TypeScript"],
+    type: "web",
+    projectType: "personal",
+    featured: true,
+    clientBenefit:
+      "Un seul outil pour centraliser toute son administration — rappels, documents, checklist par thématique, calendrier — plus un module Pro pour les freelances avec génération de PDF, suivi des revenus et gestion client.",
+  },
   {
     title: "Pasang Trekking",
     slug: "pasangtrekking",

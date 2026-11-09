@@ -52,6 +52,7 @@ export const translations = {
       vitrine: "Showcase sites",
       saas: "SaaS",
       mobile: "Mobile",
+      featured: "Featured project",
     },
     // Skills
     skills: {
@@ -345,6 +346,27 @@ export const translations = {
           "Responsive site optimized for all devices",
         ],
       },
+      payetavie: {
+        shortDescription: "Personal administrative assistant SaaS — web + mobile",
+        context:
+          "PayeTaVie simplifies everyday administrative management for French users: taxes, insurance, healthcare, housing. The web app (Next.js) and mobile app (React Native + Expo) offer a freemium model with 3 subscription tiers including a full freelance module (invoicing, quotes, clients).",
+        clientBenefit:
+          "A single tool to centralize all administrative tasks — reminders, documents, checklists by topic, calendar — plus a Pro module for freelancers with PDF generation, revenue tracking and client management.",
+        technical: [
+          "Turborepo monorepo shared between the web (Next.js) and mobile (Expo) apps",
+          "Supabase with row-level security (RLS) for multi-user data isolation",
+          "Stripe webhooks for subscription lifecycle management (freemium → Pro)",
+          "Next.js Server Actions for secure server-side mutations without a dedicated API",
+          "Resend + Edge Functions for transactional email delivery",
+        ],
+        features: [
+          "10 administrative topics: taxes, insurance, healthcare, housing, banking, vehicles and more",
+          "Expense and budget tracking module with categorization and history",
+          "Public service directory integrated with service-public.fr data",
+          "Full freelance module: invoicing, quotes, client management and PDF generation",
+          "Mobile app with full feature parity via React Native + Expo",
+        ],
+      },
       otherprojects: {
         shortDescription: "Collection of various web projects",
         context: "A collection of various web development projects showcasing different technologies and approaches.",
@@ -411,6 +433,7 @@ export const translations = {
       vitrine: "Sites vitrines",
       saas: "SaaS",
       mobile: "Mobile",
+      featured: "Projet phare",
     },
     // Skills
     skills: {
@@ -702,6 +725,27 @@ export const translations = {
           "Interface épurée et élégante mettant en avant les produits et le menu",
           "Navigation fluide avec animations subtiles et transitions soignées",
           "Site responsive optimisé pour tous les appareils",
+        ],
+      },
+      payetavie: {
+        shortDescription: "SaaS d'assistant administratif personnel — web + mobile",
+        context:
+          "PayeTaVie simplifie la gestion administrative du quotidien pour les Français : impôts, assurances, santé, logement. L'application web (Next.js) et mobile (React Native + Expo) proposent un modèle freemium avec 3 niveaux d'abonnement dont un module freelance complet (facturation, devis, clients).",
+        clientBenefit:
+          "Un seul outil pour centraliser toute son administration — rappels, documents, checklist par thématique, calendrier — plus un module Pro pour les freelances avec génération de PDF, suivi des revenus et gestion client.",
+        technical: [
+          "Monorepo Turborepo partagé entre l'app web (Next.js) et mobile (Expo)",
+          "Supabase avec sécurité niveau ligne (RLS) pour l'isolation des données multi-utilisateurs",
+          "Webhooks Stripe pour la gestion du cycle de vie des abonnements (freemium → Pro)",
+          "Server Actions Next.js pour les mutations sécurisées côté serveur sans API dédiée",
+          "Resend + Edge Functions pour l'envoi d'emails transactionnels",
+        ],
+        features: [
+          "10 thématiques administratives : impôts, assurances, santé, logement, banque, véhicules et plus",
+          "Module de suivi des dépenses et budget avec catégorisation et historique",
+          "Annuaire de services publics intégré avec les données service-public.fr",
+          "Module freelance complet : facturation, devis, gestion client et génération de PDF",
+          "Application mobile avec parité fonctionnelle complète via React Native + Expo",
         ],
       },
       otherprojects: {
