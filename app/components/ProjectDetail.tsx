@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { Project } from "@/app/data/projects";
 import { useLanguage } from "@/app/i18n/LanguageContext";
 import { gsap, ScrollTrigger } from "@/app/lib/gsap";
@@ -715,6 +715,12 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
     { scope: mainRef }
   );
 
+  // Re-refresh after images load (mobile screenshots change page height)
+  useEffect(() => {
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 400);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       {/* Fixed Navigation */}
@@ -1148,32 +1154,38 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                 </span>
               </div>
             </div>
-            <div className="flex justify-center items-end gap-4 md:gap-6 lg:gap-8 px-6 overflow-x-auto pb-4">
-              {project.mobileImages.map((img, index) => (
-                <div
-                  key={index}
-                  className={`relative flex-shrink-0 rounded-[2rem] overflow-hidden bg-neutral-900 shadow-xl ${
-                    index === Math.floor(project.mobileImages!.length / 2)
-                      ? "w-[160px] md:w-[200px] lg:w-[240px] aspect-[9/19.5] z-10"
-                      : "w-[130px] md:w-[165px] lg:w-[200px] aspect-[9/19.5] opacity-80"
-                  }`}
-                  style={{
-                    boxShadow: index === Math.floor(project.mobileImages!.length / 2)
-                      ? "0 25px 50px -12px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.1)"
-                      : "0 15px 30px -8px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08)",
-                  }}
-                >
-                  <div className="absolute inset-0 rounded-[2rem] border border-neutral-700/50 pointer-events-none z-10" />
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-14 md:w-16 h-4 md:h-5 bg-neutral-900 rounded-full z-20" />
-                  <Image
-                    src={img}
-                    alt={`${project.title} mobile - ${index + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 130px, (max-width: 1024px) 165px, 200px"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+            <div className="flex justify-center items-end gap-3 md:gap-5 lg:gap-7 px-6 overflow-x-auto pb-4">
+              {project.mobileImages.map((img, index) => {
+                const isCenter = index === Math.floor(project.mobileImages!.length / 2);
+                return (
+                  <div
+                    key={index}
+                    className={`relative flex-shrink-0 ${isCenter ? "z-10" : ""}`}
+                    style={{
+                      width: isCenter ? "clamp(140px, 14vw, 220px)" : "clamp(110px, 11vw, 175px)",
+                      opacity: isCenter ? 1 : 0.75,
+                    }}
+                  >
+                    {/* Phone shell — thin neutral ring */}
+                    <div
+                      className="absolute inset-0 rounded-[2rem] ring-1 ring-neutral-300 pointer-events-none z-10"
+                      style={{ boxShadow: isCenter ? "0 20px 50px -10px rgba(0,0,0,0.18)" : "0 10px 25px -6px rgba(0,0,0,0.1)" }}
+                    />
+                    {/* Dynamic island */}
+                    <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[28%] h-[14px] bg-black rounded-full z-20" />
+                    {/* Screenshot */}
+                    <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] bg-[#f5f1e3]">
+                      <Image
+                        src={img}
+                        alt={`${project.title} mobile - ${index + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 110px, (max-width: 1024px) 150px, 200px"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </section>
         )}
