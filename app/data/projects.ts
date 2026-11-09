@@ -17,6 +17,8 @@ export interface Project {
   /** Projet phare — affiché dans la section dédiée FeaturedProject. */
   featured?: boolean;
   clientBenefit: string;
+  /** Images de l'app mobile, affichées en mockups phones sur la page projet. */
+  mobileImages?: string[];
   liveUrl?: string;
   githubUrl?: string;
   testimonial?: {
@@ -62,6 +64,13 @@ export const projects: Project[] = [
       "Module Freelance Pro : gestion des clients, création de devis et factures, envoi par email, suivi des paiements et génération de PDF",
       "Application mobile React Native + Expo avec la même expérience que le web, navigation par onglets et notifications push",
       "Système de rappels personnalisables : délai avant l'échéance, fréquence et canal de notification (email ou push)",
+    ],
+    mobileImages: [
+      "/images/projects/payetavie/mob-02-login.png",
+      "/images/projects/payetavie/mob-03-dashboard.png",
+      "/images/projects/payetavie/mob-04-topics.png",
+      "/images/projects/payetavie/mob-06-depenses.png",
+      "/images/projects/payetavie/mob-07-facturation.png",
     ],
     year: "2026",
     technologies: ["Next.js", "React Native", "Expo", "Supabase", "Stripe", "TypeScript"],

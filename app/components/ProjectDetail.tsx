@@ -1125,6 +1125,59 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
           </div>
         </section>
 
+        {/* Mobile App Showcase */}
+        {project.mobileImages && project.mobileImages.length > 0 && (
+          <section className="py-10 md:py-14 bg-neutral-50 overflow-hidden">
+            <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-10">
+              <div className="flex items-center gap-4">
+                <h2
+                  className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {locale === "en" ? "Mobile app" : "Application mobile"}
+                </h2>
+                <span
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-light tracking-[0.15em] uppercase rounded-full bg-violet-50 text-violet-500 border border-violet-100"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <rect x="5" y="2" width="14" height="20" rx="2" />
+                    <line x1="12" y1="18" x2="12" y2="18.01" />
+                  </svg>
+                  React Native + Expo
+                </span>
+              </div>
+            </div>
+            <div className="flex justify-center items-end gap-4 md:gap-6 lg:gap-8 px-6 overflow-x-auto pb-4">
+              {project.mobileImages.map((img, index) => (
+                <div
+                  key={index}
+                  className={`relative flex-shrink-0 rounded-[2rem] overflow-hidden bg-neutral-900 shadow-xl ${
+                    index === Math.floor(project.mobileImages!.length / 2)
+                      ? "w-[160px] md:w-[200px] lg:w-[240px] aspect-[9/19.5] z-10"
+                      : "w-[130px] md:w-[165px] lg:w-[200px] aspect-[9/19.5] opacity-80"
+                  }`}
+                  style={{
+                    boxShadow: index === Math.floor(project.mobileImages!.length / 2)
+                      ? "0 25px 50px -12px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.1)"
+                      : "0 15px 30px -8px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.08)",
+                  }}
+                >
+                  <div className="absolute inset-0 rounded-[2rem] border border-neutral-700/50 pointer-events-none z-10" />
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-14 md:w-16 h-4 md:h-5 bg-neutral-900 rounded-full z-20" />
+                  <Image
+                    src={img}
+                    alt={`${project.title} mobile - ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 130px, (max-width: 1024px) 165px, 200px"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Next Project */}
         <section ref={nextProjectRef} className="bg-neutral-900">
           <Link href={`/projects/${nextProject.slug}`} className="group block">
