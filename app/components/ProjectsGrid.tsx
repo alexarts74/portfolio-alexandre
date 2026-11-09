@@ -330,7 +330,7 @@ export default function ProjectsGrid() {
   );
 
   return (
-    <section ref={sectionRef} id="projets" className="w-full scroll-mt-20">
+    <section ref={sectionRef} id="tous-les-projets" className="w-full scroll-mt-20">
       {/* Dark Header Section — pinned zoom */}
       <div ref={zoomSectionRef} className="relative bg-black h-screen overflow-hidden flex items-center">
         <div
