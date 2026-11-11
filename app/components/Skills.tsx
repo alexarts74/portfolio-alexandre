@@ -217,7 +217,7 @@ export default function Skills() {
   );
 
   return (
-    <section ref={sectionRef} id="skills" className="w-full bg-white py-16 md:py-20 lg:py-24">
+    <section ref={sectionRef} id="skills" data-section="skills" className="w-full bg-white py-16 md:py-20 lg:py-24">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         {/* Section Header */}
         <div className="mb-8 md:mb-10 flex items-center gap-4">

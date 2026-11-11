@@ -6,10 +6,12 @@ import ProjectsGrid from "./components/ProjectsGrid";
 import Skills from "./components/Skills";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
+import { ParticleOverlay } from "./components/ParticleOverlay";
 
 export default function Home() {
   return (
     <>
+      <ParticleOverlay />
       <CustomCursor />
       <Navigation />
       <main>

@@ -113,7 +113,7 @@ export default function FeaturedProject() {
   );
 
   return (
-    <section ref={sectionRef} id="projets" className="bg-black text-white py-24 md:py-32 overflow-hidden scroll-mt-20">
+    <section ref={sectionRef} id="projets" data-section="featuredproject" className="bg-black text-white py-24 md:py-32 overflow-hidden scroll-mt-20">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         <div className="grid md:grid-cols-12 gap-12 md:gap-16 lg:gap-20 items-center">
 

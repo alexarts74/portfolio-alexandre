@@ -135,7 +135,7 @@ export default function Footer() {
   );
 
   return (
-    <footer ref={footerRef} className="w-full bg-black py-16 md:py-20 lg:py-24 text-white">
+    <footer ref={footerRef} data-section="footer" className="w-full bg-black py-16 md:py-20 lg:py-24 text-white">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         {/* CTA Section */}
         <div className="mb-16 text-center">

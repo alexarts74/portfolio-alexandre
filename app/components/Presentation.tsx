@@ -212,7 +212,7 @@ export default function Presentation() {
   );
 
   return (
-    <section ref={sectionRef} id="about" className="w-full bg-white py-20 md:py-28 lg:py-36">
+    <section ref={sectionRef} id="about" data-section="presentation" className="w-full bg-white py-20 md:py-28 lg:py-36">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         {/* Section Header */}
         <div className="mb-10 md:mb-12 flex items-center gap-4">

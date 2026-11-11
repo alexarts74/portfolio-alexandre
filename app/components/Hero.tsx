@@ -186,7 +186,7 @@ export default function Hero() {
   );
 
   return (
-    <section ref={sectionRef} className="relative min-h-[100svh] w-full overflow-hidden bg-black">
+    <section ref={sectionRef} data-section="hero" className="relative min-h-[100svh] w-full overflow-hidden bg-black">
       {/* Mesh gradient — blobs with GSAP Lissajous movement */}
       <div
         ref={containerRef}
