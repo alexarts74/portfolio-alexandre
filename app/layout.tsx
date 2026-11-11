@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "./i18n/LanguageContext";
+import { TransitionProvider } from "./components/PageTransition";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -80,7 +81,9 @@ export default function RootLayout({
     <html lang="fr" className={`${cormorant.variable} ${inter.variable} overscroll-none`}>
       <body className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-white text-black antialiased leading-relaxed">
         <LanguageProvider>
-          {children}
+          <TransitionProvider>
+            {children}
+          </TransitionProvider>
         </LanguageProvider>
       </body>
     </html>

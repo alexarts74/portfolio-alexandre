@@ -6,6 +6,7 @@ import { useLanguage } from "@/app/i18n/LanguageContext";
 import { gsap } from "@/app/lib/gsap";
 import { useGSAP } from "@gsap/react";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { TransitionLink } from "./PageTransition";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -174,7 +175,7 @@ export default function Navigation() {
         }`}
       >
         <div className="mx-6 flex items-center justify-between py-5 md:mx-12 md:py-6 lg:mx-16 xl:mx-24">
-          <Link
+          <TransitionLink
             href="/"
             className={`text-sm font-light tracking-[0.3em] uppercase transition-colors duration-500 z-50 ${
               isMenuOpen
@@ -187,26 +188,36 @@ export default function Navigation() {
             style={{ fontFamily: "var(--font-display)" }}
           >
             Alexandre
-          </Link>
+          </TransitionLink>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const isAnchor = link.href.startsWith("#");
-              return (
+              const linkClass = `text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
+                isScrolled
+                  ? "text-neutral-400 hover:text-neutral-900"
+                  : "text-white/60 hover:text-white"
+              }`;
+              return isAnchor ? (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
-                    isScrolled
-                      ? "text-neutral-400 hover:text-neutral-900"
-                      : "text-white/60 hover:text-white"
-                  }`}
+                  className={linkClass}
                   style={{ fontFamily: "var(--font-body)" }}
-                  onClick={isAnchor ? (e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href) : undefined}
+                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href)}
                 >
                   {link.label}
                 </Link>
+              ) : (
+                <TransitionLink
+                  key={link.href}
+                  href={link.href}
+                  className={linkClass}
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {link.label}
+                </TransitionLink>
               );
             })}
             <LanguageSwitcher
@@ -266,22 +277,27 @@ export default function Navigation() {
         <div ref={linksRef} className="flex flex-col items-center justify-center h-full gap-8">
           {navLinks.map((link) => {
             const isAnchor = link.href.startsWith("#");
-            return (
+            const mobileClass = "menu-link text-white text-2xl font-light tracking-[0.3em] uppercase hover:opacity-60 transition-opacity";
+            return isAnchor ? (
               <Link
                 key={link.href}
                 href={link.href}
-                className="menu-link text-white text-2xl font-light tracking-[0.3em] uppercase hover:opacity-60 transition-opacity"
-                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                  if (isAnchor) {
-                    handleAnchorClick(e, link.href);
-                  } else {
-                    closeMenu();
-                  }
-                }}
+                className={mobileClass}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href)}
                 style={{ opacity: 0 }}
               >
                 {link.label}
               </Link>
+            ) : (
+              <TransitionLink
+                key={link.href}
+                href={link.href}
+                className={mobileClass}
+                onClick={closeMenu}
+                style={{ opacity: 0 }}
+              >
+                {link.label}
+              </TransitionLink>
             );
           })}
           <div ref={langSwitcherRef} className="mt-8" style={{ opacity: 0 }}>

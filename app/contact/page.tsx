@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/app/components/PageTransition";
 import { useState, useRef } from "react";
 import { useLanguage } from "@/app/i18n/LanguageContext";
 import { gsap } from "@/app/lib/gsap";
@@ -37,7 +37,7 @@ export default function ContactPage() {
 
       const tl = gsap.timeline({
         defaults: { ease: "power3.out" },
-        delay: 0.2,
+        delay: 0.65,
       });
 
       // Back arrow + label slide-in from left
@@ -204,7 +204,7 @@ export default function ContactPage() {
       {/* Fixed Navigation */}
       <nav className="fixed left-0 right-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-100">
         <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 flex justify-between items-center py-4">
-          <Link
+          <TransitionLink
             ref={backLinkRef}
             href="/"
             className="group flex items-center gap-3 text-neutral-600 transition-colors hover:text-black"
@@ -231,7 +231,7 @@ export default function ContactPage() {
             >
               {locale === "en" ? "Back to home" : "Retour à l'accueil"}
             </span>
-          </Link>
+          </TransitionLink>
           <LanguageSwitcher className="text-neutral-600" />
         </div>
       </nav>
@@ -543,13 +543,13 @@ export default function ContactPage() {
             >
               © {new Date().getFullYear()} Alexandre Artus
             </p>
-            <Link
+            <TransitionLink
               href="/"
               className="text-xs font-light text-neutral-400 tracking-wider uppercase hover:text-black transition-colors"
               style={{ fontFamily: "var(--font-body)" }}
             >
               {locale === "en" ? "Back to home" : "Retour à l'accueil"}
-            </Link>
+            </TransitionLink>
           </div>
         </footer>
       </main>

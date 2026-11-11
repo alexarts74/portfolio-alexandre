@@ -28,10 +28,36 @@ export default function CustomCursor() {
     let mouseX = 0;
     let mouseY = 0;
     let isOverProject = false;
+    let isDark = false;
+
+    const isOverDarkSection = (x: number, y: number): boolean => {
+      const el = document.elementFromPoint(x, y);
+      if (!el) return false;
+      let node: Element | null = el;
+      while (node && node !== document.documentElement) {
+        if (node.classList.contains("bg-black")) return true;
+        node = node.parentElement;
+      }
+      return false;
+    };
+
+    const updateCursorTheme = (dark: boolean) => {
+      if (dark === isDark) return;
+      isDark = dark;
+      gsap.to(circle, {
+        backgroundColor: dark ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.85)",
+        duration: 0.2,
+        overwrite: "auto",
+      });
+      if (text) {
+        text.style.color = dark ? "#000" : "#fff";
+      }
+    };
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      updateCursorTheme(isOverDarkSection(mouseX, mouseY));
     };
 
     // Smooth follow with GSAP ticker
@@ -146,17 +172,18 @@ export default function CustomCursor() {
           height: SMALL,
           marginLeft: -SMALL / 2,
           marginTop: -SMALL / 2,
-          background: "rgba(0, 0, 0, 0.85)",
+          background: "rgba(0, 0, 0, 0.85)", // updated dynamically via updateCursorTheme
           willChange: "width, height",
         }}
       >
         <span
           ref={textRef}
-          className="text-[11px] font-light tracking-[0.25em] text-white uppercase"
+          className="text-[11px] font-light tracking-[0.25em] uppercase"
           style={{
             fontFamily: "var(--font-body)",
             opacity: 0,
             transform: "scale(0)",
+            color: "#fff",
           }}
         >
           {locale === "en" ? "View" : "Voir"}
