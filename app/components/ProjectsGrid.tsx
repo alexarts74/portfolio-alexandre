@@ -64,6 +64,46 @@ function SectionBlock({
   );
 }
 
+function HorizontalHeader({
+  number,
+  label,
+  title,
+  titleItalic,
+  headerRef,
+}: {
+  number: string;
+  label: string;
+  title: string;
+  titleItalic: string;
+  headerRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  return (
+    <div ref={headerRef} className="section-block mx-6 md:mx-12 lg:mx-16 xl:mx-24 pt-10 pb-6 shrink-0">
+      <div className="section-block-badge flex items-center gap-4 mb-4">
+        <span
+          className="text-[10px] tracking-[0.3em] text-neutral-400 uppercase"
+          style={{ fontFamily: "var(--font-body)" }}
+        >
+          {label}
+        </span>
+        <div className="h-px flex-1 bg-neutral-200" />
+        <span
+          className="text-[10px] tracking-[0.2em] text-neutral-300"
+          style={{ fontFamily: "var(--font-body)" }}
+        >
+          {number}
+        </span>
+      </div>
+      <h3
+        className="text-3xl md:text-4xl font-light"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {title} <span className="italic text-neutral-400">{titleItalic}</span>
+      </h3>
+    </div>
+  );
+}
+
 export default function ProjectsGrid() {
   const { t, locale } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
@@ -78,16 +118,22 @@ export default function ProjectsGrid() {
   const section3Ref = useRef<HTMLDivElement>(null);
   const section4Ref = useRef<HTMLDivElement>(null);
 
+  // Mobile-only header refs for the horizontal sections
+  const section2MobileRef = useRef<HTMLDivElement>(null);
+  const section3MobileRef = useRef<HTMLDivElement>(null);
+
   // Grid refs
   const webflowGridRef = useRef<HTMLDivElement>(null);
-  const vitrineGridRef = useRef<HTMLDivElement>(null);
   const mobileGridRef = useRef<HTMLDivElement>(null);
 
-  // Horizontal scroll refs (SaaS desktop)
+  // Horizontal scroll refs (desktop): showcase sites + SaaS
+  const vitrineHorizontalRef = useRef<HTMLDivElement>(null);
+  const vitrineTrackRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // SaaS mobile grid ref
+  // Mobile vertical grids for the horizontal sections
+  const vitrineMobileRef = useRef<HTMLDivElement>(null);
   const saasMobileRef = useRef<HTMLDivElement>(null);
 
   // Divider refs
@@ -205,7 +251,7 @@ export default function ProjectsGrid() {
       }
 
       // --- Section header reveals ---
-      [section1Ref, section2Ref, section3Ref, section4Ref].forEach((ref) => {
+      [section1Ref, section2Ref, section2MobileRef, section3Ref, section3MobileRef, section4Ref].forEach((ref) => {
         if (!ref.current) return;
         gsap.fromTo(
           ref.current,
@@ -237,8 +283,8 @@ export default function ProjectsGrid() {
         );
       });
 
-      // --- Card grid stagger reveals (Webflow, Vitrine, Mobile) ---
-      [webflowGridRef, vitrineGridRef, mobileGridRef].forEach((gridRef) => {
+      // --- Card grid stagger reveals (Webflow, Mobile) ---
+      [webflowGridRef, mobileGridRef].forEach((gridRef) => {
         if (!gridRef.current) return;
         const cards = gridRef.current.querySelectorAll(".grid-card");
         if (cards.length === 0) return;
@@ -257,73 +303,85 @@ export default function ProjectsGrid() {
         );
       });
 
-      // --- Desktop: horizontal scroll for SaaS ---
+      // --- Desktop: pinned horizontal scroll (showcase sites, then SaaS) ---
       mm.add("(min-width: 768px)", () => {
-        if (!horizontalRef.current || !trackRef.current) return;
+        const tweens: gsap.core.Tween[] = [];
 
-        const track = trackRef.current;
-        const cards = track.querySelectorAll(".h-scroll-card");
-        const getScrollWidth = () => track.scrollWidth - window.innerWidth;
+        // Created in page order so ScrollTrigger computes the pin offsets correctly
+        [
+          { wrap: vitrineHorizontalRef.current, track: vitrineTrackRef.current },
+          { wrap: horizontalRef.current, track: trackRef.current },
+        ].forEach(({ wrap, track }) => {
+          if (!wrap || !track) return;
 
-        const scrollTween = gsap.to(track, {
-          x: () => -getScrollWidth(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: horizontalRef.current,
-            pin: true,
-            scrub: 1,
-            end: () => `+=${getScrollWidth()}`,
-            invalidateOnRefresh: true,
-          },
-        });
+          const cards = track.querySelectorAll(".h-scroll-card");
+          const getScrollWidth = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
-        cards.forEach((card) => {
-          gsap.fromTo(
-            card,
-            { scale: 0.9, opacity: 0.3 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: 0.5,
-              scrollTrigger: {
-                trigger: card,
-                containerAnimation: scrollTween,
-                start: "left 90%",
-                end: "left 60%",
-                scrub: true,
-              },
-            }
-          );
+          const scrollTween = gsap.to(track, {
+            x: () => -getScrollWidth(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: wrap,
+              pin: true,
+              scrub: 1,
+              end: () => `+=${getScrollWidth()}`,
+              invalidateOnRefresh: true,
+            },
+          });
+          tweens.push(scrollTween);
+
+          cards.forEach((card) => {
+            gsap.fromTo(
+              card,
+              { scale: 0.9, opacity: 0.3 },
+              {
+                scale: 1,
+                opacity: 1,
+                duration: 0.5,
+                scrollTrigger: {
+                  trigger: card,
+                  containerAnimation: scrollTween,
+                  start: "left 90%",
+                  end: "left 60%",
+                  scrub: true,
+                },
+              }
+            );
+          });
         });
 
         return () => {
-          scrollTween.kill();
-          ScrollTrigger.getAll().forEach((st) => {
-            if (st.vars.containerAnimation === scrollTween) st.kill();
+          tweens.forEach((scrollTween) => {
+            scrollTween.kill();
+            ScrollTrigger.getAll().forEach((st) => {
+              if (st.vars.containerAnimation === scrollTween) st.kill();
+            });
           });
         };
       });
 
-      // --- Mobile: stagger for SaaS grid ---
+      // --- Mobile: stagger for showcase and SaaS grids ---
       mm.add("(max-width: 767px)", () => {
-        if (!saasMobileRef.current) return;
-        const cards = saasMobileRef.current.querySelectorAll(".mobile-card");
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: saasMobileRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
+        [vitrineMobileRef, saasMobileRef].forEach((gridRef) => {
+          if (!gridRef.current) return;
+          const cards = gridRef.current.querySelectorAll(".mobile-card");
+          gsap.fromTo(
+            cards,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: gridRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        });
       });
     },
     { scope: sectionRef }
@@ -393,18 +451,46 @@ export default function ProjectsGrid() {
           <div className="divider-line h-px bg-neutral-200 origin-left" />
         </div>
 
-        {/* SECTION 2 — Sites vitrines */}
-        <SectionBlock
-          number="02"
-          label={t.projects.vitrine}
-          title={locale === "fr" ? "Sites" : "Showcase"}
-          titleItalic={locale === "fr" ? "vitrines" : "sites"}
-          sectionRef={section2Ref}
-        />
-        <div ref={vitrineGridRef} className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-16 md:mb-20">
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+        {/* SECTION 2 — Sites vitrines (desktop: pinned horizontal scroll with header inside) */}
+        <div ref={vitrineHorizontalRef} className="hidden md:flex flex-col overflow-hidden pb-10 mb-6 md:mb-10">
+          <HorizontalHeader
+            number="02"
+            label={t.projects.vitrine}
+            title={locale === "fr" ? "Sites" : "Showcase"}
+            titleItalic={locale === "fr" ? "vitrines" : "sites"}
+            headerRef={section2Ref}
+          />
+
+          {/* Scroll track */}
+          <div className="flex items-start pt-4 overflow-hidden">
+            <div
+              ref={vitrineTrackRef}
+              className="flex items-center gap-8 px-6 md:px-12 lg:px-16 xl:px-24"
+            >
+              {vitrineProjects.map((project, index) => (
+                <div key={project.slug} className="h-scroll-card shrink-0 w-[380px] lg:w-[420px]">
+                  <ProjectCard project={project} index={index} />
+                </div>
+              ))}
+              <div className="shrink-0 w-24" />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: Section header + vertical grid for showcase sites */}
+        <div className="md:hidden">
+          <SectionBlock
+            number="02"
+            label={t.projects.vitrine}
+            title={locale === "fr" ? "Sites" : "Showcase"}
+            titleItalic={locale === "fr" ? "vitrines" : "sites"}
+            sectionRef={section2MobileRef}
+          />
+        </div>
+        <div ref={vitrineMobileRef} className="md:hidden mx-6 mb-16">
+          <div className="grid gap-8">
             {vitrineProjects.map((project, index) => (
-              <div key={project.slug} className="grid-card">
+              <div key={project.slug} className="mobile-card">
                 <ProjectCard project={project} index={index} />
               </div>
             ))}
@@ -419,29 +505,13 @@ export default function ProjectsGrid() {
         {/* SECTION 3 — SaaS / Web apps (desktop: pinned horizontal scroll with header inside) */}
         <div ref={horizontalRef} className="hidden md:flex flex-col overflow-hidden pb-10">
           {/* Section header inside the pinned container */}
-          <div ref={section3Ref} className="section-block mx-6 md:mx-12 lg:mx-16 xl:mx-24 pt-10 pb-6 shrink-0">
-            <div className="section-block-badge flex items-center gap-4 mb-4">
-              <span
-                className="text-[10px] tracking-[0.3em] text-neutral-400 uppercase"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                {t.projects.saas}
-              </span>
-              <div className="h-px flex-1 bg-neutral-200" />
-              <span
-                className="text-[10px] tracking-[0.2em] text-neutral-300"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                03
-              </span>
-            </div>
-            <h3
-              className="text-3xl md:text-4xl font-light"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Web <span className="italic text-neutral-400">apps</span>
-            </h3>
-          </div>
+          <HorizontalHeader
+            number="03"
+            label={t.projects.saas}
+            title="Web"
+            titleItalic="apps"
+            headerRef={section3Ref}
+          />
 
           {/* Scroll track */}
           <div className="flex items-start pt-4 overflow-hidden">
@@ -466,8 +536,9 @@ export default function ProjectsGrid() {
             label={t.projects.saas}
             title="Web"
             titleItalic="apps"
-            sectionRef={section3Ref}
-          /></div>
+            sectionRef={section3MobileRef}
+          />
+        </div>
 
         {/* Mobile: Vertical Grid for SaaS */}
         <div ref={saasMobileRef} className="md:hidden mx-6 mb-16">
