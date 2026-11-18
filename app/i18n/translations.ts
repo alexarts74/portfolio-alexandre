@@ -135,6 +135,29 @@ export const translations = {
     },
     // Project data
     projectData: {
+      nerea: {
+        shortDescription: "Online shop for my own brand of hand-drawn pareos, built on Medusa and Next.js",
+        context: "NEREA is my brand of hand-drawn pareos. I draw the prints (hibiscus, shells, mermaids) and built the online shop that sells them, for France, in euros and in French.\n\nThe shop runs on Medusa, an open-source headless e-commerce platform: catalogue, prices, shipping and design are fully under control, without relying on an off-the-shelf solution. I started from Medusa's official starter and rebuilt the whole storefront: visual identity, home page, catalogue, cart, checkout and legal pages. The shop works end to end locally (an order reaches the admin and decrements stock). Stripe payments, order emails and going live are the next steps.",
+        clientBenefit: "A shop that matches the brand and fits selling in France: VAT-inclusive prices, shipping and returns stated right on the product page, legal pages written. The region and catalogue are rebuilt by script in a single command, then prices, stock and visuals are managed from the Medusa admin without touching the code.",
+        technical: [
+          "Turborepo monorepo: Medusa 2 backend (Node.js, TypeScript, PostgreSQL) and Next.js 16 storefront (App Router, React 19, Tailwind CSS)",
+          "France setup in an idempotent script: single euro region, prices entered VAT-inclusive with 20 % VAT, Colissimo and pickup-point shipping free from 120 EUR through a price rule on the cart amount, free returns",
+          "Catalogue loaded by a second idempotent script: category, three collections, eight pareos in two sizes with stock, then search reindexing",
+          "Cart totals reworked for VAT-inclusive display: Medusa returns pre-tax subtotals even when prices are entered VAT-inclusive, so the summary shows items including VAT and the VAT amount included",
+          "Shop search, sorting and filters wired to Medusa's product index through InstantSearch",
+          "Legal pages (legal notice, terms of sale, privacy, shipping, returns) driven by a single configuration file, kept in line with the backend's shipping options",
+          "Pareo visuals generated as SVG by a Node script from my prints, until the high-resolution exports are ready",
+        ],
+        features: [
+          "Editorial home page: hero with three stacked pareos, scrolling banner, grid of the eight prints, workshop, signature piece and collections",
+          "Shop with sorting, size filters and search by print or colour",
+          "Product page with size choice (110 × 180 cm or 140 × 200 cm), availability and shipping perks",
+          "Cart with a progress bar towards free shipping",
+          "Four numbered checkout steps (address, shipping, payment, review) with a VAT-inclusive summary",
+          "Customer account, order history and legal pages in French",
+          "Restrained brand palette: white, black and two colours, peach and mint, with Cormorant Garamond and Jost",
+        ],
+      },
       evera: {
         shortDescription: "SaaS platform for vehicle fleet management",
         context: "Evera is a SaaS solution for companies managing vehicle fleets. It centralizes all vehicle-related information: trips, costs, maintenance, infractions, and subscriptions, enabling proactive real-time management.",
@@ -541,6 +564,29 @@ export const translations = {
     },
     // Project data
     projectData: {
+      nerea: {
+        shortDescription: "Boutique en ligne de ma marque de paréos dessinés à la main, sur Medusa et Next.js",
+        context: "NEREA est ma marque de paréos dessinés à la main. Je dessine les motifs (hibiscus, coquillages, sirènes) et j'ai développé la boutique en ligne qui les vend, pour la France, en euros et en français.\n\nLa boutique repose sur Medusa, une plateforme e-commerce open source et headless : catalogue, prix, livraison et design sont entièrement maîtrisés, sans dépendre d'une solution clé en main. Je suis parti du starter officiel de Medusa et j'ai repris toute la partie boutique : identité visuelle, page d'accueil, catalogue, panier, tunnel de commande et pages légales. La boutique fonctionne de bout en bout en local (une commande arrive dans l'administration et décrémente le stock). Le paiement Stripe, les e-mails de commande et la mise en ligne sont les prochaines étapes.",
+        clientBenefit: "Une boutique à l'image de la marque et adaptée à la vente en France : prix TTC, livraison et retours annoncés dès la fiche produit, pages légales rédigées. La région et le catalogue se recréent par script en une commande, puis prix, stocks et visuels se gèrent depuis l'administration Medusa, sans toucher au code.",
+        technical: [
+          "Monorepo Turborepo : backend Medusa 2 (Node.js, TypeScript, PostgreSQL) et boutique Next.js 16 (App Router, React 19, Tailwind CSS)",
+          "Configuration France par un script idempotent : région unique en euros, prix saisis TTC avec TVA à 20 %, Colissimo et point relais offerts dès 120 € grâce à une règle de prix sur le montant du panier, retours gratuits",
+          "Catalogue chargé par un second script idempotent : catégorie, trois collections, huit paréos en deux formats avec leur stock, puis réindexation de la recherche",
+          "Totaux du panier recalculés pour un affichage TTC : Medusa renvoie des sous-totaux hors taxes même quand les prix sont saisis TTC, le récapitulatif affiche donc les articles TTC et la TVA incluse",
+          "Recherche, tri et filtres de la boutique branchés sur l'index produits de Medusa via InstantSearch",
+          "Pages légales (mentions légales, CGV, confidentialité, livraison, retours) alimentées par un seul fichier de configuration, aligné sur les options de livraison du backend",
+          "Visuels des paréos générés en SVG par un script Node à partir de mes motifs, en attendant les exports haute définition",
+        ],
+        features: [
+          "Page d'accueil éditoriale : hero avec trois paréos superposés, bandeau défilant, grille des huit motifs, atelier, pièce signature et collections",
+          "Boutique avec tri, filtres par format et recherche par motif ou couleur",
+          "Fiche produit avec choix du format (110 × 180 cm ou 140 × 200 cm), disponibilité et avantages livraison",
+          "Panier avec barre de progression vers la livraison offerte",
+          "Commande en quatre étapes numérotées (adresse, livraison, paiement, vérification) avec récapitulatif TTC",
+          "Compte client, historique des commandes et pages légales en français",
+          "Charte sobre : blanc, noir et deux couleurs, pêche et menthe, typographies Cormorant Garamond et Jost",
+        ],
+      },
       evera: {
         shortDescription: "Plateforme SaaS de gestion de flottes de véhicules",
         context: "Evera est une solution SaaS pour les entreprises qui gèrent des flottes de véhicules. Elle centralise toutes les informations liées aux véhicules : trajets, coûts, entretiens, infractions et abonnements, pour permettre une gestion proactive et en temps réel.",
