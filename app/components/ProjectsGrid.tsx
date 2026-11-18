@@ -317,6 +317,14 @@ export default function ProjectsGrid() {
           const cards = track.querySelectorAll(".h-scroll-card");
           const getScrollWidth = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
+          // The fixed nav stays visible, so pin the block centred in the space below it
+          // (or right under it when the block is taller than that space).
+          const getPinTop = () => {
+            const navH = document.querySelector("nav")?.getBoundingClientRect().height ?? 0;
+            const free = window.innerHeight - navH;
+            return Math.round(navH + Math.max(0, (free - wrap.offsetHeight) / 2));
+          };
+
           const scrollTween = gsap.to(track, {
             x: () => -getScrollWidth(),
             ease: "none",
@@ -324,6 +332,7 @@ export default function ProjectsGrid() {
               trigger: wrap,
               pin: true,
               scrub: 1,
+              start: () => `top ${getPinTop()}px`,
               end: () => `+=${getScrollWidth()}`,
               invalidateOnRefresh: true,
             },
