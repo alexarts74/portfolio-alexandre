@@ -70,16 +70,36 @@ export default function ContactPage() {
     setError(false);
 
     try {
-      const res = await fetch("/__forms.html", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": NETLIFY_FORM_NAME,
-          "bot-field": botField,
-          ...formData,
-        }).toString(),
-      });
-      if (!res.ok) throw new Error(`Form submission failed: ${res.status}`);
+      // Honeypot filled → silently pretend it worked
+      if (!botField) {
+        // Web3Forms sends the email notification (required to succeed).
+        // FormData = "simple" CORS request, no preflight.
+        const payload = new FormData();
+        payload.append("access_key", SITE.web3formsKey);
+        payload.append("subject", `Portfolio — ${formData.subject || "Nouveau message"}`);
+        payload.append("from_name", "Portfolio Alexandre");
+        payload.append("name", formData.name);
+        payload.append("email", formData.email);
+        payload.append("sujet", formData.subject);
+        payload.append("message", formData.message);
+        const mail = fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: payload,
+        }).then(async (res) => {
+          const json = await res.json().catch(() => null);
+          if (!res.ok || !json?.success) throw new Error(`Web3Forms failed: ${res.status}`);
+        });
+
+        // Netlify Forms keeps a history in the dashboard (best effort)
+        const archive = fetch("/__forms.html", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ "form-name": NETLIFY_FORM_NAME, "bot-field": botField, ...formData }).toString(),
+        }).catch(() => undefined);
+
+        await Promise.all([mail, archive]);
+      }
 
       if (formRef.current) {
         await gsap.to(formRef.current, { opacity: 0, y: -20, duration: 0.3, ease: "power2.in" });
