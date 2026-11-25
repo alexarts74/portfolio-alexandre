@@ -112,18 +112,17 @@ export default function Navigation({ variant = "home", backHref = "/", backLabel
     { href: "#skills", label: t.nav.skills },
   ];
 
-  const solid = !isHome || isScrolled;
+  // Floating pill once the page scrolls (always on inner pages); flat and wide over the hero
+  const floating = (!isHome || isScrolled) && !isMenuOpen;
 
   return (
     <div ref={navRef}>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 border-b ${
-          solid ? "bg-ink/95 backdrop-blur-md border-white/5" : "bg-transparent border-transparent"
-        }`}
-      >
+      <nav className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
         <div
-          className={`mx-6 flex items-center justify-between md:mx-12 lg:mx-16 xl:mx-24 transition-[padding] duration-500 ${
-            solid ? "py-3" : "py-5 md:py-6"
+          className={`pointer-events-auto mx-auto flex items-center justify-between rounded-full border transition-[max-width,padding,background-color,border-color,box-shadow,margin] duration-500 ease-out ${
+            floating
+              ? "max-w-5xl border-white/10 bg-ink/85 py-1.5 pl-5 pr-1.5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl md:py-2 md:pl-7 md:pr-2"
+              : "max-w-[100rem] border-transparent bg-transparent px-3 py-2 md:mt-2 md:px-6 lg:px-10 xl:px-[4.5rem]"
           }`}
         >
           <TransitionLink
@@ -138,7 +137,7 @@ export default function Navigation({ variant = "home", backHref = "/", backLabel
           {isHome ? (
             <>
               {/* Desktop */}
-              <div className="hidden md:flex items-center gap-8">
+              <div className="hidden md:flex items-center gap-6 lg:gap-8">
                 {anchorLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -168,7 +167,7 @@ export default function Navigation({ variant = "home", backHref = "/", backLabel
               </button>
             </>
           ) : (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 py-2.5 pr-4 md:pr-5">
               <TransitionLink
                 href={backHref}
                 className="group flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white"

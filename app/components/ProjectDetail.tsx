@@ -725,6 +725,43 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
     return () => clearTimeout(timer);
   }, []);
 
+  // Shared project header (meta, title, short description) — rendered over the hero for both types
+  const projectHeader = (
+    <div className="max-w-4xl">
+      <div ref={metaRef} className="flex items-center gap-4 mb-6">
+        <span
+          className="text-xs tracking-[0.3em] uppercase text-white/80"
+          style={{ fontFamily: "var(--font-body)", opacity: 0 }}
+        >
+          {project.year}
+        </span>
+        <div className="h-px w-8 bg-white/40" style={{ opacity: 0 }} />
+        <span
+          className="text-xs tracking-[0.3em] uppercase text-white/80"
+          style={{ fontFamily: "var(--font-body)", opacity: 0 }}
+        >
+          {project.type === "mobile" ? "Mobile" : "Web"}
+        </span>
+      </div>
+
+      <h1
+        ref={titleRef}
+        className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-[-0.04em] leading-[0.95] mb-8 text-white"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {project.title}
+      </h1>
+
+      <p
+        ref={shortDescRef}
+        className="text-xl md:text-2xl leading-relaxed max-w-2xl text-white/85"
+        style={{ fontFamily: "var(--font-body)", opacity: 0 }}
+      >
+        {projectTranslations?.shortDescription || project.shortDescription}
+      </p>
+    </div>
+  );
+
   return (
     <>
       <Navigation variant="minimal" backHref="/#projets" backLabel={t.projectDetails.backToProjects} />
@@ -733,37 +770,43 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         {/* Hero Section - Different layout for mobile vs web */}
         {project.type === "mobile" ? (
           /* Mobile Hero - Phone mockups */
-          <section ref={heroSectionRef} data-dark className="hero-gradient relative pt-28 pb-16 md:pt-32 md:pb-20 w-full overflow-hidden rounded-b-[2.5rem]">
-            <div ref={mobileMockupsRef} className="flex justify-center items-end gap-4 md:gap-6 lg:gap-8 px-6">
-              {project.images.slice(0, 3).map((img, index) => (
-                <div
-                  key={index}
-                  className={`mockup-item relative flex-shrink-0 rounded-[2rem] overflow-hidden bg-neutral-900 shadow-2xl ${
-                    index === 1
-                      ? "w-[180px] md:w-[220px] lg:w-[260px] aspect-[9/19.5] z-10"
-                      : "mockup-side w-[140px] md:w-[180px] lg:w-[220px] aspect-[9/19.5] opacity-80 hidden md:block"
-                  }`}
-                  style={{
-                    opacity: 0,
-                    boxShadow: index === 1
-                      ? "0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1)"
-                      : "0 15px 30px -8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1)"
-                  }}
-                >
-                  {/* Phone frame effect */}
-                  <div className="absolute inset-0 rounded-[2rem] border border-neutral-700/50 pointer-events-none z-10" />
-                  {/* Notch */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 md:w-20 h-5 md:h-6 bg-neutral-900 rounded-full z-20" />
-                  <Image
-                    src={img}
-                    alt={`${project.title} - Screen ${index + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 140px, (max-width: 1024px) 180px, 220px"
-                    className="object-cover"
-                    priority={index === 1}
-                  />
-                </div>
-              ))}
+          <section ref={heroSectionRef} data-dark className="hero-gradient relative pt-28 pb-16 md:pt-36 md:pb-20 w-full overflow-hidden rounded-b-[2.5rem]">
+            <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+              <div className="lg:col-span-5">{projectHeader}</div>
+              <div
+                ref={mobileMockupsRef}
+                className="flex justify-center items-end gap-4 md:gap-6 lg:gap-4 xl:gap-5 lg:col-span-7"
+              >
+                {project.images.slice(0, 3).map((img, index) => (
+                  <div
+                    key={index}
+                    className={`mockup-item relative flex-shrink-0 rounded-[2rem] overflow-hidden bg-neutral-900 shadow-2xl ${
+                      index === 1
+                        ? "w-[180px] md:w-[220px] lg:w-[200px] xl:w-[250px] aspect-[9/19.5] z-10"
+                        : "mockup-side w-[140px] md:w-[170px] lg:w-[130px] xl:w-[180px] aspect-[9/19.5] opacity-80 hidden md:block"
+                    }`}
+                    style={{
+                      opacity: 0,
+                      boxShadow: index === 1
+                        ? "0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1)"
+                        : "0 15px 30px -8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1)"
+                    }}
+                  >
+                    {/* Phone frame effect */}
+                    <div className="absolute inset-0 rounded-[2rem] border border-neutral-700/50 pointer-events-none z-10" />
+                    {/* Notch */}
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 md:w-20 h-5 md:h-6 bg-neutral-900 rounded-full z-20" />
+                    <Image
+                      src={img}
+                      alt={`${project.title} - Screen ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 180px, (max-width: 1280px) 220px, 250px"
+                      className="object-cover"
+                      priority={index === 1}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         ) : (
@@ -812,53 +855,12 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
           </section>
         )}
 
-        {/* Project Header */}
-        <section
-          className={`relative z-10 ${
-            project.type === "mobile"
-              ? "pt-12 md:pt-16"
-              : "-mt-72 md:-mt-80 lg:-mt-88"
-          }`}
-        >
-          <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
-            <div className={`max-w-4xl ${project.type === "web" ? "mb-16 md:mb-20 lg:mb-24" : ""}`}>
-              {/* Meta info */}
-              <div ref={metaRef} className="flex items-center gap-4 mb-6">
-                <span
-                  className={`text-xs tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
-                  style={{ fontFamily: "var(--font-body)", opacity: 0 }}
-                >
-                  {project.year}
-                </span>
-                <div className={`h-px w-8 ${project.type === "web" ? "bg-white/40" : "bg-neutral-300"}`} style={{ opacity: 0 }} />
-                <span
-                  className={`text-xs tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
-                  style={{ fontFamily: "var(--font-body)", opacity: 0 }}
-                >
-                  {project.type === "mobile" ? "Mobile" : "Web"}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h1
-                ref={titleRef}
-                className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-[-0.04em] leading-[0.95] mb-8 ${project.type === "web" ? "text-white" : "text-ink"}`}
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {project.title}
-              </h1>
-
-              {/* Short Description */}
-              <p
-                ref={shortDescRef}
-                className={`text-xl md:text-2xl leading-relaxed max-w-2xl ${project.type === "web" ? "text-white/85" : "text-neutral-600"}`}
-                style={{ fontFamily: "var(--font-body)", opacity: 0 }}
-              >
-                {projectTranslations?.shortDescription || project.shortDescription}
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Project Header (web: overlaps the media; mobile: rendered inside the hero above) */}
+        {project.type === "web" && (
+          <section className="relative z-10 -mt-72 md:-mt-80 lg:-mt-88">
+            <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-16 md:mb-20 lg:mb-24">{projectHeader}</div>
+          </section>
+        )}
 
         {/* Main Content - Editorial Layout */}
         <section className={project.type === "web" ? "pt-16 md:pt-20 lg:pt-24 pb-0" : "pt-16 md:pt-24 lg:pt-32 pb-0"}>
