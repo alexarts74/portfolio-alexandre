@@ -40,25 +40,25 @@ function SectionBlock({
     <div ref={sectionRef} className="section-block mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-12">
       <div className="section-block-badge flex items-center gap-4 mb-4">
         <span
-          className="text-[10px] tracking-[0.3em] text-neutral-400 uppercase"
+          className="text-sm font-bold text-ink"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          <span className="text-accent">#</span>{number}
+        </span>
+        <div className="h-px flex-1 bg-ink/10" />
+        <span
+          className="text-sm font-medium text-ink/50"
           style={{ fontFamily: "var(--font-body)" }}
         >
           {label}
         </span>
-        <div className="h-px flex-1 bg-neutral-200" />
-        <span
-          className="text-[10px] tracking-[0.2em] text-neutral-300"
-          style={{ fontFamily: "var(--font-body)" }}
-        >
-          {number}
-        </span>
       </div>
       <h3
-        className="text-3xl md:text-4xl font-light"
+        className="text-3xl md:text-5xl font-bold tracking-tight text-ink"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}{" "}
-        <span className="italic text-neutral-400">{titleItalic}</span>
+        <span className="text-accent">{titleItalic}</span>
       </h3>
     </div>
   );
@@ -81,24 +81,24 @@ function HorizontalHeader({
     <div ref={headerRef} className="section-block mx-6 md:mx-12 lg:mx-16 xl:mx-24 pt-10 pb-6 shrink-0">
       <div className="section-block-badge flex items-center gap-4 mb-4">
         <span
-          className="text-[10px] tracking-[0.3em] text-neutral-400 uppercase"
+          className="text-sm font-bold text-ink"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          <span className="text-accent">#</span>{number}
+        </span>
+        <div className="h-px flex-1 bg-ink/10" />
+        <span
+          className="text-sm font-medium text-ink/50"
           style={{ fontFamily: "var(--font-body)" }}
         >
           {label}
         </span>
-        <div className="h-px flex-1 bg-neutral-200" />
-        <span
-          className="text-[10px] tracking-[0.2em] text-neutral-300"
-          style={{ fontFamily: "var(--font-body)" }}
-        >
-          {number}
-        </span>
       </div>
       <h3
-        className="text-3xl md:text-4xl font-light"
+        className="text-3xl md:text-5xl font-bold tracking-tight text-ink"
         style={{ fontFamily: "var(--font-display)" }}
       >
-        {title} <span className="italic text-neutral-400">{titleItalic}</span>
+        {title} <span className="text-accent">{titleItalic}</span>
       </h3>
     </div>
   );
@@ -170,7 +170,7 @@ export default function ProjectsGrid() {
             scrollTrigger: {
               trigger: zoomSectionRef.current,
               start: "top top",
-              end: "+=200%",
+              end: "+=120%",
               pin: true,
               scrub: 0.5,
               anticipatePin: 1,
@@ -213,7 +213,7 @@ export default function ProjectsGrid() {
             scrollTrigger: {
               trigger: zoomSectionRef.current,
               start: "top top",
-              end: "+=150%",
+              end: "+=100%",
               pin: true,
               scrub: 0.5,
               anticipatePin: 1,
@@ -397,12 +397,12 @@ export default function ProjectsGrid() {
   );
 
   return (
-    <section ref={sectionRef} id="tous-les-projets" data-section="projectsgrid" className="w-full scroll-mt-20">
+    <section ref={sectionRef} id="tous-les-projets" className="w-full scroll-mt-20">
       {/* Dark Header Section — pinned zoom */}
-      <div ref={zoomSectionRef} className="relative bg-black h-screen overflow-hidden flex items-center">
+      <div ref={zoomSectionRef} data-dark className="hero-gradient relative h-screen overflow-hidden flex items-center">
         <div
           ref={bigNumberRef}
-          className="absolute right-0 top-1/2 -translate-y-1/2 text-[20rem] md:text-[28rem] lg:text-[35rem] font-light text-white/[0.03] leading-none pointer-events-none select-none"
+          className="absolute right-0 top-1/2 -translate-y-1/2 text-[20rem] md:text-[28rem] lg:text-[35rem] font-extrabold tracking-tighter text-white/10 leading-none pointer-events-none select-none"
           style={{ fontFamily: "var(--font-display)" }}
         >
           02
@@ -411,8 +411,8 @@ export default function ProjectsGrid() {
         <div ref={headerRef} className="relative w-full flex flex-col items-center text-center">
           <div className="section-badge mb-6">
             <span
-              className="inline-block border border-white/20 px-4 py-2 text-[10px] font-light tracking-[0.3em] text-white/60 uppercase"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="inline-block rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm"
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {t.projects.section}
             </span>
@@ -420,22 +420,22 @@ export default function ProjectsGrid() {
 
           <h2
             ref={titleZoomRef}
-            className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] tracking-tight text-white origin-center"
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1] tracking-[-0.03em] text-white origin-center"
             style={{ fontFamily: "var(--font-display)", willChange: "transform" }}
           >
             <SplitChars text={t.projects.title} />
             <br />
-            <span className="italic text-white/40">
+            <span className="text-ink/80">
               <SplitChars text={t.projects.titleItalic} />
             </span>
           </h2>
 
-          <div className="section-line mt-10 h-px w-24 bg-white/30 origin-center mx-auto" />
+          <div className="section-line mt-10 h-1 w-16 rounded-full bg-white origin-center mx-auto" />
         </div>
       </div>
 
       {/* Projects Content */}
-      <div className="bg-neutral-50 pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12">
+      <div className="bg-cream pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12">
 
         {/* SECTION 1 — Webflow */}
         <SectionBlock
@@ -457,7 +457,7 @@ export default function ProjectsGrid() {
 
         {/* Divider 1 */}
         <div ref={divider1Ref} className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-16 md:mb-20">
-          <div className="divider-line h-px bg-neutral-200 origin-left" />
+          <div className="divider-line h-px bg-ink/10 origin-left" />
         </div>
 
         {/* SECTION 2 — Sites vitrines (desktop: pinned horizontal scroll with header inside) */}
@@ -508,7 +508,7 @@ export default function ProjectsGrid() {
 
         {/* Divider 2 */}
         <div ref={divider2Ref} className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-16 md:mb-20">
-          <div className="divider-line h-px bg-neutral-200 origin-left" />
+          <div className="divider-line h-px bg-ink/10 origin-left" />
         </div>
 
         {/* SECTION 3 — SaaS / Web apps (desktop: pinned horizontal scroll with header inside) */}
@@ -562,7 +562,7 @@ export default function ProjectsGrid() {
 
         {/* Divider 3 */}
         <div ref={divider3Ref} className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-16 md:mb-20">
-          <div className="divider-line h-px bg-neutral-200 origin-left" />
+          <div className="divider-line h-px bg-ink/10 origin-left" />
         </div>
 
         {/* SECTION 4 — Mobile */}

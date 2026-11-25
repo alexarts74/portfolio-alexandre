@@ -7,128 +7,78 @@ import { gsap } from "@/app/lib/gsap";
 import { useGSAP } from "@gsap/react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { TransitionLink } from "./PageTransition";
+import PillButton from "./PillButton";
 
-export default function Navigation() {
+interface NavigationProps {
+  /** "home": anchor links + CTA. "minimal": logo, back link and language (contact & project pages). */
+  variant?: "home" | "minimal";
+  backHref?: string;
+  backLabel?: string;
+}
+
+export default function Navigation({ variant = "home", backHref = "/", backLabel }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { t } = useLanguage();
+  const isHome = variant === "home";
 
   const navRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const hamburgerTopRef = useRef<HTMLSpanElement>(null);
-  const hamburgerMidRef = useRef<HTMLSpanElement>(null);
   const hamburgerBotRef = useRef<HTMLSpanElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
-  const langSwitcherRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isMenuOpen]);
 
-  // Build the GSAP timeline for the mobile menu
+  // Mobile menu timeline
   useGSAP(
     () => {
       if (!overlayRef.current || !linksRef.current) return;
 
-      const links = linksRef.current.querySelectorAll(".menu-link");
+      const items = linksRef.current.querySelectorAll(".menu-item");
       const tl = gsap.timeline({ paused: true });
 
-      // Overlay clip-path reveal from hamburger position
       tl.fromTo(
         overlayRef.current,
-        { clipPath: "circle(0% at 90% 5%)", visibility: "visible" as const },
-        {
-          clipPath: "circle(150% at 90% 5%)",
-          duration: 0.7,
-          ease: "power3.inOut",
-        }
+        { clipPath: "circle(0% at 92% 4%)", visibility: "visible" as const },
+        { clipPath: "circle(150% at 92% 4%)", duration: 0.7, ease: "power3.inOut" }
       );
-
-      // Stagger links in
       tl.fromTo(
-        links,
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power3.out",
-        },
+        items,
+        { opacity: 0, yPercent: 60 },
+        { opacity: 1, yPercent: 0, duration: 0.5, stagger: 0.07, ease: "power3.out" },
         "-=0.3"
       );
-
-      // Language switcher fade-in
-      if (langSwitcherRef.current) {
-        tl.fromTo(
-          langSwitcherRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
-          "-=0.2"
-        );
-      }
 
       menuTimelineRef.current = tl;
     },
     { scope: navRef }
   );
 
-  // Play / reverse the timeline when isMenuOpen changes
   useEffect(() => {
-    if (!menuTimelineRef.current) return;
+    const tl = menuTimelineRef.current;
+    if (!tl) return;
 
     if (isMenuOpen) {
-      menuTimelineRef.current.timeScale(1).play();
-      // Animate hamburger bars to X
-      gsap.to(hamburgerTopRef.current, {
-        rotation: 45,
-        y: 9,
-        duration: 0.3,
-        ease: "power2.inOut",
-      });
-      gsap.to(hamburgerMidRef.current, {
-        opacity: 0,
-        duration: 0.15,
-        ease: "power2.inOut",
-      });
-      gsap.to(hamburgerBotRef.current, {
-        rotation: -45,
-        y: -9,
-        duration: 0.3,
-        ease: "power2.inOut",
-      });
+      tl.timeScale(1).play();
+      gsap.to(hamburgerTopRef.current, { rotation: 45, y: 4, duration: 0.3, ease: "power2.inOut" });
+      gsap.to(hamburgerBotRef.current, { rotation: -45, y: -4, duration: 0.3, ease: "power2.inOut" });
     } else {
-      menuTimelineRef.current.timeScale(1.5).reverse();
-      // Animate hamburger bars back to lines
-      gsap.to(hamburgerTopRef.current, {
-        rotation: 0,
-        y: 0,
-        duration: 0.3,
-        ease: "power2.inOut",
-      });
-      gsap.to(hamburgerMidRef.current, {
-        opacity: 1,
-        duration: 0.15,
-        delay: 0.1,
-        ease: "power2.inOut",
-      });
-      gsap.to(hamburgerBotRef.current, {
+      tl.timeScale(1.5).reverse();
+      gsap.to([hamburgerTopRef.current, hamburgerBotRef.current], {
         rotation: 0,
         y: 0,
         duration: 0.3,
@@ -139,172 +89,134 @@ export default function Navigation() {
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
-  // Smooth scroll handler for anchor links
   const handleAnchorClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      if (href.startsWith("#")) {
-        e.preventDefault();
-        closeMenu();
-        // Small delay to let menu close before scrolling
-        setTimeout(() => {
-          gsap.to(window, {
-            scrollTo: { y: href, offsetY: 80 },
-            duration: 1,
-            ease: "power2.inOut",
-          });
-        }, isMenuOpen ? 400 : 0);
-      }
+      if (!href.startsWith("#")) return;
+      e.preventDefault();
+      const wasOpen = isMenuOpen;
+      closeMenu();
+      setTimeout(() => {
+        gsap.to(window, {
+          scrollTo: { y: href, offsetY: 72 },
+          duration: 1,
+          ease: "power2.inOut",
+        });
+      }, wasOpen ? 400 : 0);
     },
     [closeMenu, isMenuOpen]
   );
 
-  const navLinks = [
+  const anchorLinks = [
     { href: "#projets", label: t.nav.projects },
-    { href: "#skills", label: t.nav.skills },
     { href: "#about", label: t.nav.about },
-    { href: "/contact", label: t.nav.contact },
+    { href: "#skills", label: t.nav.skills },
   ];
+
+  const solid = !isHome || isScrolled;
 
   return (
     <div ref={navRef}>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? "bg-white border-b border-neutral-200"
-            : "bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 border-b ${
+          solid ? "bg-ink/95 backdrop-blur-md border-white/5" : "bg-transparent border-transparent"
         }`}
       >
-        <div className="mx-6 flex items-center justify-between py-5 md:mx-12 md:py-6 lg:mx-16 xl:mx-24">
+        <div
+          className={`mx-6 flex items-center justify-between md:mx-12 lg:mx-16 xl:mx-24 transition-[padding] duration-500 ${
+            solid ? "py-3" : "py-5 md:py-6"
+          }`}
+        >
           <TransitionLink
             href="/"
-            className={`text-sm font-light tracking-[0.3em] uppercase transition-colors duration-500 z-50 ${
-              isMenuOpen
-                ? "text-white hover:opacity-60"
-                : isScrolled
-                  ? "text-neutral-900 hover:text-neutral-500"
-                  : "text-white hover:opacity-60"
-            }`}
+            className="z-50 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-70"
             onClick={closeMenu}
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Alexandre
+            Alexandre<span className="text-accent">.</span>
           </TransitionLink>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => {
-              const isAnchor = link.href.startsWith("#");
-              const linkClass = `text-xs font-light tracking-[0.2em] uppercase transition-colors duration-500 ${
-                isScrolled
-                  ? "text-neutral-400 hover:text-neutral-900"
-                  : "text-white/60 hover:text-white"
-              }`;
-              return isAnchor ? (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={linkClass}
-                  style={{ fontFamily: "var(--font-body)" }}
-                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href)}
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <TransitionLink
-                  key={link.href}
-                  href={link.href}
-                  className={linkClass}
-                  style={{ fontFamily: "var(--font-body)" }}
-                >
-                  {link.label}
-                </TransitionLink>
-              );
-            })}
-            <LanguageSwitcher
-              className={`transition-colors duration-500 ${
-                isScrolled ? "text-neutral-400" : "text-white/60"
-              }`}
-            />
-          </div>
+          {isHome ? (
+            <>
+              {/* Desktop */}
+              <div className="hidden md:flex items-center gap-8">
+                {anchorLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-[15px] text-white/80 transition-colors duration-300 hover:text-white"
+                    style={{ fontFamily: "var(--font-body)" }}
+                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <LanguageSwitcher className="text-white/80" />
+                <PillButton href="/contact" transition>
+                  {t.nav.cta}
+                </PillButton>
+              </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden z-50 relative w-6 h-5 flex flex-col justify-between"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-            aria-expanded={isMenuOpen}
-          >
-            <span
-              ref={hamburgerTopRef}
-              className={`block h-[1px] w-full origin-center ${
-                isMenuOpen
-                  ? "bg-white"
-                  : isScrolled
-                    ? "bg-neutral-900"
-                    : "bg-white"
-              }`}
-            />
-            <span
-              ref={hamburgerMidRef}
-              className={`block h-[1px] w-full ${
-                isMenuOpen
-                  ? "bg-white"
-                  : isScrolled
-                    ? "bg-neutral-900"
-                    : "bg-white"
-              }`}
-            />
-            <span
-              ref={hamburgerBotRef}
-              className={`block h-[1px] w-full origin-center ${
-                isMenuOpen
-                  ? "bg-white"
-                  : isScrolled
-                    ? "bg-neutral-900"
-                    : "bg-white"
-              }`}
-            />
-          </button>
+              {/* Mobile button */}
+              <button
+                className="md:hidden z-50 relative flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-full bg-white/10 backdrop-blur-sm"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+                aria-expanded={isMenuOpen}
+              >
+                <span ref={hamburgerTopRef} className="block h-[2px] w-5 rounded-full bg-white origin-center" />
+                <span ref={hamburgerBotRef} className="block h-[2px] w-5 rounded-full bg-white origin-center" />
+              </button>
+            </>
+          ) : (
+            <div className="flex items-center gap-6">
+              <TransitionLink
+                href={backHref}
+                className="group flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:-translate-x-1" aria-hidden>
+                  <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span className="hidden sm:inline">{backLabel ?? t.nav.back}</span>
+              </TransitionLink>
+              <LanguageSwitcher className="text-white/80" />
+            </div>
+          )}
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <div
-        ref={overlayRef}
-        className="fixed inset-0 z-40 bg-black md:hidden"
-        style={{ visibility: "hidden", clipPath: "circle(0% at 90% 5%)" }}
-      >
-        <div ref={linksRef} className="flex flex-col items-center justify-center h-full gap-8">
-          {navLinks.map((link) => {
-            const isAnchor = link.href.startsWith("#");
-            const mobileClass = "menu-link text-white text-2xl font-light tracking-[0.3em] uppercase hover:opacity-60 transition-opacity";
-            return isAnchor ? (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={mobileClass}
-                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href)}
-                style={{ opacity: 0 }}
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <TransitionLink
-                key={link.href}
-                href={link.href}
-                className={mobileClass}
-                onClick={closeMenu}
-                style={{ opacity: 0 }}
-              >
-                {link.label}
-              </TransitionLink>
-            );
-          })}
-          <div ref={langSwitcherRef} className="mt-8" style={{ opacity: 0 }}>
-            <LanguageSwitcher className="text-white text-lg" />
+      {/* Mobile menu overlay */}
+      {isHome && (
+        <div
+          ref={overlayRef}
+          className="hero-gradient fixed inset-0 z-40 md:hidden"
+          style={{ visibility: "hidden", clipPath: "circle(0% at 92% 4%)" }}
+        >
+          <div ref={linksRef} className="flex h-full flex-col justify-between px-6 pt-28 pb-10">
+            <div className="flex flex-col gap-2">
+              {anchorLinks.map((link, i) => (
+                <div key={link.href} className="overflow-hidden">
+                  <Link
+                    href={link.href}
+                    className="menu-item flex items-baseline gap-3 text-[2.6rem] leading-tight font-bold tracking-tight text-white"
+                    style={{ fontFamily: "var(--font-display)", opacity: 0 }}
+                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleAnchorClick(e, link.href)}
+                  >
+                    <span className="text-sm font-semibold text-white/50">#0{i + 1}</span>
+                    {link.label}
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div className="menu-item flex items-center justify-between" style={{ opacity: 0 }}>
+              <PillButton href="/contact" transition>
+                {t.nav.cta}
+              </PillButton>
+              <LanguageSwitcher className="text-white" />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

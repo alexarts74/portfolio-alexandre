@@ -6,11 +6,20 @@ export const translations = {
       skills: "Skills",
       about: "About",
       contact: "Contact",
+      cta: "Get in touch",
+      back: "Back to home",
     },
     // Hero
     hero: {
+      greeting: "Hey, I'm Alexandre,",
+      titleLine1: "Full Stack",
+      titleLine2: "Developer",
+      tagline: "Web products that actually work.",
+      services: ["Showcase websites", "Web apps & SaaS", "Mobile apps", "AI & automation"],
+      trustedBy: "They trusted me",
+      available: "Available for freelance",
       subtitle: "Full Stack Developer",
-      description: "Building digital experiences with code & creativity",
+      description: "From showcase sites to SaaS, I design and build fast, clean products, front to back.",
       scroll: "Scroll",
       cta: {
         projects: "See Projects",
@@ -438,11 +447,20 @@ export const translations = {
       skills: "Compétences",
       about: "À propos",
       contact: "Contact",
+      cta: "Me contacter",
+      back: "Retour à l'accueil",
     },
     // Hero
     hero: {
+      greeting: "Salut, moi c'est Alexandre,",
+      titleLine1: "Développeur",
+      titleLine2: "Full Stack",
+      tagline: "Des produits web qui marchent vraiment.",
+      services: ["Sites vitrines", "Web apps & SaaS", "Apps mobiles", "IA & automatisation"],
+      trustedBy: "Ils m'ont fait confiance",
+      available: "Dispo en freelance",
       subtitle: "Développeur Full Stack",
-      description: "Création d'expériences digitales avec code & créativité",
+      description: "Du site vitrine au SaaS, je conçois et développe des produits rapides et soignés, du front au back.",
       scroll: "Scroll",
       cta: {
         projects: "Voir Projets",

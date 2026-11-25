@@ -217,24 +217,24 @@ export default function Skills() {
   );
 
   return (
-    <section ref={sectionRef} id="skills" data-section="skills" className="w-full bg-white py-16 md:py-20 lg:py-24">
+    <section ref={sectionRef} id="skills" data-dark className="w-full bg-ink text-white py-16 md:py-20 lg:py-24">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         {/* Section Header */}
         <div className="mb-8 md:mb-10 flex items-center gap-4">
           <span
             ref={headerLeftRef}
-            className="shrink-0 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
-            style={{ fontFamily: "var(--font-body)" }}
+            className="shrink-0 text-sm font-bold text-white"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            {t.skills.number}
+            <span className="text-accent">#</span>{t.skills.number}
           </span>
           <div
             ref={lineRef}
-            className="h-px flex-1 bg-neutral-200 origin-left"
+            className="h-px flex-1 bg-white/10 origin-left"
           />
           <span
             ref={headerRightRef}
-            className="shrink-0 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
+            className="shrink-0 text-sm font-medium text-white/50"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {t.skills.section}
@@ -244,22 +244,27 @@ export default function Skills() {
         {/* Title */}
         <h2
           ref={titleRef}
-          className="mb-8 text-3xl font-light leading-tight tracking-wide md:text-4xl"
+          className="mb-10 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          {t.skills.title} <span className="italic">{t.skills.titleItalic}</span>
+          {t.skills.title} <span className="text-accent">{t.skills.titleItalic}</span>
         </h2>
 
         {/* Skills Grid */}
         <div
           ref={gridRef}
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
         >
           {skillCategories.map((category) => (
-            <div key={category.key} className="skill-category">
+            <div
+              key={category.key}
+              className={`skill-category rounded-3xl p-6 ${
+                category.highlight ? "hero-gradient" : "bg-ink-2 border border-white/5"
+              }`}
+            >
               <h3
-                className="category-label mb-3 text-xs font-light tracking-[0.2em] text-neutral-400 uppercase"
-                style={{ fontFamily: "var(--font-body)" }}
+                className={`category-label mb-4 text-lg font-bold ${category.highlight ? "text-white" : "text-white/90"}`}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {getLabel(category.key, category.label)}
               </h3>
@@ -267,17 +272,14 @@ export default function Skills() {
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className={`skill-tag group relative overflow-hidden border px-3 py-1.5 text-xs font-light tracking-wider transition-all duration-300 cursor-default ${
+                    className={`skill-tag rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-300 cursor-default ${
                       category.highlight
-                        ? "border-neutral-300 text-neutral-700 hover:border-neutral-900 hover:text-white"
-                        : "border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900"
+                        ? "border-white/40 bg-white/10 text-white hover:bg-white hover:text-accent"
+                        : "border-white/15 text-white/70 hover:border-accent hover:bg-accent hover:text-white"
                     }`}
                     style={{ fontFamily: "var(--font-body)" }}
                   >
-                    <span className="relative z-10">{skill}</span>
-                    {category.highlight && (
-                      <span className="absolute inset-0 bg-neutral-900 translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
-                    )}
+                    {skill}
                   </span>
                 ))}
               </div>

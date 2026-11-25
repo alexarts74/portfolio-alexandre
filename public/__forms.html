@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!-- Static copy of the contact form so Netlify Forms can detect it at deploy time.
+     The React form in app/contact/page.tsx POSTs to this file. Keep field names in sync. -->
+<html lang="fr">
+  <head><meta charset="utf-8" /><meta name="robots" content="noindex" /><title>Forms</title></head>
+  <body>
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>

@@ -32,31 +32,32 @@ export default function CustomCursor() {
 
     const isOverDarkSection = (x: number, y: number): boolean => {
       const el = document.elementFromPoint(x, y);
-      if (!el) return false;
-      let node: Element | null = el;
-      while (node && node !== document.documentElement) {
-        if (node.classList.contains("bg-black")) return true;
-        node = node.parentElement;
-      }
-      return false;
+      return !!el?.closest("[data-dark]");
     };
 
     const updateCursorTheme = (dark: boolean) => {
       if (dark === isDark) return;
       isDark = dark;
       gsap.to(circle, {
-        backgroundColor: dark ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.85)",
+        backgroundColor: dark ? "rgba(255,255,255,0.95)" : "#ff5a1f",
         duration: 0.2,
         overwrite: "auto",
       });
       if (text) {
-        text.style.color = dark ? "#000" : "#fff";
+        text.style.color = dark ? "#0f0f10" : "#fff";
       }
     };
 
+    let hasMoved = false;
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      // Stay hidden until the first real mouse position is known (avoids a dot stuck at 0,0)
+      if (!hasMoved) {
+        hasMoved = true;
+        gsap.set(cursor, { x: mouseX, y: mouseY });
+        gsap.to(circle, { opacity: 1, duration: 0.2 });
+      }
       updateCursorTheme(isOverDarkSection(mouseX, mouseY));
     };
 
@@ -113,6 +114,7 @@ export default function CustomCursor() {
       gsap.to(circle, { opacity: 0, duration: 0.15 });
     };
     const onEnterViewport = () => {
+      if (!hasMoved) return;
       gsap.to(circle, { opacity: 1, duration: 0.15 });
     };
 
@@ -172,15 +174,16 @@ export default function CustomCursor() {
           height: SMALL,
           marginLeft: -SMALL / 2,
           marginTop: -SMALL / 2,
-          background: "rgba(0, 0, 0, 0.85)", // updated dynamically via updateCursorTheme
+          background: "#ff5a1f", // updated dynamically via updateCursorTheme
+          opacity: 0,
           willChange: "width, height",
         }}
       >
         <span
           ref={textRef}
-          className="text-[11px] font-light tracking-[0.25em] uppercase"
+          className="text-xs font-semibold"
           style={{
-            fontFamily: "var(--font-body)",
+            fontFamily: "var(--font-display)",
             opacity: 0,
             transform: "scale(0)",
             color: "#fff",
