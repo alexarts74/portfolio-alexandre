@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "./i18n/LanguageContext";
 import { TransitionProvider } from "./components/PageTransition";
 
-const cormorant = Cormorant_Garamond({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-body",
   display: "swap",
 });
@@ -78,8 +78,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${cormorant.variable} ${inter.variable} overscroll-none`}>
-      <body className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-white text-black antialiased leading-relaxed">
+    <html lang="fr" className={`${jakarta.variable} ${inter.variable} overscroll-none`}>
+      <body className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-ink text-ink antialiased leading-relaxed">
         <LanguageProvider>
           <TransitionProvider>
             {children}

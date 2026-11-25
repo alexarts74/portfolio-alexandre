@@ -8,7 +8,7 @@ import { useLanguage } from "@/app/i18n/LanguageContext";
 import { gsap, ScrollTrigger } from "@/app/lib/gsap";
 import { useGSAP } from "@gsap/react";
 import ProjectGallery from "./ProjectGallery";
-import LanguageSwitcher from "./LanguageSwitcher";
+import Navigation from "./Navigation";
 
 interface ProjectDetailProps {
   project: Project;
@@ -67,9 +67,9 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
           if (heroOverlayRef.current && heroSectionRef.current) {
             gsap.fromTo(
               heroOverlayRef.current,
-              { opacity: 0.4 },
+              { opacity: 0.85 },
               {
-                opacity: 0.6,
+                opacity: 1,
                 scrollTrigger: {
                   trigger: heroSectionRef.current,
                   start: "top top",
@@ -572,8 +572,10 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
           const scrubTl = gsap.timeline({
             scrollTrigger: {
               trigger: nextProjectRef.current,
-              start: "top 80%",
-              end: "top 10%",
+              start: "top 85%",
+              // The section sits at the very end of the page, so it can never reach "top 10%":
+              // finish once it is fully on screen instead.
+              end: "bottom bottom",
               scrub: 0.5,
             },
           });
@@ -600,6 +602,8 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
 
           // Title character split with rotateX
           if (nextTitleEl) {
+            // The <h2> starts at opacity 0 (inline style); only its chars are animated here
+            gsap.set(nextTitleEl, { opacity: 1 });
             const text = nextTitleEl.textContent || "";
             nextTitleEl.innerHTML = "";
             text.split("").forEach((char) => {
@@ -723,44 +727,13 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
 
   return (
     <>
-      {/* Fixed Navigation */}
-      <nav className="fixed left-0 right-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-100">
-        <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 flex justify-between items-center py-4">
-          <Link
-            href="/#projets"
-            className="group flex items-center gap-3 text-neutral-600 transition-colors hover:text-black"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="transition-transform group-hover:-translate-x-1"
-            >
-              <path
-                d="M19 12H5M5 12L12 19M5 12L12 5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span
-              className="text-xs font-light tracking-[0.2em] uppercase"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              {t.projectDetails.backToProjects}
-            </span>
-          </Link>
-          <LanguageSwitcher className="text-neutral-600" />
-        </div>
-      </nav>
+      <Navigation variant="minimal" backHref="/#projets" backLabel={t.projectDetails.backToProjects} />
 
       <main ref={mainRef} className="min-h-screen bg-white">
         {/* Hero Section - Different layout for mobile vs web */}
         {project.type === "mobile" ? (
           /* Mobile Hero - Phone mockups */
-          <section ref={heroSectionRef} className="relative py-12 md:py-16 lg:py-20 w-full overflow-hidden bg-gradient-to-b from-neutral-100 to-white">
+          <section ref={heroSectionRef} data-dark className="hero-gradient relative pt-28 pb-16 md:pt-32 md:pb-20 w-full overflow-hidden rounded-b-[2.5rem]">
             <div ref={mobileMockupsRef} className="flex justify-center items-end gap-4 md:gap-6 lg:gap-8 px-6">
               {project.images.slice(0, 3).map((img, index) => (
                 <div
@@ -809,12 +782,12 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     <source src={project.video} type="video/mp4" />
                   </video>
                 </div>
-                <div ref={heroOverlayRef} className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden />
+                <div ref={heroOverlayRef} className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 via-45% to-accent/30 pointer-events-none" aria-hidden />
               </>
             ) : heroError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200">
                 <div
-                  className="text-[20vw] font-light text-neutral-200"
+                  className="text-[20vw] text-neutral-200"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {project.title.charAt(0)}
@@ -833,7 +806,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     onError={() => setHeroError(true)}
                   />
                 </div>
-                <div ref={heroOverlayRef} className="absolute inset-0 bg-black/40 pointer-events-none" aria-hidden />
+                <div ref={heroOverlayRef} className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 via-45% to-accent/30 pointer-events-none" aria-hidden />
               </>
             )}
           </section>
@@ -843,7 +816,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         <section
           className={`relative z-10 ${
             project.type === "mobile"
-              ? "-mt-12 md:-mt-16"
+              ? "pt-12 md:pt-16"
               : "-mt-72 md:-mt-80 lg:-mt-88"
           }`}
         >
@@ -852,14 +825,14 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               {/* Meta info */}
               <div ref={metaRef} className="flex items-center gap-4 mb-6">
                 <span
-                  className={`text-xs font-light tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
+                  className={`text-xs tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {project.year}
                 </span>
                 <div className={`h-px w-8 ${project.type === "web" ? "bg-white/40" : "bg-neutral-300"}`} style={{ opacity: 0 }} />
                 <span
-                  className={`text-xs font-light tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
+                  className={`text-xs tracking-[0.3em] uppercase ${project.type === "web" ? "text-white/80" : "text-neutral-500"}`}
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {project.type === "mobile" ? "Mobile" : "Web"}
@@ -869,7 +842,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               {/* Title */}
               <h1
                 ref={titleRef}
-                className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light tracking-tight mb-8 ${project.type === "web" ? "text-white" : ""}`}
+                className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-[-0.04em] leading-[0.95] mb-8 ${project.type === "web" ? "text-white" : "text-ink"}`}
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 {project.title}
@@ -878,7 +851,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               {/* Short Description */}
               <p
                 ref={shortDescRef}
-                className={`text-xl md:text-2xl lg:text-3xl font-light leading-relaxed max-w-2xl ${project.type === "web" ? "text-white/95" : "text-neutral-600"}`}
+                className={`text-xl md:text-2xl leading-relaxed max-w-2xl ${project.type === "web" ? "text-white/85" : "text-neutral-600"}`}
                 style={{ fontFamily: "var(--font-body)", opacity: 0 }}
               >
                 {projectTranslations?.shortDescription || project.shortDescription}
@@ -895,13 +868,13 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               {/* Context - Takes more space */}
               <div className="lg:col-span-7">
                 <h2
-                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-6"
+                  className="section-label text-sm font-semibold text-accent mb-6"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {locale === "en" ? "Context" : "Contexte"}
                 </h2>
                 <p
-                  className="section-text text-lg md:text-xl font-light leading-[1.8] text-neutral-700"
+                  className="section-text text-lg md:text-xl leading-[1.8] text-neutral-700"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {projectTranslations?.context || project.context}
@@ -914,7 +887,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                   {/* Technologies */}
                   <div>
                     <h3
-                      className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-4"
+                      className="section-label text-sm font-semibold text-accent mb-4"
                       style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                     >
                       {t.projectDetails.technologies}
@@ -923,7 +896,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="tech-tag bg-neutral-100 px-4 py-2 text-sm font-light tracking-wide text-neutral-700"
+                          className="tech-tag rounded-full bg-cream px-4 py-2 text-sm text-ink"
                           style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                         >
                           {tech}
@@ -940,7 +913,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="project-link group inline-flex items-center gap-2 bg-neutral-900 px-5 py-2.5 text-sm font-light tracking-wider text-white uppercase transition-all duration-300 hover:bg-neutral-800"
+                          className="project-link group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#ff6d38]"
                           style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                         >
                           {t.projectDetails.viewLive}
@@ -959,7 +932,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="project-link inline-flex items-center gap-2 border border-neutral-300 px-5 py-2.5 text-sm font-light tracking-wider text-neutral-700 uppercase transition-all duration-300 hover:border-neutral-900 hover:text-neutral-900"
+                          className="project-link inline-flex items-center gap-2 rounded-full border border-ink/15 px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-white"
                           style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -978,7 +951,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             <div ref={clientBenefitRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-16 md:mb-24">
               <div className="lg:col-span-4">
                 <h2
-                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2 lg:sticky lg:top-32"
+                  className="section-label text-sm font-semibold text-accent mb-2 lg:sticky lg:top-32"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {t.projectDetails.clientBenefit}
@@ -986,7 +959,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               </div>
               <div className="lg:col-span-8">
                 <p
-                  className="section-text text-lg md:text-xl font-light leading-[1.8] text-neutral-700"
+                  className="section-text text-lg md:text-xl leading-[1.8] text-neutral-700"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {projectTranslations?.clientBenefit || project.clientBenefit}
@@ -999,7 +972,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
               <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-16 md:mb-24">
                 <div className="lg:col-span-4">
                   <h2
-                    className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2"
+                    className="text-sm font-semibold text-accent mb-2"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {locale === "en" ? "Client feedback" : "Retour client"}
@@ -1007,7 +980,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                 </div>
                 <div className="lg:col-span-8">
                   <blockquote
-                    className="text-xl md:text-2xl font-light italic leading-[1.7] text-neutral-800"
+                    className="text-xl md:text-2xl italic leading-[1.7] text-neutral-800"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     “{project.testimonial.quote}”
@@ -1033,7 +1006,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             <div ref={technicalSectionRef} className="grid lg:grid-cols-12 gap-12 lg:gap-16 pt-8 md:pt-12 mb-12 md:mb-16 lg:items-start">
               <div className="lg:col-span-4">
                 <h2
-                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2"
+                  className="section-label text-sm font-semibold text-accent mb-2"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {locale === "en" ? "Technical" : "Technique"}
@@ -1048,14 +1021,14 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     >
                       <div className="flex items-center gap-6">
                         <span
-                          className="tech-number flex-shrink-0 text-2xl md:text-3xl font-light text-neutral-300 tabular-nums"
+                          className="tech-number flex-shrink-0 text-2xl md:text-3xl font-bold text-accent tabular-nums"
                           style={{ fontFamily: "var(--font-display)", opacity: 0 }}
                         >
                           {String(index + 1).padStart(2, '0')}
                         </span>
-                        <div className="tech-line h-px flex-shrink-0 w-8 bg-neutral-200 origin-left" style={{ transform: "scaleX(0)" }} />
+                        <div className="tech-line h-px flex-shrink-0 w-8 bg-accent/30 origin-left" style={{ transform: "scaleX(0)" }} />
                         <p
-                          className="tech-text text-base md:text-lg font-light leading-relaxed text-neutral-700 group-hover:text-neutral-900 transition-colors"
+                          className="tech-text text-base md:text-lg leading-relaxed text-neutral-700 group-hover:text-neutral-900 transition-colors"
                           style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                         >
                           {item}
@@ -1076,7 +1049,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               <div className="lg:col-span-4">
                 <h2
-                  className="section-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-2"
+                  className="section-label text-sm font-semibold text-accent mb-2"
                   style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                 >
                   {locale === "en" ? "Features" : "Fonctionnalités"}
@@ -1089,9 +1062,9 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                       key={index}
                       className="feature-li flex items-start gap-4 group"
                     >
-                      <span className="feature-bullet flex-shrink-0 mt-1.5 w-2 h-2 rounded-full bg-neutral-300 group-hover:bg-neutral-900 transition-colors" style={{ transform: "scale(0)" }} />
+                      <span className="feature-bullet flex-shrink-0 mt-1.5 w-2 h-2 rounded-full bg-accent/40 group-hover:bg-accent transition-colors" style={{ transform: "scale(0)" }} />
                       <p
-                        className="feature-item text-base md:text-lg font-light leading-relaxed text-neutral-600 group-hover:text-neutral-800 transition-colors"
+                        className="feature-item text-base md:text-lg leading-relaxed text-neutral-600 group-hover:text-neutral-800 transition-colors"
                         style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                       >
                         {feature}
@@ -1108,7 +1081,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         <section ref={gallerySectionRef} className="py-10 md:py-14 bg-white">
           <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
             <h2
-              className="gallery-label text-sm font-light tracking-[0.2em] text-neutral-400 uppercase mb-10"
+              className="gallery-label text-sm font-semibold text-accent mb-10"
               style={{ fontFamily: "var(--font-body)", opacity: 0 }}
             >
               {locale === "en" ? "Gallery" : "Galerie"}
@@ -1137,13 +1110,13 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 mb-10">
               <div className="flex items-center gap-4">
                 <h2
-                  className="text-sm font-light tracking-[0.2em] text-neutral-400 uppercase"
+                  className="text-sm font-semibold text-accent"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   {locale === "en" ? "Mobile app" : "Application mobile"}
                 </h2>
                 <span
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-light tracking-[0.15em] uppercase rounded-full bg-violet-50 text-violet-500 border border-violet-100"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-full bg-accent-soft text-accent"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -1191,31 +1164,31 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         )}
 
         {/* Next Project */}
-        <section ref={nextProjectRef} className="bg-neutral-900">
+        <section ref={nextProjectRef} data-dark className="hero-gradient">
           <Link href={`/projects/${nextProject.slug}`} className="group block">
             <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 py-12 md:py-16">
               <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-center">
                 {/* Text */}
                 <div>
                   <div className="next-label flex items-center gap-4 mb-4" style={{ opacity: 0 }}>
-                    <div className="h-px w-8 bg-white/20" />
+                    <div className="h-px w-8 bg-white/50" />
                     <span
-                      className="text-xs font-light tracking-[0.3em] text-neutral-500 uppercase"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      className="text-sm font-semibold text-white/80"
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {locale === "en" ? "Next project" : "Projet suivant"}
                     </span>
                   </div>
                   <h2
-                    className="next-title text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white transition-all duration-500 group-hover:tracking-wide"
+                    className="next-title text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-[-0.04em] text-white"
                     style={{ fontFamily: "var(--font-display)", opacity: 0 }}
                   >
                     {nextProject.title}
                   </h2>
-                  <div className="next-cta mt-5 flex items-center gap-3 text-neutral-500 transition-colors group-hover:text-white" style={{ opacity: 0 }}>
+                  <div className="next-cta mt-5 flex items-center gap-3 text-white/80 transition-colors group-hover:text-white" style={{ opacity: 0 }}>
                     <span
-                      className="text-sm font-light tracking-wider uppercase"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      className="text-sm font-semibold"
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {t.projects.viewProject}
                     </span>
@@ -1241,7 +1214,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                   >
                     {nextError ? (
                       <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-700 transition-all duration-500 group-hover:scale-105">
-                        <div className="text-5xl font-light text-neutral-600" style={{ fontFamily: "var(--font-display)" }}>
+                        <div className="text-5xl text-neutral-600" style={{ fontFamily: "var(--font-display)" }}>
                           {nextProject.title.charAt(0)}
                         </div>
                       </div>

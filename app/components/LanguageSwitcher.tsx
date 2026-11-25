@@ -13,7 +13,7 @@ export default function LanguageSwitcher({ className = "" }: LanguageSwitcherPro
     <div className={`flex items-center gap-1 ${className}`}>
       <button
         onClick={() => setLocale("en")}
-        className={`text-xs font-light tracking-[0.15em] uppercase transition-opacity ${
+        className={`text-xs font-medium tracking-[0.12em] uppercase transition-opacity ${
           locale === "en" ? "opacity-100" : "opacity-50 hover:opacity-80"
         }`}
         style={{ fontFamily: "var(--font-body)" }}
@@ -23,7 +23,7 @@ export default function LanguageSwitcher({ className = "" }: LanguageSwitcherPro
       <span className="text-xs opacity-30">/</span>
       <button
         onClick={() => setLocale("fr")}
-        className={`text-xs font-light tracking-[0.15em] uppercase transition-opacity ${
+        className={`text-xs font-medium tracking-[0.12em] uppercase transition-opacity ${
           locale === "fr" ? "opacity-100" : "opacity-50 hover:opacity-80"
         }`}
         style={{ fontFamily: "var(--font-body)" }}

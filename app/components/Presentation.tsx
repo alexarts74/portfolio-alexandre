@@ -168,7 +168,7 @@ export default function Presentation() {
           // Counter animation
           if (valueEl && targetText) {
             const numericPart = parseFloat(targetText);
-            const suffix = targetText.replace(/[\d.]/g, "");
+            const suffix = "";
 
             if (!isNaN(numericPart)) {
               const counter = { val: 0 };
@@ -212,24 +212,24 @@ export default function Presentation() {
   );
 
   return (
-    <section ref={sectionRef} id="about" data-section="presentation" className="w-full bg-white py-20 md:py-28 lg:py-36">
+    <section ref={sectionRef} id="about" className="w-full bg-cream py-20 md:py-28 lg:py-36">
       <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
         {/* Section Header */}
         <div className="mb-10 md:mb-12 flex items-center gap-4">
           <span
             ref={headerLeftRef}
-            className="shrink-0 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
-            style={{ fontFamily: "var(--font-body)" }}
+            className="shrink-0 text-sm font-bold text-ink"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            {t.presentation.number}
+            <span className="text-accent">#</span>{t.presentation.number}
           </span>
           <div
             ref={lineRef}
-            className="h-px flex-1 bg-neutral-200 origin-left"
+            className="h-px flex-1 bg-ink/10 origin-left"
           />
           <span
             ref={headerRightRef}
-            className="shrink-0 text-xs font-light tracking-[0.3em] text-neutral-400 uppercase"
+            className="shrink-0 text-sm font-medium text-ink/50"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {t.presentation.section}
@@ -242,7 +242,7 @@ export default function Presentation() {
           <div>
             <div
               ref={imageContainerRef}
-              className="relative aspect-[3/4] w-full max-w-lg overflow-hidden bg-neutral-200"
+              className="relative aspect-[3/4] w-full max-w-lg overflow-hidden rounded-[2rem] bg-neutral-200"
             >
               {imageError ? (
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-300">
@@ -257,10 +257,20 @@ export default function Presentation() {
                   alt="Portrait d'Alexandre"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-[filter,transform] duration-1000 ease-in-out hover:grayscale"
+                  className="object-cover transition-transform duration-1000 ease-out hover:scale-105"
                   onError={() => setImageError(true)}
                 />
               )}
+              <span
+                className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-ink backdrop-blur-sm"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+                </span>
+                {t.hero.available}
+              </span>
             </div>
           </div>
 
@@ -268,17 +278,17 @@ export default function Presentation() {
           <div className="flex flex-col justify-center">
             <h2
               ref={titleRef}
-              className="mb-6 text-3xl font-light leading-tight tracking-wide md:text-4xl lg:text-5xl"
+              className="mb-6 text-4xl font-bold leading-[1.05] tracking-tight text-ink md:text-5xl lg:text-6xl"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {t.presentation.title}
               <br />
-              <span className="italic">{t.presentation.titleItalic}</span>
+              <span className="text-accent">{t.presentation.titleItalic}</span>
             </h2>
 
             <div
               ref={paragraphsRef}
-              className="space-y-4 text-base font-light leading-relaxed text-neutral-600"
+              className="space-y-4 text-base leading-relaxed text-neutral-600"
               style={{ fontFamily: "var(--font-body)" }}
             >
               <p>{t.presentation.paragraph1}</p>
@@ -289,24 +299,24 @@ export default function Presentation() {
             {/* Stats */}
             <div
               ref={statsRef}
-              className="mt-8 grid grid-cols-3 gap-4 border-t border-neutral-200 pt-8"
+              className="mt-10 grid grid-cols-3 gap-4 border-t border-ink/10 pt-8"
             >
               {[
-                { value: "2.5", label: t.presentation.stats.experience },
-                { value: "10+", label: t.presentation.stats.projects },
-                { value: "100%", label: t.presentation.stats.satisfaction },
+                { value: "2.5", suffix: "", label: t.presentation.stats.experience },
+                { value: "10", suffix: "+", label: t.presentation.stats.projects },
+                { value: "100", suffix: "%", label: t.presentation.stats.satisfaction },
               ].map((stat) => (
                 <div key={stat.label} data-stat>
                   <span
-                    data-stat-value={stat.value}
-                    className="text-2xl font-light md:text-3xl"
+                    className="text-4xl font-extrabold tracking-tight text-ink md:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    {stat.value}
+                    <span data-stat-value={stat.value}>{stat.value}</span>
+                    <span className="text-accent">{stat.suffix}</span>
                   </span>
                   <p
                     data-stat-label
-                    className="mt-1 text-[10px] font-light tracking-wider text-neutral-500 uppercase"
+                    className="mt-1 text-xs text-neutral-500"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {stat.label}

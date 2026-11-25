@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Portfolio personnel d'Alexandre Artus, développeur full stack. Design minimaliste inspiré de portfolios artistiques avec des animations au scroll et support multilingue (FR/EN).
+Portfolio personnel d'Alexandre Artus, développeur full stack. Design « carte dégradée » orange → bordeaux (hero avec portrait duotone), titres sans-serif bold, animations GSAP au scroll et support multilingue (FR/EN).
 
 ## Commands
 
@@ -27,14 +27,15 @@ npm run lint     # Run ESLint
 
 ```
 app/
-├── layout.tsx           # Root layout with fonts (Cormorant Garamond + Inter)
+├── layout.tsx           # Root layout with fonts (Plus Jakarta Sans + Inter)
 ├── page.tsx             # Home page assembling all sections
 ├── globals.css          # Tailwind + custom animations
 ├── lib/
 │   └── gsap.ts          # GSAP setup (registers ScrollTrigger + ScrollToPlugin)
 ├── components/
-│   ├── Navigation.tsx   # Fixed header with GSAP mobile menu (clip-path reveal)
-│   ├── Hero.tsx         # Full-screen hero with GSAP entrance + parallax
+│   ├── Navigation.tsx   # Fixed header (variant "home" | "minimal") + GSAP mobile menu
+│   ├── PillButton.tsx   # Shared pill CTA with round accent arrow
+│   ├── Hero.tsx         # Gradient card hero, duotone portrait, services, clients marquee
 │   ├── Presentation.tsx # About section with stats
 │   ├── ProjectsGrid.tsx # Projects showcase (horizontal scroll on desktop via GSAP)
 │   ├── ProjectCard.tsx  # Individual project card
@@ -48,11 +49,12 @@ app/
 │   ├── LanguageContext.tsx  # Language provider (FR/EN)
 │   └── translations.ts     # All translations
 ├── data/
-│   └── projects.ts      # Project data with images, videos, tech stacks
+│   ├── projects.ts      # Project data with images, videos, tech stacks
+│   └── site.ts          # Email, location, social links (single source of truth)
 ├── projects/
 │   └── [slug]/page.tsx  # Dynamic project detail page
 └── contact/
-    └── page.tsx         # Contact page (form submission is simulated — no backend)
+    └── page.tsx         # Contact page — Netlify Forms (detected via public/__forms.html)
 ```
 
 ### Animation Strategy
@@ -64,9 +66,10 @@ app/
 
 ### Styling
 
-- **Fonts**: Cormorant Garamond (display) + Inter (body) via `next/font`
-- **Colors**: Minimalist black/white/neutral palette
-- **Animations**: GSAP for all interactive/scroll animations, CSS keyframes only for simple infinite loops (scroll marquee, blob floats, cursor pulse)
+- **Fonts**: Plus Jakarta Sans 400–800 (display, `--font-display`) + Inter (body) via `next/font`
+- **Colors**: tokens in `globals.css` `@theme` → `accent` (#ff5a1f), `accent-soft`, `ink` (#0f0f10), `ink-2`, `cream`. Use `.hero-gradient` for the signature orange→burgundy gradient and `.duotone` for B&W photos blended over it
+- **Dark sections** carry a `data-dark` attribute (the custom cursor switches colour on it)
+- **Animations**: GSAP for all interactive/scroll animations, CSS keyframes only for simple infinite loops (client marquee)
 
 ### Customization
 
@@ -76,5 +79,5 @@ To personalize the portfolio:
 3. Add images to `public/images/`:
    - `portrait.jpg` - Your photo
    - `projects/*.jpg` - Project screenshots
-4. Update contact info in `app/components/Footer.tsx`
+4. Update contact info in `app/data/site.ts`
 5. Modify skills in `app/components/Skills.tsx`

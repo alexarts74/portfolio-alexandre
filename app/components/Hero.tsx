@@ -1,281 +1,189 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/app/i18n/LanguageContext";
-import Link from "next/link";
+import { projects } from "@/app/data/projects";
 import { gsap } from "@/app/lib/gsap";
 import { useGSAP } from "@gsap/react";
+import PillButton from "./PillButton";
 
-const BLOBS = [
-  { size: "60vw", color: "#1e3278", opacity: 0.9, blur: 120, top: "-5%", left: "5%",
-    xTo: 70, xDur: 2, yTo: 60, yDur: 2.8, sTo: 1.15, sDur: 1.6 },
-  { size: "55vw", color: "#28196e", opacity: 0.8, blur: 130, top: "10%", left: "55%",
-    xTo: -60, xDur: 2.4, yTo: 70, yDur: 2, sTo: 0.85, sDur: 2.4 },
-  { size: "50vw", color: "#0f3c6e", opacity: 0.85, blur: 110, top: "50%", left: "-10%",
-    xTo: 80, xDur: 2.2, yTo: -50, yDur: 3.2, sTo: 1.1, sDur: 1.8 },
-  { size: "45vw", color: "#192882", opacity: 0.75, blur: 100, top: "35%", left: "60%",
-    xTo: -50, xDur: 3, yTo: 50, yDur: 2.2, sTo: 0.9, sDur: 2.6 },
-  { size: "40vw", color: "#141464", opacity: 0.7, blur: 100, top: "70%", left: "25%",
-    xTo: 60, xDur: 2, yTo: -60, yDur: 2.6, sTo: 1.12, sDur: 2.2 },
+// Clients = every non-personal project
+const CLIENTS = projects
+  .filter((p) => p.projectType !== "personal")
+  .map((p) => p.title.replace(/^Portfolio\s+/i, ""));
+
+// Generic glyphs standing in for client logos
+const GLYPHS = [
+  <svg key="ring" viewBox="0 0 24 24" className="h-6 w-6" aria-hidden><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="3.5" /></svg>,
+  <svg key="hourglass" viewBox="0 0 24 24" className="h-6 w-6" aria-hidden><path d="M4 3h16l-8 9 8 9H4l8-9z" fill="currentColor" /></svg>,
+  <svg key="half" viewBox="0 0 24 24" className="h-6 w-6" aria-hidden><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" strokeWidth="2.5" /><path d="M12 2.5a9.5 9.5 0 0 0 0 19z" fill="currentColor" /></svg>,
+  <svg key="double" viewBox="0 0 32 24" className="h-6 w-8" aria-hidden><circle cx="10" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="3" /><circle cx="22" cy="12" r="9" fill="currentColor" /></svg>,
 ];
 
 export default function Hero() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const descriptionRef = useRef<HTMLDivElement>(null);
-  const buttonsRef = useRef<HTMLDivElement>(null);
-  const topContentRef = useRef<HTMLDivElement>(null);
-  const bottomContentRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const blobRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (!sectionRef.current || !containerRef.current) return;
+      const card = cardRef.current;
+      if (!card) return;
 
-      // --- 1. Ambient blob movement (Lissajous — x, y, scale on separate cycles) ---
-      blobRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const b = BLOBS[i];
-        gsap.to(el, { xPercent: b.xTo, duration: b.xDur, repeat: -1, yoyo: true, ease: "sine.inOut" });
-        gsap.to(el, { yPercent: b.yTo, duration: b.yDur, repeat: -1, yoyo: true, ease: "sine.inOut" });
-        gsap.to(el, { scale: b.sTo, duration: b.sDur, repeat: -1, yoyo: true, ease: "sine.inOut" });
-      });
-
-      // --- 2. Scroll parallax ---
-      gsap.to(containerRef.current, {
-        scale: 1.08,
-        y: 40,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      blobRefs.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.to(el, {
-          y: `+=${20 + i * 15}`,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      });
-
-      // --- 3. Entrance timeline (plays once) ---
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      if (titleRef.current) {
-        const text = titleRef.current.textContent || "";
-        titleRef.current.innerHTML = "";
-        text.split("").forEach((char) => {
-          const span = document.createElement("span");
-          span.textContent = char === " " ? "\u00A0" : char;
-          span.style.display = "inline-block";
-          titleRef.current!.appendChild(span);
-        });
-
-        const chars = titleRef.current.querySelectorAll("span");
-        tl.fromTo(
-          chars,
-          { opacity: 0, rotateX: -90, y: 40 },
-          {
-            opacity: 1,
-            rotateX: 0,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.03,
-            ease: "back.out(1.4)",
-          }
-        );
-      }
-
-      if (subtitleRef.current) {
-        tl.fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          "-=0.4"
-        );
-      }
-
-      if (descriptionRef.current) {
-        tl.fromTo(
-          descriptionRef.current,
-          { opacity: 0, x: 40 },
-          { opacity: 1, x: 0, duration: 0.6 },
-          "-=0.3"
-        );
-      }
-
-      if (buttonsRef.current) {
-        const buttons = buttonsRef.current.querySelectorAll("a");
-        tl.fromTo(
-          buttons,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.15 },
-          "-=0.3"
-        );
-      }
-
-      // --- 4. Scroll content fade-out ---
       const mm = gsap.matchMedia();
 
-      mm.add("(min-width: 768px)", () => {
-        if (topContentRef.current) {
-          gsap.to(topContentRef.current, {
-            opacity: 0,
-            y: -40,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "20% top",
-              end: "60% top",
-              scrub: true,
-            },
-          });
-        }
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-        if (bottomContentRef.current) {
-          gsap.to(bottomContentRef.current, {
-            opacity: 0,
-            y: 40,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "20% top",
-              end: "60% top",
-              scrub: true,
-            },
-          });
-        }
-      });
+        tl.fromTo(
+          card,
+          { clipPath: "inset(6% 4% 6% 4% round 40px)" },
+          { clipPath: "inset(0% 0% 0% 0% round 40px)", duration: 1.2, ease: "power4.inOut", clearProps: "clipPath" }
+        )
+          .fromTo(portraitRef.current, { scale: 1.25 }, { scale: 1, duration: 1.8, ease: "power2.out" }, 0)
+          .fromTo(".hero-greeting", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.6)
+          .fromTo(".hero-line", { yPercent: 110 }, { yPercent: 0, duration: 1, stagger: 0.12, ease: "power4.out" }, 0.65)
+          .fromTo(".hero-side > *", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 }, 0.9)
+          .fromTo(".hero-service", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, 1.05)
+          .fromTo(".hero-band", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8 }, 1.1);
 
-      mm.add("(max-width: 767px)", () => {
-        if (topContentRef.current) {
-          gsap.to(topContentRef.current, {
-            opacity: 0,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "30% top",
-              end: "70% top",
-              scrub: true,
-            },
-          });
-        }
-
-        if (bottomContentRef.current) {
-          gsap.to(bottomContentRef.current, {
-            opacity: 0,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "30% top",
-              end: "70% top",
-              scrub: true,
-            },
-          });
-        }
+        // Scroll: portrait drifts slower than the page, content lifts and fades
+        const scroll = { trigger: card, start: "top top", end: "bottom top", scrub: true };
+        gsap.to(parallaxRef.current, { yPercent: 6, ease: "none", scrollTrigger: scroll });
+        gsap.to(contentRef.current, { y: -80, opacity: 0.15, ease: "none", scrollTrigger: scroll });
       });
     },
     { scope: sectionRef }
   );
 
+  const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    gsap.to(window, { scrollTo: { y: "#projets", offsetY: 72 }, duration: 1, ease: "power2.inOut" });
+  };
+
   return (
-    <section ref={sectionRef} data-section="hero" className="relative min-h-[100svh] w-full overflow-hidden bg-black">
-      {/* Mesh gradient — blobs with GSAP Lissajous movement */}
+    <section ref={sectionRef} data-dark className="relative bg-ink p-2 md:p-3">
+      {/* Gradient card */}
       <div
-        ref={containerRef}
-        className="absolute inset-0 overflow-hidden"
-        style={{ background: "#08081a" }}
+        ref={cardRef}
+        className="hero-gradient relative flex min-h-[calc(100svh-1rem)] flex-col overflow-hidden rounded-[2rem] md:min-h-[calc(100svh-1.5rem)] md:rounded-[2.5rem]"
       >
-        {BLOBS.map((b, i) => (
-          <div
-            key={i}
-            ref={(el) => { blobRefs.current[i] = el; }}
-            className="absolute rounded-full"
-            style={{
-              width: b.size,
-              height: b.size,
-              background: b.color,
-              opacity: b.opacity,
-              top: b.top,
-              left: b.left,
-              filter: `blur(${b.blur}px)`,
-              willChange: "transform",
-            }}
-          />
-        ))}
-      </div>
+        {/* Duotone portrait: B&W photo + gradient multiplied on top, blended inside the masked group */}
+        <div
+          ref={parallaxRef}
+          className="hero-portrait pointer-events-none absolute inset-x-0 -top-[8%] h-[116%] md:left-[26%] md:right-auto md:w-[48vw] lg:left-[28%] lg:w-[44vw]"
+        >
+          <div ref={portraitRef} className="absolute inset-0 isolate">
+            <Image
+              src="/images/portrait.png"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 48vw"
+              className="duotone object-cover object-[50%_20%]"
+            />
+            <div className="hero-gradient absolute inset-0 mix-blend-multiply" aria-hidden />
+          </div>
+        </div>
 
-      {/* Content - Top section */}
-      <div
-        ref={topContentRef}
-        className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/80 via-black/40 to-transparent pt-28 md:pt-32 pb-20 px-6 md:px-12 lg:px-16 xl:px-24"
-      >
-        <div className="flex flex-wrap items-start justify-between gap-8">
-          <div>
-            <h1
-              ref={titleRef}
-              className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Alexandre Artus
-            </h1>
-            <p
-              ref={subtitleRef}
-              className="text-lg md:text-xl text-white/60 mt-2"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              {t.hero.subtitle}
-            </p>
+        {/* Readability veils */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2a0b0c]/85 via-transparent to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-black/25 md:hidden" aria-hidden />
+
+        {/* Content */}
+        <div
+          ref={contentRef}
+          className="relative z-10 flex flex-1 flex-col px-4 pt-28 pb-8 md:px-9 md:pt-36 md:pb-12 lg:px-13 xl:px-21"
+        >
+          <div className="grid flex-1 items-center gap-10 md:grid-cols-12">
+            {/* Title */}
+            <div className="md:col-span-7">
+              <p
+                className="hero-greeting mb-4 text-xl font-semibold text-white md:text-2xl lg:text-3xl"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {t.hero.greeting}
+              </p>
+              <h1
+                className="text-[clamp(3rem,12vw,8rem)] md:text-[clamp(3rem,8.2vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.04em] text-white"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                <span className="block overflow-x-visible overflow-y-clip pb-[0.06em]">
+                  <span className="hero-line block">{t.hero.titleLine1}</span>
+                </span>
+                <span className="block overflow-x-visible overflow-y-clip pb-[0.06em]">
+                  <span className="hero-line block">{t.hero.titleLine2}</span>
+                </span>
+              </h1>
+            </div>
+
+            {/* Tagline */}
+            <div className="hero-side md:col-span-4 md:col-start-9 md:self-center">
+              <h2
+                className="text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {t.hero.tagline}
+              </h2>
+              <p className="mt-4 max-w-sm text-base leading-relaxed text-white/70" style={{ fontFamily: "var(--font-body)" }}>
+                {t.hero.description}
+              </p>
+              <div className="mt-7">
+                <PillButton href="#projets" onClick={scrollToProjects}>
+                  {t.hero.cta.projects}
+                </PillButton>
+              </div>
+            </div>
           </div>
 
-          <div ref={descriptionRef} className="hidden lg:block max-w-sm">
-            <p
-              className="text-base font-light text-white/60 leading-relaxed"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              {t.hero.description}
-            </p>
-          </div>
+          {/* Services */}
+          <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 md:mt-16 md:grid-cols-4">
+            {t.hero.services.map((service, i) => (
+              <li key={service} className="hero-service">
+                <span className="text-lg font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+                  <span className="text-accent-soft/70">#</span>0{i + 1}
+                </span>
+                <p className="mt-2 text-sm text-white/80 md:text-base" style={{ fontFamily: "var(--font-body)" }}>
+                  {service}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      {/* Bottom section - Buttons */}
-      <div
-        ref={bottomContentRef}
-        className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-20 pb-8 px-6 md:px-12 lg:px-16 xl:px-24"
-      >
-        <div className="flex items-end justify-between gap-6">
-          <div ref={buttonsRef} className="flex flex-wrap gap-4">
-            <a
-              href="#projets"
-              className="group inline-flex items-center gap-3 bg-white px-6 py-3 text-sm font-light tracking-wider text-black uppercase transition-all duration-300 hover:bg-white/90"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              {t.hero.cta.projects}
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+      {/* Clients band */}
+      <div className="hero-band mt-2 flex flex-col gap-6 overflow-hidden rounded-[2rem] bg-ink-2 px-4 py-8 md:mt-3 md:flex-row md:items-center md:gap-12 md:rounded-[2.5rem] md:px-9 md:py-10 lg:px-13 xl:px-21">
+        <p
+          className="shrink-0 text-sm font-semibold leading-snug text-white md:w-36"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {t.hero.trustedBy}
+        </p>
+        <div
+          className="relative min-w-0 flex-1 overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+          }}
+        >
+          <ul className="animate-scroll flex w-max items-center gap-14 pr-14">
+            {[...CLIENTS, ...CLIENTS].map((name, i) => (
+              <li
+                key={`${name}-${i}`}
+                aria-hidden={i >= CLIENTS.length}
+                className="flex shrink-0 items-center gap-3 text-2xl font-bold tracking-tight text-white/85"
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 border border-white/40 px-6 py-3 text-sm font-light tracking-wider text-white uppercase transition-all duration-300 hover:border-white hover:bg-white/10"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              {t.hero.cta.contact}
-            </Link>
-          </div>
+                <span className="text-white/50">{GLYPHS[i % GLYPHS.length]}</span>
+                {name}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

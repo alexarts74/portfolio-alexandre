@@ -15,16 +15,16 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative w-full">
       {/* Browser chrome */}
-      <div className="rounded-t-lg border border-neutral-200 border-b-0 bg-neutral-100 px-3 py-2 flex items-center gap-2">
+      <div className="rounded-t-2xl border border-ink/10 border-b-0 bg-white px-3 py-2.5 flex items-center gap-2">
         <div className="flex gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
-          <div className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
+          <div className="w-2.5 h-2.5 rounded-full bg-accent/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-ink/15" />
+          <div className="w-2.5 h-2.5 rounded-full bg-ink/15" />
         </div>
-        <div className="flex-1 ml-2 h-5 rounded-md bg-white border border-neutral-200" />
+        <div className="flex-1 ml-2 h-5 rounded-full bg-cream" />
       </div>
       {/* Content */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-b-lg border border-neutral-200 border-t-0 bg-neutral-200">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-b-2xl border border-ink/10 border-t-0 bg-neutral-200">
         {children}
       </div>
     </div>
@@ -101,19 +101,19 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           /* Mobile: screenshot flottant, coins arrondis, ombre douce */
           <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.25rem] bg-neutral-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-neutral-200/60 transition-shadow duration-500 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
             {imageContent}
-            <div className="absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/25 pointer-events-none rounded-[1.25rem]" />
+            <div className="absolute inset-0 bg-accent/0 transition-all duration-500 group-hover:bg-accent/20 pointer-events-none rounded-[1.25rem]" />
           </div>
         ) : (
           /* Web: browser frame */
           <div className="relative">
             <BrowserFrame>{imageContent}</BrowserFrame>
-            <div className="absolute inset-0 top-[30px] bg-black/0 transition-all duration-500 group-hover:bg-black/25 pointer-events-none rounded-b-lg" />
+            <div className="absolute inset-0 top-[34px] bg-accent/0 transition-all duration-500 group-hover:bg-accent/20 pointer-events-none rounded-b-2xl" />
           </div>
         )}
 
         {/* External links */}
         <div className={`absolute flex gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100 z-10 ${
-          isMobile ? "top-3 right-3" : "top-10 right-2"
+          isMobile ? "top-3 right-3" : "top-12 right-3"
         }`}>
           {project.githubUrl && (
             <button
@@ -145,11 +145,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <div className="flex items-center gap-2 mb-2">
           {/* Type badge */}
           <span
-            className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-light tracking-[0.15em] uppercase rounded-full ${
-              isMobile
-                ? "bg-violet-50 text-violet-500 border border-violet-100"
-                : "bg-sky-50 text-sky-500 border border-sky-100"
-            }`}
+            className="inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-accent-soft text-accent"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {isMobile ? (
@@ -166,29 +162,32 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             )}
             {isMobile ? "Mobile" : "Web"}
           </span>
-          <span className="text-neutral-300">-</span>
+          <span className="text-neutral-300">·</span>
           <span
-            className="text-[10px] font-light tracking-[0.15em] text-neutral-400 uppercase"
+            className="text-xs text-neutral-500"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {project.year}
           </span>
-          <span className="text-neutral-300">-</span>
+          <span className="text-neutral-300">·</span>
           <span
-            className="text-[10px] font-light tracking-[0.15em] text-neutral-400 uppercase"
+            className="text-xs text-neutral-500"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {getProjectTypeLabel(project.projectType)}
           </span>
         </div>
         <h3
-          className="text-lg font-light tracking-wide transition-all duration-300 group-hover:tracking-wider"
+          className="flex items-center gap-2 text-xl font-bold tracking-tight text-ink transition-colors duration-300 group-hover:text-accent"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {project.title}
+          <svg className="h-4 w-4 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.25} aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H8M17 7v9" />
+          </svg>
         </h3>
         <p
-          className="mt-1.5 text-sm font-light text-neutral-500 line-clamp-2 transition-colors duration-300 group-hover:text-neutral-700"
+          className="mt-1.5 text-sm text-neutral-500 line-clamp-2 transition-colors duration-300 group-hover:text-neutral-700"
           style={{ fontFamily: "var(--font-body)" }}
         >
           {projectTranslations?.shortDescription || project.shortDescription}
@@ -199,7 +198,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {project.technologies.slice(0, 3).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 text-[9px] font-light tracking-wider text-neutral-400 uppercase border border-neutral-200 rounded-full transition-colors duration-300 group-hover:border-neutral-300 group-hover:text-neutral-600"
+              className="px-2.5 py-0.5 text-[11px] text-neutral-500 border border-ink/10 rounded-full transition-colors duration-300 group-hover:border-ink/20 group-hover:text-ink"
               style={{ fontFamily: "var(--font-body)" }}
             >
               {tech}
