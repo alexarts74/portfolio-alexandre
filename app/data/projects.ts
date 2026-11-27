@@ -16,6 +16,8 @@ export interface Project {
   showcase?: boolean;
   /** Projet phare — affiché dans la section dédiée FeaturedProject. */
   featured?: boolean;
+  /** Missions annexes hors produit — section dédiée sur la page projet. */
+  missions?: string[];
   clientBenefit: string;
   /** Images de l'app mobile, affichées en mockups phones sur la page projet. */
   mobileImages?: string[];
@@ -29,6 +31,47 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    title: "Evera",
+    slug: "evera",
+    image: "/images/projects/evera.png",
+    video: "/images/projects/evera/complet.mp4",
+    images: [
+      "/images/projects/evera/dashboard.png",
+      "/images/projects/evera/gestion-flotte.png",
+      "/images/projects/evera/trajet.png",
+      "/images/projects/evera/aen.png",
+      "/images/projects/evera/reservation.png",
+    ],
+    shortDescription: "Plateforme SaaS de gestion de flottes de véhicules",
+    context: "Evera est une solution SaaS pour les entreprises qui gèrent des flottes de véhicules. Elle centralise toutes les informations liées aux véhicules : trajets, coûts, entretiens, infractions et abonnements, pour permettre une gestion proactive et en temps réel.",
+    technical: [
+      "Architecture full-stack Next.js (front) + Nest.js (API) avec PostgreSQL, déployée en SaaS multi-tenant",
+      "Pipeline de données temps réel via MQTT pour la télémétrie véhicules, avec ingestion et stockage en base",
+      "CRON jobs et scripts Python côté serveur pour la détection d'anomalies et la remontée d'alertes automatiques",
+      "Intégration Stripe pour la gestion des abonnements, paiements récurrents et facturation automatisée",
+      "Reportings analytiques avec agrégation de données côté backend et visualisation côté front",
+    ],
+    features: [
+      "Dashboard centralisé avec vue temps réel sur la flotte : trajets, coûts, entretiens, infractions",
+      "Système d'alertes proactif notifiant les incidents avant qu'ils ne deviennent critiques",
+      "Suivi live des véhicules via télémétrie MQTT avec historique des trajets",
+      "Gestion automatisée des abonnements et paiements clients",
+      "Reportings et KPIs pour optimiser les coûts d'exploitation de la flotte",
+    ],
+    missions: [
+      "Infrastructure MQTT de bout en bout : installation et configuration du broker sur un serveur, puis intégration des boîtiers télématiques (connexion, décodage des trames, remontée des données vers la plateforme)",
+      "Location et configuration d'un serveur pour héberger n8n en auto-hébergé, puis mise en place des workflows d'automatisation pour les équipes",
+      "Refonte et mise en place de la connexion HubSpot sur la landing page et les outils hors SaaS : formulaires reliés au CRM pour centraliser les leads",
+    ],
+    year: "2026",
+    technologies: ["Next.js", "Nest.js", "PostgreSQL", "Python", "Stripe", "MQTT", "n8n", "HubSpot"],
+    type: "web",
+    projectType: "professional",
+    featured: true,
+    clientBenefit: "Réduction significative des coûts d'exploitation de la flotte grâce au suivi centralisé des trajets, entretiens et infractions. Les alertes en temps réel permettent une gestion proactive des incidents, évitant les pannes coûteuses et garantissant une disponibilité optimale des véhicules.",
+    liveUrl: "https://evera.co/",
+  },
   {
     title: "PayeTaVie",
     slug: "payetavie",
@@ -270,41 +313,6 @@ export const projects: Project[] = [
     projectType: "personal",
     clientBenefit:
       "Une boutique à l'image de la marque et adaptée à la vente en France : prix TTC, livraison et retours annoncés dès la fiche produit, pages légales rédigées. La région et le catalogue se recréent par script en une commande, puis prix, stocks et visuels se gèrent depuis l'administration Medusa, sans toucher au code.",
-  },
-  {
-    title: "Evera",
-    slug: "evera",
-    image: "/images/projects/evera.png",
-    video: "/images/projects/evera/complet.mp4",
-    images: [
-      "/images/projects/evera/dashboard.png",
-      "/images/projects/evera/gestion-flotte.png",
-      "/images/projects/evera/trajet.png",
-      "/images/projects/evera/aen.png",
-      "/images/projects/evera/reservation.png",
-    ],
-    shortDescription: "Plateforme SaaS de gestion de flottes de véhicules",
-    context: "Evera est une solution SaaS pour les entreprises qui gèrent des flottes de véhicules. Elle centralise toutes les informations liées aux véhicules : trajets, coûts, entretiens, infractions et abonnements, pour permettre une gestion proactive et en temps réel.",
-    technical: [
-      "Architecture full-stack Next.js (front) + Nest.js (API) avec PostgreSQL, déployée en SaaS multi-tenant",
-      "Pipeline de données temps réel via MQTT pour la télémétrie véhicules, avec ingestion et stockage en base",
-      "CRON jobs et scripts Python côté serveur pour la détection d'anomalies et la remontée d'alertes automatiques",
-      "Intégration Stripe pour la gestion des abonnements, paiements récurrents et facturation automatisée",
-      "Reportings analytiques avec agrégation de données côté backend et visualisation côté front",
-    ],
-    features: [
-      "Dashboard centralisé avec vue temps réel sur la flotte : trajets, coûts, entretiens, infractions",
-      "Système d'alertes proactif notifiant les incidents avant qu'ils ne deviennent critiques",
-      "Suivi live des véhicules via télémétrie MQTT avec historique des trajets",
-      "Gestion automatisée des abonnements et paiements clients",
-      "Reportings et KPIs pour optimiser les coûts d'exploitation de la flotte",
-    ],
-    year: "2026",
-    technologies: ["Next.js", "Nest.js", "PostgreSQL", "Python", "Stripe", "MQTT"],
-    type: "web",
-    projectType: "professional",
-    clientBenefit: "Réduction significative des coûts d'exploitation de la flotte grâce au suivi centralisé des trajets, entretiens et infractions. Les alertes en temps réel permettent une gestion proactive des incidents, évitant les pannes coûteuses et garantissant une disponibilité optimale des véhicules.",
-    liveUrl: "https://evera.co/",
   },
   {
     title: "Bib Batteries",

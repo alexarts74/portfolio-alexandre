@@ -62,6 +62,9 @@ export const translations = {
       saas: "SaaS",
       mobile: "Mobile",
       featured: "Featured project",
+      featuredTitle: "Featured projects",
+      previous: "Previous project",
+      next: "Next project",
     },
     // Skills
     skills: {
@@ -141,6 +144,8 @@ export const translations = {
       viewLive: "View live",
       viewCode: "View code",
       clientBenefit: "Client benefit",
+      missions: "Beyond the SaaS",
+      missionsIntro: "Alongside the product, I also took care of the infrastructure and tooling around it.",
     },
     // Project data
     projectData: {
@@ -187,6 +192,11 @@ export const translations = {
           "Live vehicle tracking via MQTT telemetry with trip history",
           "Automated client subscription and payment management",
           "Reports and KPIs to optimize fleet operating costs",
+        ],
+        missions: [
+          "End-to-end MQTT infrastructure: installed and configured the broker on a server, then integrated the telematics devices (connection, frame decoding, data forwarded to the platform)",
+          "Rented and configured a server to self-host n8n, then built automation workflows for the teams",
+          "Reworked and set up the HubSpot connection on the landing page and the non-SaaS tools: forms wired to the CRM to centralize leads",
         ],
       },
       bibbatteries: {
@@ -503,6 +513,9 @@ export const translations = {
       saas: "SaaS",
       mobile: "Mobile",
       featured: "Projet phare",
+      featuredTitle: "Projets phares",
+      previous: "Projet précédent",
+      next: "Projet suivant",
     },
     // Skills
     skills: {
@@ -582,6 +595,8 @@ export const translations = {
       viewLive: "Voir en ligne",
       viewCode: "Voir le code",
       clientBenefit: "Bénéfice client",
+      missions: "Missions hors SaaS",
+      missionsIntro: "En parallèle du produit, j'ai pris en charge l'infrastructure et les outils autour.",
     },
     // Project data
     projectData: {
@@ -628,6 +643,11 @@ export const translations = {
           "Suivi live des véhicules via télémétrie MQTT avec historique des trajets",
           "Gestion automatisée des abonnements et paiements clients",
           "Reportings et KPIs pour optimiser les coûts d'exploitation de la flotte",
+        ],
+        missions: [
+          "Infrastructure MQTT de bout en bout : installation et configuration du broker sur un serveur, puis intégration des boîtiers télématiques (connexion, décodage des trames, remontée des données vers la plateforme)",
+          "Location et configuration d'un serveur pour héberger n8n en auto-hébergé, puis mise en place des workflows d'automatisation pour les équipes",
+          "Refonte et mise en place de la connexion HubSpot sur la landing page et les outils hors SaaS : formulaires reliés au CRM pour centraliser les leads",
         ],
       },
       bibbatteries: {

@@ -81,6 +81,15 @@ html, body {
   animation: scroll 30s linear infinite;
 }
 
+/* Horizontal carousels: keep native swipe/scroll, hide the bar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .animate-scroll:hover {
   animation-play-state: paused;
 }

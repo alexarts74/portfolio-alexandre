@@ -20,6 +20,10 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
   const [heroError, setHeroError] = useState(false);
   const [nextError, setNextError] = useState(false);
   const projectTranslations = t.projectData[project.slug as keyof typeof t.projectData];
+  const missions =
+    projectTranslations && "missions" in projectTranslations
+      ? projectTranslations.missions
+      : project.missions;
 
   const mainRef = useRef<HTMLElement>(null);
   const heroSectionRef = useRef<HTMLElement>(null);
@@ -33,6 +37,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
   const clientBenefitRef = useRef<HTMLDivElement>(null);
   const separatorRef = useRef<HTMLDivElement>(null);
   const technicalSectionRef = useRef<HTMLDivElement>(null);
+  const missionsSectionRef = useRef<HTMLElement>(null);
   const featuresSectionRef = useRef<HTMLElement>(null);
   const gallerySectionRef = useRef<HTMLDivElement>(null);
   const nextProjectRef = useRef<HTMLElement>(null);
@@ -519,6 +524,38 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             });
           });
         }
+      }
+
+      // Missions section — label then cards staggered on scroll
+      if (missionsSectionRef.current) {
+        const missionsHead = missionsSectionRef.current.querySelectorAll(".section-label, .missions-intro");
+        const missionCards = missionsSectionRef.current.querySelectorAll(".mission-card");
+
+        gsap.fromTo(
+          missionsHead,
+          { opacity: 0, x: -30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: missionsSectionRef.current, start: "top 80%" },
+          }
+        );
+
+        gsap.fromTo(
+          missionCards,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: { trigger: missionsSectionRef.current, start: "top 70%" },
+          }
+        );
       }
 
       // --- Gallery Section ---
@@ -1078,6 +1115,54 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
             </div>
           </div>
         </section>
+
+        {/* Missions beyond the product */}
+        {missions && missions.length > 0 && (
+          <section ref={missionsSectionRef} className="py-14 md:py-20 bg-neutral-50">
+            <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
+              <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+                <div className="lg:col-span-4">
+                  <h2
+                    className="section-label text-sm font-semibold text-accent mb-3"
+                    style={{ fontFamily: "var(--font-body)", opacity: 0 }}
+                  >
+                    {t.projectDetails.missions}
+                  </h2>
+                  <p
+                    className="missions-intro text-base leading-relaxed text-neutral-500 max-w-xs"
+                    style={{ fontFamily: "var(--font-body)", opacity: 0 }}
+                  >
+                    {t.projectDetails.missionsIntro}
+                  </p>
+                </div>
+                <div className="lg:col-span-8">
+                  <ul className="grid gap-4 md:gap-5">
+                    {missions.map((mission, index) => (
+                      <li
+                        key={index}
+                        className="mission-card flex items-start gap-5 md:gap-6 rounded-2xl border border-neutral-200 bg-white p-6 md:p-8"
+                        style={{ opacity: 0 }}
+                      >
+                        <span
+                          className="flex-shrink-0 text-2xl md:text-3xl font-bold text-accent tabular-nums leading-none"
+                          style={{ fontFamily: "var(--font-display)" }}
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <p
+                          className="text-base md:text-lg leading-relaxed text-neutral-700"
+                          style={{ fontFamily: "var(--font-body)" }}
+                        >
+                          {mission}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Gallery */}
         <section ref={gallerySectionRef} className="py-10 md:py-14 bg-white">
