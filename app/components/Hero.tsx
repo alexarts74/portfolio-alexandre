@@ -145,9 +145,9 @@ export default function Hero() {
       </div>
 
       {/* Clients band */}
-      <div className="hero-band mt-2 flex flex-col gap-6 overflow-hidden rounded-[2rem] border border-ink/10 bg-white px-4 py-8 md:mt-3 md:flex-row md:items-center md:gap-12 md:rounded-[2.5rem] md:px-9 md:py-10 lg:px-13 xl:px-21">
+      <div data-dark className="hero-band mt-2 flex flex-col gap-6 overflow-hidden rounded-[2rem] bg-ink-2 px-4 py-8 md:mt-3 md:flex-row md:items-center md:gap-12 md:rounded-[2.5rem] md:px-9 md:py-10 lg:px-13 xl:px-21">
         <p
-          className="shrink-0 text-sm font-semibold leading-snug text-ink md:w-36"
+          className="shrink-0 text-sm font-semibold leading-snug text-white md:w-36"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {t.hero.trustedBy}
@@ -164,10 +164,10 @@ export default function Hero() {
               <li
                 key={`${name}-${i}`}
                 aria-hidden={i >= CLIENTS.length}
-                className="flex shrink-0 items-center gap-3 text-2xl font-bold tracking-tight text-ink/80"
+                className="flex shrink-0 items-center gap-3 text-2xl font-bold tracking-tight text-white/85"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                <span className="text-ink/30">{GLYPHS[i % GLYPHS.length]}</span>
+                <span className="text-white/50">{GLYPHS[i % GLYPHS.length]}</span>
                 {name}
               </li>
             ))}

@@ -16,8 +16,8 @@ const skillCategories = [
   },
   {
     key: "ai",
-    label: "AI & LLM",
-    skills: ["Claude Code", "Claude API", "OpenAI", "Prompt Engineering", "RAG"],
+    label: "AI & Automation",
+    skills: ["Claude Code", "Claude API", "OpenAI", "Prompt Engineering", "RAG", "n8n", "Make"],
     highlight: true,
   },
   {
