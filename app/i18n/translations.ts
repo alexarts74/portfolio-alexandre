@@ -11,10 +11,8 @@ export const translations = {
     },
     // Hero
     hero: {
-      greeting: "Hey, I'm Alexandre,",
       titleLine1: "Full Stack",
       titleLine2: "Developer",
-      tagline: "Web products that actually work.",
       services: ["Showcase websites", "Web apps & SaaS", "Mobile apps", "AI & automation"],
       trustedBy: "They trusted me",
       available: "Available for freelance",
@@ -465,10 +463,8 @@ export const translations = {
     },
     // Hero
     hero: {
-      greeting: "Salut, moi c'est Alexandre,",
       titleLine1: "Développeur",
       titleLine2: "Full Stack",
-      tagline: "Des produits web qui marchent vraiment.",
       services: ["Sites vitrines", "Web apps & SaaS", "Apps mobiles", "IA & automatisation"],
       trustedBy: "Ils m'ont fait confiance",
       available: "Dispo en freelance",

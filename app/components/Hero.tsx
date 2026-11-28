@@ -45,7 +45,6 @@ export default function Hero() {
           { clipPath: "inset(0% 0% 0% 0% round 40px)", duration: 1.2, ease: "power4.inOut", clearProps: "clipPath" }
         )
           .fromTo(portraitRef.current, { scale: 1.25 }, { scale: 1, duration: 1.8, ease: "power2.out" }, 0)
-          .fromTo(".hero-greeting", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.6)
           .fromTo(".hero-line", { yPercent: 110 }, { yPercent: 0, duration: 1, stagger: 0.12, ease: "power4.out" }, 0.65)
           .fromTo(".hero-side > *", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 }, 0.9)
           .fromTo(".hero-service", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, 1.05)
@@ -103,12 +102,6 @@ export default function Hero() {
           <div className="grid flex-1 items-center gap-10 md:grid-cols-12">
             {/* Title */}
             <div className="md:col-span-7">
-              <p
-                className="hero-greeting mb-4 text-xl font-semibold text-white md:text-2xl lg:text-3xl"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {t.hero.greeting}
-              </p>
               <h1
                 className="text-[clamp(3rem,12vw,8rem)] md:text-[clamp(3rem,8.2vw,8rem)] font-extrabold leading-[0.92] tracking-[-0.04em] text-white"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -122,15 +115,9 @@ export default function Hero() {
               </h1>
             </div>
 
-            {/* Tagline */}
+            {/* Description + CTA */}
             <div className="hero-side md:col-span-4 md:col-start-9 md:self-center">
-              <h2
-                className="text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {t.hero.tagline}
-              </h2>
-              <p className="mt-4 max-w-sm text-base leading-relaxed text-white/70" style={{ fontFamily: "var(--font-body)" }}>
+              <p className="max-w-sm text-base leading-relaxed text-white/70" style={{ fontFamily: "var(--font-body)" }}>
                 {t.hero.description}
               </p>
               <div className="mt-7">
