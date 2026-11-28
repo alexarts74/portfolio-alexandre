@@ -4,11 +4,10 @@
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
 
+  /* 60 / 30 / 10 — white (surfaces) / ink (dark sections) / accent (highlights only) */
   --color-accent: #ff5a1f;
-  --color-accent-soft: #ffe4d6;
   --color-ink: #0f0f10;
   --color-ink-2: #18181a;
-  --color-cream: #f6f3ee;
 }
 
 html, body {
@@ -27,7 +26,8 @@ html, body {
   }
 }
 
-/* Signature gradient: orange → red → burgundy */
+/* Signature gradient: orange → red → burgundy.
+   Reserved for the closing section of each page (footer CTA, next project) */
 .hero-gradient {
   background:
     radial-gradient(120% 90% at 15% 10%, #ff7a35 0%, rgba(255, 122, 53, 0) 55%),
@@ -35,7 +35,7 @@ html, body {
     linear-gradient(135deg, #ff6a2b 0%, #e8432a 45%, #8a1d1a 75%, #3f1012 100%);
 }
 
-/* Duotone photo: black & white image multiplied over the gradient */
+/* Duotone photo: black & white image, darkened by an ink layer in the hero */
 .duotone {
   filter: grayscale(1) contrast(1.35) brightness(0.85);
 }

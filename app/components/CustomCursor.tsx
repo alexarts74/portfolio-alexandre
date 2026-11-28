@@ -6,6 +6,9 @@ import { useLanguage } from "@/app/i18n/LanguageContext";
 
 const SMALL = 14;
 const BIG = 100;
+const INK = "#0f0f10";
+const WHITE = "rgba(255,255,255,0.95)";
+const ACCENT = "#ff5a1f";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -35,17 +38,19 @@ export default function CustomCursor() {
       return !!el?.closest("[data-dark]");
     };
 
-    const updateCursorTheme = (dark: boolean) => {
-      if (dark === isDark) return;
-      isDark = dark;
+    // Ink dot on light sections, white on dark ones; accent only for the "View" bubble
+    const applyColor = () => {
       gsap.to(circle, {
-        backgroundColor: dark ? "rgba(255,255,255,0.95)" : "#ff5a1f",
+        backgroundColor: isOverProject ? ACCENT : isDark ? WHITE : INK,
         duration: 0.2,
         overwrite: "auto",
       });
-      if (text) {
-        text.style.color = dark ? "#0f0f10" : "#fff";
-      }
+    };
+
+    const updateCursorTheme = (dark: boolean) => {
+      if (dark === isDark) return;
+      isDark = dark;
+      applyColor();
     };
 
     let hasMoved = false;
@@ -75,6 +80,7 @@ export default function CustomCursor() {
     const grow = () => {
       if (isOverProject) return;
       isOverProject = true;
+      applyColor();
       gsap.to(circle, {
         width: BIG,
         height: BIG,
@@ -89,6 +95,7 @@ export default function CustomCursor() {
     const shrink = () => {
       if (!isOverProject) return;
       isOverProject = false;
+      applyColor();
       gsap.to(circle, {
         width: SMALL,
         height: SMALL,
@@ -174,7 +181,7 @@ export default function CustomCursor() {
           height: SMALL,
           marginLeft: -SMALL / 2,
           marginTop: -SMALL / 2,
-          background: "#ff5a1f", // updated dynamically via updateCursorTheme
+          background: INK, // updated dynamically via applyColor
           opacity: 0,
           willChange: "width, height",
         }}

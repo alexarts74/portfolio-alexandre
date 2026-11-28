@@ -30,7 +30,7 @@ function FeaturedCard({ project }: { project: Project }) {
       {/* Mockups */}
       <div className="relative px-6 pt-8 md:px-10 md:pt-10">
         <div
-          className="hero-gradient pointer-events-none absolute inset-x-0 top-0 h-full opacity-40 blur-3xl"
+          className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(60%_70%_at_50%_0%,rgb(255_90_31/0.15),transparent_70%)] blur-2xl"
           aria-hidden
         />
         <div className="relative flex items-end gap-4 md:gap-5">
@@ -59,7 +59,7 @@ function FeaturedCard({ project }: { project: Project }) {
           {phoneImage && (
             <div className="mb-3 w-[64px] shrink-0 md:mb-5 md:w-[88px] lg:w-[100px]">
               <div className="relative aspect-[9/16] overflow-hidden rounded-[1.25rem] border-2 border-white/15 bg-neutral-900">
-                <div className="absolute left-1/2 top-0 z-10 h-3 w-8 -translate-x-1/2 rounded-b-lg bg-black" />
+                <div className="absolute left-1/2 top-0 z-10 h-3 w-8 -translate-x-1/2 rounded-b-lg bg-ink" />
                 <Image
                   src={phoneImage}
                   alt={`${project.title} mobile`}

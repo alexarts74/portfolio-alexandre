@@ -398,11 +398,11 @@ export default function ProjectsGrid() {
 
   return (
     <section ref={sectionRef} id="tous-les-projets" className="w-full scroll-mt-20">
-      {/* Dark Header Section — pinned zoom */}
-      <div ref={zoomSectionRef} data-dark className="hero-gradient relative h-screen overflow-hidden flex items-center">
+      {/* Header Section — pinned zoom */}
+      <div ref={zoomSectionRef} className="bg-white relative h-screen overflow-hidden flex items-center">
         <div
           ref={bigNumberRef}
-          className="absolute right-0 top-1/2 -translate-y-1/2 text-[20rem] md:text-[28rem] lg:text-[35rem] font-extrabold tracking-tighter text-white/10 leading-none pointer-events-none select-none"
+          className="absolute right-0 top-1/2 -translate-y-1/2 text-[20rem] md:text-[28rem] lg:text-[35rem] font-extrabold tracking-tighter text-ink/[0.04] leading-none pointer-events-none select-none"
           style={{ fontFamily: "var(--font-display)" }}
         >
           02
@@ -411,7 +411,7 @@ export default function ProjectsGrid() {
         <div ref={headerRef} className="relative w-full flex flex-col items-center text-center">
           <div className="section-badge mb-6">
             <span
-              className="inline-block rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm"
+              className="inline-block rounded-full border border-ink/15 bg-ink/[0.03] px-4 py-2 text-xs font-semibold text-ink backdrop-blur-sm"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {t.projects.section}
@@ -420,22 +420,22 @@ export default function ProjectsGrid() {
 
           <h2
             ref={titleZoomRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1] tracking-[-0.03em] text-white origin-center"
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1] tracking-[-0.03em] text-ink origin-center"
             style={{ fontFamily: "var(--font-display)", willChange: "transform" }}
           >
             <SplitChars text={t.projects.title} />
             <br />
-            <span className="text-ink/80">
+            <span className="text-ink/30">
               <SplitChars text={t.projects.titleItalic} />
             </span>
           </h2>
 
-          <div className="section-line mt-10 h-1 w-16 rounded-full bg-white origin-center mx-auto" />
+          <div className="section-line mt-10 h-1 w-16 rounded-full bg-accent origin-center mx-auto" />
         </div>
       </div>
 
       {/* Projects Content */}
-      <div className="bg-cream pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12">
+      <div className="bg-white pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12">
 
         {/* SECTION 1 — Webflow */}
         <SectionBlock

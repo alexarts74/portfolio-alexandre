@@ -807,7 +807,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
         {/* Hero Section - Different layout for mobile vs web */}
         {project.type === "mobile" ? (
           /* Mobile Hero - Phone mockups */
-          <section ref={heroSectionRef} data-dark className="hero-gradient relative pt-28 pb-16 md:pt-36 md:pb-20 w-full overflow-hidden rounded-b-[2.5rem]">
+          <section ref={heroSectionRef} data-dark className="bg-ink relative pt-28 pb-16 md:pt-36 md:pb-20 w-full overflow-hidden rounded-b-[2.5rem]">
             <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24 grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-5">{projectHeader}</div>
               <div
@@ -862,7 +862,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     <source src={project.video} type="video/mp4" />
                   </video>
                 </div>
-                <div ref={heroOverlayRef} className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 via-45% to-accent/30 pointer-events-none" aria-hidden />
+                <div ref={heroOverlayRef} className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 via-45% to-ink/20 pointer-events-none" aria-hidden />
               </>
             ) : heroError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200">
@@ -886,7 +886,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                     onError={() => setHeroError(true)}
                   />
                 </div>
-                <div ref={heroOverlayRef} className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 via-45% to-accent/30 pointer-events-none" aria-hidden />
+                <div ref={heroOverlayRef} className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 via-45% to-ink/20 pointer-events-none" aria-hidden />
               </>
             )}
           </section>
@@ -935,7 +935,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="tech-tag rounded-full bg-cream px-4 py-2 text-sm text-ink"
+                          className="tech-tag rounded-full bg-ink/5 px-4 py-2 text-sm text-ink"
                           style={{ fontFamily: "var(--font-body)", opacity: 0 }}
                         >
                           {tech}
@@ -1203,7 +1203,7 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                   {locale === "en" ? "Mobile app" : "Application mobile"}
                 </h2>
                 <span
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-full bg-accent-soft text-accent"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-full bg-ink/5 text-ink/70"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -1232,9 +1232,9 @@ export default function ProjectDetail({ project, nextProject }: ProjectDetailPro
                       style={{ boxShadow: isCenter ? "0 20px 50px -10px rgba(0,0,0,0.18)" : "0 10px 25px -6px rgba(0,0,0,0.1)" }}
                     />
                     {/* Dynamic island */}
-                    <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[28%] h-[14px] bg-black rounded-full z-20" />
+                    <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[28%] h-[14px] bg-ink rounded-full z-20" />
                     {/* Screenshot */}
-                    <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] bg-[#f5f1e3]">
+                    <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] bg-neutral-100">
                       <Image
                         src={img}
                         alt={`${project.title} mobile - ${index + 1}`}

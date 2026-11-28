@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Portfolio personnel d'Alexandre Artus, développeur full stack. Design « carte dégradée » orange → bordeaux (hero avec portrait duotone), titres sans-serif bold, animations GSAP au scroll et support multilingue (FR/EN).
+Portfolio personnel d'Alexandre Artus, développeur full stack. Palette blanc / noir / orange en 60-30-10 (hero en carte noire avec portrait N&B, dégradé orange → bordeaux réservé à la section finale de chaque page), titres sans-serif bold, animations GSAP au scroll et support multilingue (FR/EN).
 
 ## Commands
 
@@ -35,7 +35,7 @@ app/
 ├── components/
 │   ├── Navigation.tsx   # Fixed header (variant "home" | "minimal") + GSAP mobile menu
 │   ├── PillButton.tsx   # Shared pill CTA with round accent arrow
-│   ├── Hero.tsx         # Gradient card hero, duotone portrait, services, clients marquee
+│   ├── Hero.tsx         # Ink card hero, duotone portrait, services, clients marquee
 │   ├── Presentation.tsx # About section with stats
 │   ├── ProjectsGrid.tsx # Projects showcase (horizontal scroll on desktop via GSAP)
 │   ├── ProjectCard.tsx  # Individual project card
@@ -67,8 +67,10 @@ app/
 ### Styling
 
 - **Fonts**: Plus Jakarta Sans 400–800 (display, `--font-display`) + Inter (body) via `next/font`
-- **Colors**: tokens in `globals.css` `@theme` → `accent` (#ff5a1f), `accent-soft`, `ink` (#0f0f10), `ink-2`, `cream`. Use `.hero-gradient` for the signature orange→burgundy gradient and `.duotone` for B&W photos blended over it
-- **Dark sections** carry a `data-dark` attribute (the custom cursor switches colour on it)
+- **Colors — 60 / 30 / 10 rule**: white (~60 %, light section backgrounds) / `ink` (~30 %, #0f0f10 — never pure `#000`/`bg-black`) / `accent` (~10 %, #ff5a1f). Tokens in `globals.css` `@theme` → `accent`, `ink`, `ink-2`. Orange is for highlights only: CTA arrow dots, `#` markers, the highlighted word in section titles, small badges, hover/active states. Neutral light surfaces use `bg-ink/5`-style tints, not cream or orange tints
+- **`.hero-gradient`** (orange→burgundy) is reserved for the **closing section of each page**: the footer CTA card (home) and the "Next project" block (project pages). Don't use it for heroes, cards, overlays or transitions — those are `bg-ink`
+- **Hero**: `bg-ink` card on a white frame; the portrait uses `.duotone` plus a `bg-ink/45 mix-blend-multiply` layer
+- **Dark sections** carry a `data-dark` attribute (the custom cursor is ink on light sections, white on `[data-dark]`, accent only for the "View" bubble on projects)
 - **Animations**: GSAP for all interactive/scroll animations, CSS keyframes only for simple infinite loops (client marquee)
 
 ### Customization

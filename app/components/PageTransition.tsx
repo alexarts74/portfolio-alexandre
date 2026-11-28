@@ -84,7 +84,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       {children}
       <div
         ref={overlayRef}
-        className="hero-gradient fixed inset-0 z-[9997] pointer-events-none"
+        className="fixed inset-0 z-[9997] bg-ink pointer-events-none"
         style={{ transform: "translateY(100%)" }}
         aria-hidden
       />

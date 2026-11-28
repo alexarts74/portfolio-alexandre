@@ -79,7 +79,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${jakarta.variable} ${inter.variable} overscroll-none`}>
-      <body className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-ink text-ink antialiased leading-relaxed">
+      <body className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-white text-ink antialiased leading-relaxed">
         <LanguageProvider>
           <TransitionProvider>
             {children}

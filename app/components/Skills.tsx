@@ -217,76 +217,79 @@ export default function Skills() {
   );
 
   return (
-    <section ref={sectionRef} id="skills" data-dark className="w-full bg-ink text-white py-16 md:py-20 lg:py-24">
-      <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
-        {/* Section Header */}
-        <div className="mb-8 md:mb-10 flex items-center gap-4">
-          <span
-            ref={headerLeftRef}
-            className="shrink-0 text-sm font-bold text-white"
+    // Ink wrapper: fills the GSAP pin-spacer below the pinned section (the body is white)
+    <div data-dark className="bg-ink">
+      <section ref={sectionRef} id="skills" data-dark className="w-full bg-ink text-white py-16 md:py-20 lg:py-24">
+        <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
+          {/* Section Header */}
+          <div className="mb-8 md:mb-10 flex items-center gap-4">
+            <span
+              ref={headerLeftRef}
+              className="shrink-0 text-sm font-bold text-white"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              <span className="text-accent">#</span>{t.skills.number}
+            </span>
+            <div
+              ref={lineRef}
+              className="h-px flex-1 bg-white/10 origin-left"
+            />
+            <span
+              ref={headerRightRef}
+              className="shrink-0 text-sm font-medium text-white/50"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              {t.skills.section}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2
+            ref={titleRef}
+            className="mb-10 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <span className="text-accent">#</span>{t.skills.number}
-          </span>
+            {t.skills.title} <span className="text-accent">{t.skills.titleItalic}</span>
+          </h2>
+
+          {/* Skills Grid */}
           <div
-            ref={lineRef}
-            className="h-px flex-1 bg-white/10 origin-left"
-          />
-          <span
-            ref={headerRightRef}
-            className="shrink-0 text-sm font-medium text-white/50"
-            style={{ fontFamily: "var(--font-body)" }}
+            ref={gridRef}
+            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {t.skills.section}
-          </span>
-        </div>
-
-        {/* Title */}
-        <h2
-          ref={titleRef}
-          className="mb-10 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          {t.skills.title} <span className="text-accent">{t.skills.titleItalic}</span>
-        </h2>
-
-        {/* Skills Grid */}
-        <div
-          ref={gridRef}
-          className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {skillCategories.map((category) => (
-            <div
-              key={category.key}
-              className={`skill-category rounded-3xl p-6 ${
-                category.highlight ? "hero-gradient" : "bg-ink-2 border border-white/5"
-              }`}
-            >
-              <h3
-                className={`category-label mb-4 text-lg font-bold ${category.highlight ? "text-white" : "text-white/90"}`}
-                style={{ fontFamily: "var(--font-display)" }}
+            {skillCategories.map((category) => (
+              <div
+                key={category.key}
+                className={`skill-category rounded-3xl p-6 ${
+                  category.highlight ? "bg-ink-2 border border-accent/40" : "bg-ink-2 border border-white/5"
+                }`}
               >
-                {getLabel(category.key, category.label)}
-              </h3>
-              <div className="skill-tags flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className={`skill-tag rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-300 cursor-default ${
-                      category.highlight
-                        ? "border-white/40 bg-white/10 text-white hover:bg-white hover:text-accent"
-                        : "border-white/15 text-white/70 hover:border-accent hover:bg-accent hover:text-white"
-                    }`}
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    {skill}
-                  </span>
-                ))}
+                <h3
+                  className={`category-label mb-4 text-lg font-bold ${category.highlight ? "text-white" : "text-white/90"}`}
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {getLabel(category.key, category.label)}
+                </h3>
+                <div className="skill-tags flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className={`skill-tag rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-300 cursor-default ${
+                        category.highlight
+                          ? "border-accent/40 text-white hover:border-accent hover:bg-accent"
+                          : "border-white/15 text-white/70 hover:border-accent hover:bg-accent hover:text-white"
+                      }`}
+                      style={{ fontFamily: "var(--font-body)" }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

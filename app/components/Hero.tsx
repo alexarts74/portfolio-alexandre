@@ -66,13 +66,14 @@ export default function Hero() {
   };
 
   return (
-    <section ref={sectionRef} data-dark className="relative bg-ink p-2 md:p-3">
-      {/* Gradient card */}
+    <section ref={sectionRef} className="relative bg-white p-2 md:p-3">
+      {/* Ink card */}
       <div
         ref={cardRef}
-        className="hero-gradient relative flex min-h-[calc(100svh-1rem)] flex-col overflow-hidden rounded-[2rem] md:min-h-[calc(100svh-1.5rem)] md:rounded-[2.5rem]"
+        data-dark
+        className="relative flex bg-ink min-h-[calc(100svh-1rem)] flex-col overflow-hidden rounded-[2rem] md:min-h-[calc(100svh-1.5rem)] md:rounded-[2.5rem]"
       >
-        {/* Duotone portrait: B&W photo + gradient multiplied on top, blended inside the masked group */}
+        {/* Duotone portrait: B&W photo darkened by an ink layer, blended inside the masked group */}
         <div
           ref={parallaxRef}
           className="hero-portrait pointer-events-none absolute inset-x-0 -top-[8%] h-[116%] md:left-[26%] md:right-auto md:w-[48vw] lg:left-[28%] lg:w-[44vw]"
@@ -86,13 +87,13 @@ export default function Hero() {
               sizes="(max-width: 768px) 100vw, 48vw"
               className="duotone object-cover object-[50%_20%]"
             />
-            <div className="hero-gradient absolute inset-0 mix-blend-multiply" aria-hidden />
+            <div className="absolute inset-0 bg-ink/45 mix-blend-multiply" aria-hidden />
           </div>
         </div>
 
         {/* Readability veils */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2a0b0c]/85 via-transparent to-transparent" aria-hidden />
-        <div className="pointer-events-none absolute inset-0 bg-black/25 md:hidden" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-ink/25 md:hidden" aria-hidden />
 
         {/* Content */}
         <div
@@ -145,7 +146,7 @@ export default function Hero() {
             {t.hero.services.map((service, i) => (
               <li key={service} className="hero-service">
                 <span className="text-lg font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
-                  <span className="text-accent-soft/70">#</span>0{i + 1}
+                  <span className="text-accent">#</span>0{i + 1}
                 </span>
                 <p className="mt-2 text-sm text-white/80 md:text-base" style={{ fontFamily: "var(--font-body)" }}>
                   {service}
@@ -157,9 +158,9 @@ export default function Hero() {
       </div>
 
       {/* Clients band */}
-      <div className="hero-band mt-2 flex flex-col gap-6 overflow-hidden rounded-[2rem] bg-ink-2 px-4 py-8 md:mt-3 md:flex-row md:items-center md:gap-12 md:rounded-[2.5rem] md:px-9 md:py-10 lg:px-13 xl:px-21">
+      <div className="hero-band mt-2 flex flex-col gap-6 overflow-hidden rounded-[2rem] border border-ink/10 bg-white px-4 py-8 md:mt-3 md:flex-row md:items-center md:gap-12 md:rounded-[2.5rem] md:px-9 md:py-10 lg:px-13 xl:px-21">
         <p
-          className="shrink-0 text-sm font-semibold leading-snug text-white md:w-36"
+          className="shrink-0 text-sm font-semibold leading-snug text-ink md:w-36"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {t.hero.trustedBy}
@@ -176,10 +177,10 @@ export default function Hero() {
               <li
                 key={`${name}-${i}`}
                 aria-hidden={i >= CLIENTS.length}
-                className="flex shrink-0 items-center gap-3 text-2xl font-bold tracking-tight text-white/85"
+                className="flex shrink-0 items-center gap-3 text-2xl font-bold tracking-tight text-ink/80"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                <span className="text-white/50">{GLYPHS[i % GLYPHS.length]}</span>
+                <span className="text-ink/30">{GLYPHS[i % GLYPHS.length]}</span>
                 {name}
               </li>
             ))}

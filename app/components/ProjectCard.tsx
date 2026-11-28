@@ -21,7 +21,7 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
           <div className="w-2.5 h-2.5 rounded-full bg-ink/15" />
           <div className="w-2.5 h-2.5 rounded-full bg-ink/15" />
         </div>
-        <div className="flex-1 ml-2 h-5 rounded-full bg-cream" />
+        <div className="flex-1 ml-2 h-5 rounded-full bg-ink/5" />
       </div>
       {/* Content */}
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-b-2xl border border-ink/10 border-t-0 bg-neutral-200">
@@ -101,13 +101,13 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           /* Mobile: screenshot flottant, coins arrondis, ombre douce */
           <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.25rem] bg-neutral-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-neutral-200/60 transition-shadow duration-500 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
             {imageContent}
-            <div className="absolute inset-0 bg-accent/0 transition-all duration-500 group-hover:bg-accent/20 pointer-events-none rounded-[1.25rem]" />
+            <div className="absolute inset-0 bg-ink/0 transition-all duration-500 group-hover:bg-ink/10 pointer-events-none rounded-[1.25rem]" />
           </div>
         ) : (
           /* Web: browser frame */
           <div className="relative">
             <BrowserFrame>{imageContent}</BrowserFrame>
-            <div className="absolute inset-0 top-[34px] bg-accent/0 transition-all duration-500 group-hover:bg-accent/20 pointer-events-none rounded-b-2xl" />
+            <div className="absolute inset-0 top-[34px] bg-ink/0 transition-all duration-500 group-hover:bg-ink/10 pointer-events-none rounded-b-2xl" />
           </div>
         )}
 
@@ -145,7 +145,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <div className="flex items-center gap-2 mb-2">
           {/* Type badge */}
           <span
-            className="inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-accent-soft text-accent"
+            className="inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-ink/[0.05] text-ink/70"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {isMobile ? (

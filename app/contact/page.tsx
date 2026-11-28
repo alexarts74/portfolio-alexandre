@@ -121,7 +121,7 @@ export default function ContactPage() {
     <>
       <Navigation variant="minimal" />
 
-      <main ref={mainRef} className="min-h-screen bg-cream pt-28 pb-10 md:pt-36">
+      <main ref={mainRef} className="min-h-screen bg-white pt-28 pb-10 md:pt-36">
         <div className="mx-6 md:mx-12 lg:mx-16 xl:mx-24">
           {/* Heading */}
           <div className="mb-12 md:mb-16">
@@ -151,7 +151,7 @@ export default function ContactPage() {
             {/* Info card */}
             <aside
               data-dark
-              className="contact-card hero-gradient flex flex-col justify-between gap-12 rounded-[2rem] p-8 text-white md:p-10 lg:col-span-5"
+              className="contact-card bg-ink flex flex-col justify-between gap-12 rounded-[2rem] p-8 text-white md:p-10 lg:col-span-5"
             >
               <div>
                 <p className="mb-3 text-sm font-semibold text-white/70" style={{ fontFamily: "var(--font-display)" }}>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-full border border-white/40 px-4 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-accent"
+                        className="rounded-full border border-white/40 px-4 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-ink"
                       >
                         {s.label} ↗
                       </a>

@@ -188,7 +188,7 @@ export default function Navigation({ variant = "home", backHref = "/", backLabel
       {isHome && (
         <div
           ref={overlayRef}
-          className="hero-gradient fixed inset-0 z-40 md:hidden"
+          className="fixed inset-0 z-40 bg-ink md:hidden"
           style={{ visibility: "hidden", clipPath: "circle(0% at 92% 4%)" }}
         >
           <div ref={linksRef} className="flex h-full flex-col justify-between px-6 pt-28 pb-10">
