@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1600px; height: 1000px; overflow: hidden; background: #0f0f10; }
+
+  .stage { position: relative; width: 1600px; height: 1000px; overflow: hidden; background: var(--tint); }
+
+  /* Backdrop */
+  .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--bg-pos, center); }
+  .bg.blur { inset: -12%; width: 124%; height: 124%; filter: blur(64px) saturate(1.35) brightness(0.62); }
+  .tint { position: absolute; inset: 0; background: linear-gradient(140deg, var(--tint) 0%, transparent 70%); mix-blend-mode: multiply; opacity: var(--tint-opacity, 0.35); }
+  .glow { position: absolute; left: 50%; top: 52%; width: 1300px; height: 800px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgb(255 255 255 / 0.10), transparent); }
+  .shade {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(125% 95% at 50% 42%, transparent 40%, rgb(8 8 10 / 0.55) 100%),
+      linear-gradient(180deg, rgb(8 8 10 / 0.25) 0%, transparent 28%, transparent 62%, rgb(8 8 10 / 0.5) 100%);
+  }
+
+  /* 3D rig, centred on the canvas */
+  .scene { position: absolute; inset: 0; perspective: 3400px; perspective-origin: 50% 38%; }
+  .rig {
+    position: absolute; left: calc(50% + var(--rig-x, 0px)); top: calc(50% + var(--rig-y, 0px));
+    width: 0; height: 0; transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 12deg)) rotateY(var(--ry, -18deg)) rotateZ(var(--rz, 5deg));
+  }
+
+  /* Browser window */
+  .win {
+    position: absolute; border-radius: 16px; overflow: hidden; background: #141416;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.09),
+      0 60px 110px -30px rgb(0 0 0 / 0.78),
+      0 24px 40px -24px rgb(0 0 0 / 0.55);
+  }
+  .bar { height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #1a1a1d; border-bottom: 1px solid rgb(255 255 255 / 0.06); }
+  .bar i { width: 11px; height: 11px; border-radius: 50%; background: rgb(255 255 255 / 0.2); }
+  .bar .url { margin-left: 16px; height: 20px; width: 42%; border-radius: 999px; background: rgb(255 255 255 / 0.07); }
+  .view { position: relative; overflow: hidden; background: #0f0f10; }
+  .view img { position: absolute; display: block; }
+  .dim { position: absolute; inset: 0; background: #0b0b0c; pointer-events: none; }
+
+  /* Phone */
+  .phone {
+    position: absolute; padding: 12px; background: #0b0b0c;
+    box-shadow:
+      inset 0 0 0 2px #2c2c30,
+      0 60px 110px -30px rgb(0 0 0 / 0.8),
+      0 24px 40px -24px rgb(0 0 0 / 0.55);
+  }
+  .screen { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; }
+  .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 30%; height: 26px; border-radius: 20px; background: #000; z-index: 2; }
+
+  /* Screenshot that already contains its phone frame */
+  .framed { position: absolute; overflow: hidden; box-shadow: 0 60px 110px -30px rgb(0 0 0 / 0.8), 0 24px 40px -24px rgb(0 0 0 / 0.55); }
+  .framed img { width: 100%; height: 100%; object-fit: cover; display: block; }
+</style>
+</head>
+<body>
+  <div class="stage" style="/*VARS*/">
+    <!--BACKDROP-->
+    <div class="scene"><div class="rig"><!--RIG--></div></div>
+    <div class="shade"></div>
+  </div>
+</body>
+</html>

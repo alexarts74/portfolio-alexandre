@@ -34,7 +34,7 @@ export const projects: Project[] = [
   {
     title: "Evera",
     slug: "evera",
-    image: "/images/projects/evera.png",
+    image: "/images/projects/covers/evera.webp",
     video: "/images/projects/evera/complet.mp4",
     images: [
       "/images/projects/evera/dashboard.png",
@@ -75,7 +75,7 @@ export const projects: Project[] = [
   {
     title: "PayeTaVie",
     slug: "payetavie",
-    image: "/images/projects/payetavie/web-05-dashboard.png",
+    image: "/images/projects/covers/payetavie.webp",
     images: [
       "/images/projects/payetavie/web-05-dashboard.png",
       "/images/projects/payetavie/web-08-topic-impots.png",
@@ -126,7 +126,7 @@ export const projects: Project[] = [
   {
     title: "Pasang Trekking",
     slug: "pasangtrekking",
-    image: "/images/projects/pasang.jpg",
+    image: "/images/projects/covers/pasangtrekking.webp",
     images: [
       "/images/projects/pasang/home.jpg",
       "/images/projects/pasang/treks.jpg",
@@ -161,7 +161,7 @@ export const projects: Project[] = [
   {
     title: "BillTag (concept)",
     slug: "billtag",
-    image: "/images/projects/billtag.jpg",
+    image: "/images/projects/covers/billtag.webp",
     images: [
       "/images/projects/billtag/home.jpg",
     ],
@@ -190,7 +190,7 @@ export const projects: Project[] = [
   {
     title: "Orbite",
     slug: "orbite",
-    image: "/images/projects/orbite.jpg",
+    image: "/images/projects/covers/orbite.webp",
     images: [
       "/images/projects/orbite/slogan.jpg",
       "/images/projects/orbite/hero.jpg",
@@ -231,7 +231,7 @@ export const projects: Project[] = [
   {
     title: "Diving with Mewan",
     slug: "divingwithmewan",
-    image: "/images/projects/mewan.jpg",
+    image: "/images/projects/covers/divingwithmewan.webp",
     images: [
       "/images/projects/mewan/hero.jpg",
       "/images/projects/mewan/home.jpg",
@@ -263,7 +263,7 @@ export const projects: Project[] = [
   {
     title: "NEREA",
     slug: "nerea",
-    image: "/images/projects/nerea.jpg",
+    image: "/images/projects/covers/nerea.webp",
     video: "/images/projects/nerea/signature.mp4",
     // La galerie affiche images.slice(1) à l'envers : listées du checkout à l'accueil
     // pour se lire dans l'ordre du parcours.
@@ -317,7 +317,7 @@ export const projects: Project[] = [
   {
     title: "Bib Batteries",
     slug: "bibbatteries",
-    image: "/images/projects/bib-batteries.png",
+    image: "/images/projects/covers/bibbatteries.webp",
     images: [
       "/images/projects/bib/bib-1.png",
       "/images/projects/bib/bib-2.png",
@@ -347,7 +347,7 @@ export const projects: Project[] = [
   {
     title: "RunMate",
     slug: "runmate",
-    image: "/images/projects/runmate.png",
+    image: "/images/projects/covers/runmate.webp",
     images: [
       "/images/projects/runmate/runmate_1.png",
       "/images/projects/runmate/runmate_2.png",
@@ -384,7 +384,7 @@ export const projects: Project[] = [
   {
     title: "WorkAdventure",
     slug: "workadventure",
-    image: "/images/projects/workadventure.png",
+    image: "/images/projects/covers/workadventure.webp",
     images: [
       "/images/projects/wa/wa-1.png",
       "/images/projects/wa/wa-2.png",
@@ -414,7 +414,7 @@ export const projects: Project[] = [
   {
     title: "The Surf Course",
     slug: "thesurfcourse",
-    image: "/images/projects/surfcourse.png",
+    image: "/images/projects/covers/thesurfcourse.webp",
     images: [
       "/images/projects/surfcourse.png",
     ],
@@ -439,7 +439,7 @@ export const projects: Project[] = [
   {
     title: "Tudo Bem Maman",
     slug: "tudobemmaman",
-    image: "/images/projects/tudobemmaman.png",
+    image: "/images/projects/covers/tudobemmaman.webp",
     images: [
       "/images/projects/tudobemmaman/homepage.png",
       "/images/projects/tudobemmaman/clothes.png",
@@ -471,7 +471,7 @@ export const projects: Project[] = [
   {
     title: "TripMate",
     slug: "tripmate",
-    image: "/images/projects/travelmate.png",
+    image: "/images/projects/covers/tripmate.webp",
     images: [
       "/images/projects/tripmate/tripmate_1.png",
       "/images/projects/tripmate/tripmate_2.png",
@@ -503,7 +503,7 @@ export const projects: Project[] = [
   {
     title: "Portfolio Callixte",
     slug: "callixte",
-    image: "/images/projects/callixte.png",
+    image: "/images/projects/covers/callixte.webp",
     images: [
       "/images/projects/cal/cal-1.png",
       "/images/projects/cal/cal-2.png",
@@ -535,7 +535,7 @@ export const projects: Project[] = [
   {
     title: "La Mascotte de l'Océan",
     slug: "mascotteocean",
-    image: "/images/projects/mascotte.png",
+    image: "/images/projects/covers/mascotteocean.webp",
     images: [
       "/images/projects/mascotte.png",
       "/images/projects/mascotte/mascotte-ocean.png",
@@ -564,3 +564,18 @@ export const projects: Project[] = [
     liveUrl: "https://mascotte-ocean.netlify.app/fr",
   },
 ];
+
+export type ProjectCategory = "webflow" | "showcase" | "webapp" | "mobile";
+
+/** Webflow first, then mobile apps, showcase sites, and web apps for the rest. */
+export function getProjectCategory(project: Project): ProjectCategory {
+  if (project.technologies.includes("Webflow")) return "webflow";
+  if (project.type === "mobile") return "mobile";
+  if (project.showcase) return "showcase";
+  return "webapp";
+}
+
+export const projectTypeLabels = {
+  fr: { professional: "Pro", freelance: "Freelance", personal: "Perso" },
+  en: { professional: "Pro", freelance: "Freelance", personal: "Personal" },
+} as const;

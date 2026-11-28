@@ -1,0 +1,162 @@
+{
+  "$comment": "Couvertures 16:10 des projets. Fond : scripts/covers/bg/<slug>.jpg s'il existe, sinon `bg` (chemin depuis public/), sinon la première capture floutée. Captures : chemins depuis public/images/projects/. cropTop = part de la hauteur de la capture coupée en haut (barre de menus macOS, etc.). aspect = ratio largeur/hauteur de la zone visible d'une fenêtre. framed = capture qui contient déjà son cadre de téléphone.",
+  "projects": {
+    "evera": {
+      "tint": "#0d3b36",
+      "layout": "web-duo",
+      "front": {
+        "src": "evera/dashboard.png"
+      },
+      "back": {
+        "src": "evera/gestion-flotte.png",
+        "cropTop": 0.035
+      }
+    },
+    "payetavie": {
+      "tint": "#1f4d3a",
+      "layout": "web-phone",
+      "front": {
+        "src": "payetavie/web-05-dashboard.png",
+        "aspect": 1.85
+      },
+      "phone": {
+        "src": "payetavie/mob-01-landing.png"
+      }
+    },
+    "pasangtrekking": {
+      "tint": "#16324f",
+      "layout": "web-duo",
+      "front": {
+        "src": "pasang/home.jpg"
+      },
+      "back": {
+        "src": "pasang/treks.jpg"
+      }
+    },
+    "billtag": {
+      "tint": "#4a1440",
+      "layout": "web",
+      "front": {
+        "src": "billtag/home.jpg"
+      }
+    },
+    "orbite": {
+      "tint": "#2a1208",
+      "layout": "web-duo",
+      "front": {
+        "src": "orbite/hero.jpg"
+      },
+      "back": {
+        "src": "orbite/offres.jpg"
+      }
+    },
+    "divingwithmewan": {
+      "tint": "#06343a",
+      "bg": "images/projects/mewan/hero.jpg",
+      "layout": "web-duo",
+      "front": {
+        "src": "mewan/home.jpg"
+      },
+      "back": {
+        "src": "mewan/services.jpg"
+      }
+    },
+    "nerea": {
+      "tint": "#2c4a40",
+      "layout": "web-duo",
+      "front": {
+        "src": "nerea/hero.jpg"
+      },
+      "back": {
+        "src": "nerea/collections.jpg"
+      }
+    },
+    "bibbatteries": {
+      "tint": "#173823",
+      "layout": "web-duo",
+      "front": {
+        "src": "bib/bib-1.png"
+      },
+      "back": {
+        "src": "bib/bib-2.png"
+      }
+    },
+    "runmate": {
+      "tint": "#3d5a48",
+      "layout": "phones",
+      "phones": [
+        {
+          "src": "runmate/runmate_4.png"
+        },
+        {
+          "src": "runmate/runmate_1.png"
+        },
+        {
+          "src": "runmate/runmate_2.png"
+        }
+      ]
+    },
+    "workadventure": {
+      "tint": "#14264a",
+      "layout": "web",
+      "front": {
+        "src": "wa/wa-1.png",
+        "cropTop": 0.03
+      }
+    },
+    "thesurfcourse": {
+      "tint": "#0f4a6b",
+      "layout": "web",
+      "front": {
+        "src": "surfcourse.png",
+        "aspect": 1.3333
+      },
+      "frontWidth": 760
+    },
+    "tudobemmaman": {
+      "tint": "#3a2e26",
+      "layout": "web-duo",
+      "front": {
+        "src": "tudobemmaman/homepage.png"
+      },
+      "back": {
+        "src": "tudobemmaman/clothes.png"
+      }
+    },
+    "tripmate": {
+      "tint": "#7a2e0c",
+      "layout": "phones",
+      "phones": [
+        {
+          "src": "tripmate/tripmate_1.png",
+          "framed": true
+        },
+        {
+          "src": "tripmate/tripmate_4.png",
+          "framed": true
+        },
+        {
+          "src": "tripmate/tripmate_5.png",
+          "framed": true
+        }
+      ]
+    },
+    "callixte": {
+      "tint": "#2a1a10",
+      "layout": "web-duo",
+      "front": {
+        "src": "cal/cal-1.png"
+      },
+      "back": {
+        "src": "cal/cal-2.png"
+      }
+    },
+    "mascotteocean": {
+      "tint": "#7a3208",
+      "layout": "web",
+      "front": {
+        "src": "mascotte/mascotte-ocean.png"
+      }
+    }
+  }
+}

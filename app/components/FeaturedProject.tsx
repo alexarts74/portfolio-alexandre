@@ -5,17 +5,12 @@ import Image from "next/image";
 import PillButton, { ArrowIcon } from "./PillButton";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/app/lib/gsap";
-import { projects, type Project } from "@/app/data/projects";
+import { projects, projectTypeLabels, type Project } from "@/app/data/projects";
 import { useLanguage } from "@/app/i18n/LanguageContext";
 
 // Same side gutter as the rest of the page, applied as padding (and scroll padding
 // for snapping) so the carousel can bleed to the viewport edges.
 const GUTTER = "px-6 scroll-pl-6 md:px-12 md:scroll-pl-12 lg:px-16 lg:scroll-pl-16 xl:px-24 xl:scroll-pl-24";
-
-const projectTypeLabels = {
-  fr: { professional: "Pro", freelance: "Freelance", personal: "Perso" },
-  en: { professional: "Pro", freelance: "Freelance", personal: "Personal" },
-} as const;
 
 function FeaturedCard({ project }: { project: Project }) {
   const { t, locale } = useLanguage();

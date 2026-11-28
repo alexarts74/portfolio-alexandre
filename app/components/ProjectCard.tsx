@@ -2,66 +2,19 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import type { Project } from "@/app/data/projects";
+import { projectTypeLabels, type Project } from "@/app/data/projects";
 import Link from "next/link";
 import { useLanguage } from "@/app/i18n/LanguageContext";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
 }
 
-function BrowserFrame({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative w-full">
-      {/* Browser chrome */}
-      <div className="rounded-t-2xl border border-ink/10 border-b-0 bg-white px-3 py-2.5 flex items-center gap-2">
-        <div className="flex gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-accent/80" />
-          <div className="w-2.5 h-2.5 rounded-full bg-ink/15" />
-          <div className="w-2.5 h-2.5 rounded-full bg-ink/15" />
-        </div>
-        <div className="flex-1 ml-2 h-5 rounded-full bg-ink/5" />
-      </div>
-      {/* Content */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-b-2xl border border-ink/10 border-t-0 bg-neutral-200">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project }: ProjectCardProps) {
   const { t, locale } = useLanguage();
   const [imageError, setImageError] = useState(false);
   const projectTranslations = t.projectData[project.slug as keyof typeof t.projectData];
   const isMobile = project.type === "mobile";
-
-  const getProjectTypeLabel = (projectType: string) => {
-    if (locale === "fr") {
-      switch (projectType) {
-        case "professional":
-          return "Pro";
-        case "freelance":
-          return "Freelance";
-        case "personal":
-          return "Perso";
-        default:
-          return projectType;
-      }
-    } else {
-      switch (projectType) {
-        case "professional":
-          return "Pro";
-        case "freelance":
-          return "Freelance";
-        case "personal":
-          return "Personal";
-        default:
-          return projectType;
-      }
-    }
-  };
 
   const handleExternalLink = (e: React.MouseEvent, url: string) => {
     e.preventDefault();
@@ -86,35 +39,22 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       alt={project.title}
       fill
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-        isMobile ? "object-top" : ""
-      }`}
+      className="object-cover transition-transform duration-700 group-hover:scale-105"
       onError={() => setImageError(true)}
     />
   );
 
   return (
     <Link href={`/projects/${project.slug}`} className="group block" data-cursor-project>
-      {/* Device Frame */}
+      {/* Cover */}
       <div className="relative">
-        {isMobile ? (
-          /* Mobile: screenshot flottant, coins arrondis, ombre douce */
-          <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.25rem] bg-neutral-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-neutral-200/60 transition-shadow duration-500 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
-            {imageContent}
-            <div className="absolute inset-0 bg-ink/0 transition-all duration-500 group-hover:bg-ink/10 pointer-events-none rounded-[1.25rem]" />
-          </div>
-        ) : (
-          /* Web: browser frame */
-          <div className="relative">
-            <BrowserFrame>{imageContent}</BrowserFrame>
-            <div className="absolute inset-0 top-[34px] bg-ink/0 transition-all duration-500 group-hover:bg-ink/10 pointer-events-none rounded-b-2xl" />
-          </div>
-        )}
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5">
+          {imageContent}
+          <div className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/10" />
+        </div>
 
         {/* External links */}
-        <div className={`absolute flex gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100 z-10 ${
-          isMobile ? "top-3 right-3" : "top-12 right-3"
-        }`}>
+        <div className="absolute right-3 top-3 z-10 flex gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
           {project.githubUrl && (
             <button
               onClick={(e) => handleExternalLink(e, project.githubUrl!)}
@@ -174,7 +114,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             className="text-xs text-neutral-500"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            {getProjectTypeLabel(project.projectType)}
+            {projectTypeLabels[locale][project.projectType]}
           </span>
         </div>
         <h3
