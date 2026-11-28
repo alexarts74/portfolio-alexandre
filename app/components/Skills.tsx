@@ -18,7 +18,6 @@ const skillCategories = [
     key: "ai",
     label: "AI & Automation",
     skills: ["Claude Code", "Claude API", "OpenAI", "Prompt Engineering", "RAG", "n8n", "Make"],
-    highlight: true,
   },
   {
     key: "devops",
@@ -260,12 +259,10 @@ export default function Skills() {
             {skillCategories.map((category) => (
               <div
                 key={category.key}
-                className={`skill-category rounded-3xl p-6 ${
-                  category.highlight ? "bg-ink-2 border border-accent/40" : "bg-ink-2 border border-white/5"
-                }`}
+                className="skill-category group rounded-3xl border border-white/5 bg-ink-2 p-6 transition-colors duration-300 hover:border-accent/40"
               >
                 <h3
-                  className={`category-label mb-4 text-lg font-bold ${category.highlight ? "text-white" : "text-white/90"}`}
+                  className="category-label mb-4 text-lg font-bold text-white/90 transition-colors duration-300 group-hover:text-white"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {getLabel(category.key, category.label)}
@@ -274,11 +271,7 @@ export default function Skills() {
                   {category.skills.map((skill) => (
                     <span
                       key={skill}
-                      className={`skill-tag rounded-full border px-3.5 py-1.5 text-sm transition-colors duration-300 cursor-default ${
-                        category.highlight
-                          ? "border-accent/40 text-white hover:border-accent hover:bg-accent"
-                          : "border-white/15 text-white/70 hover:border-accent hover:bg-accent hover:text-white"
-                      }`}
+                      className="skill-tag cursor-default rounded-full border border-white/15 px-3.5 py-1.5 text-sm text-white/70 transition-colors duration-300 group-hover:border-accent/40 group-hover:text-white hover:!border-accent hover:bg-accent"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {skill}
